@@ -19,6 +19,8 @@
 		<StartScreen />
 	{:else if $globalGameState === EGlobalStates.BATTLE}
 		<Battle />
+	{:else if $globalGameState === EGlobalStates.STORE}
+		<Store />
 	{/if}
 </main>
 

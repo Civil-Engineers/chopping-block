@@ -1,7 +1,2 @@
-<script lang="ts">
-  // this is how to make props
-  export let x : number = 10;
+<h1>Store</h1>
 
-  // this is how to make props mandatory
-  export let y : number;
-</script>
