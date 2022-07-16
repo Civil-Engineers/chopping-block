@@ -1,5 +1,6 @@
 <script lang="ts">
 	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
+	import Shop from './Shop.svelte';
 	import { player, enemies } from '$lib/store';
 	import { sleep } from '$lib/helper';
 
@@ -52,6 +53,7 @@
 		{#each $enemies as enemy}
 			<PlayerDisplay bind:player={enemy} />
 		{/each}
+    <Shop />
 	</div>
 </div>
 
