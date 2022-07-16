@@ -8,4 +8,4 @@
 
 <p>test text {$test}</p>
 
-<Store />
+<Store y ={1}/>
