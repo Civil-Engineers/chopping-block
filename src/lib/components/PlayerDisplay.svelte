@@ -4,12 +4,12 @@
 
 	import HealthBar from './HealthBar.svelte';
 
-	export let player: Writable<IPlayer>;
+	export let player: IPlayer;
 </script>
 
 <div class="player-slot">
 	<div class="player">
-		<HealthBar maxHealth={$player.maxHealth} health={$player.health} />
+		<HealthBar maxHealth={player.maxHealth} health={player.health} />
 		<img src="test.jpg" alt="" />
 	</div>
 </div>

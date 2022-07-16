@@ -1,11 +1,42 @@
 <script lang="ts">
 	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
-	import { player, enemy } from '$lib/store';
+	import { player, enemies } from '$lib/store';
+	import { sleep } from '$lib/helper';
 
 	let isFastFording = false;
 
-  // wait speed in milliseconds
-  let waitSpeed = 1000;
+	const battleLoop = async () => {
+		// your turn -------
+
+		console.log('loop');
+
+		// your dice roll
+		await sleep(1000);
+		// show reuslt
+		await sleep(1000);
+		// do ability to enemy
+
+		await sleep(1000);
+
+		// enemy turn -------
+
+		// all enemies roll at the same time
+		await sleep(1000);
+		// show reuslt of enemy
+		await sleep(1000);
+		// do ability to player
+		await sleep(1000);
+
+		// loop many times until all enemies die or you die
+		if ($player.health > 0 || $enemies.length > 0) {
+			battleLoop();
+		}
+	};
+
+	battleLoop();
+
+	// wait speed in milliseconds
+	let waitSpeed = 1000;
 </script>
 
 <div class="container">
@@ -17,8 +48,10 @@
 		{/if}
 	</button>
 	<div class="main">
-		<PlayerDisplay {player} />
-		<PlayerDisplay player={enemy} />
+		<PlayerDisplay bind:player={$player} />
+		{#each $enemies as enemy}
+			<PlayerDisplay bind:player={enemy} />
+		{/each}
 	</div>
 </div>
 

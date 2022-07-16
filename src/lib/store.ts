@@ -56,11 +56,19 @@ export const player = writable<IPlayer>({
 	gold: 0,
 	dice: []
 });
-export const enemy = writable<IPlayer>({
-	maxHealth: 30,
-	health: 20,
-	gold: 0,
-	dice: []
-});
+export const enemies = writable<IPlayer[]>([
+	{
+		maxHealth: 30,
+		health: 20,
+		gold: 0,
+		dice: []
+	},
+	{
+		maxHealth: 30,
+		health: 20,
+		gold: 0,
+		dice: []
+	}
+]);
 
 export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREEN);
