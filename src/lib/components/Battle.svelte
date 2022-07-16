@@ -10,7 +10,17 @@
 			fast forward
 		{/if}
 	</button>
+  <div class="main">
+    <div></div>
+    <div></div>
+  </div>
 </div>
 
 <style>
+  .main {
+    display: flex;
+  }
+  .main > div {
+    background: red;
+  }
 </style>
