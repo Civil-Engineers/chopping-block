@@ -20,7 +20,7 @@
 	<div class="main">
 		<PlayerDisplay {player} />
 		<PlayerDisplay player={enemy} />
-		<Shop on:click={() => isShopping = !isShopping} />
+		<Shop />
 	</div>
 </div>
 
