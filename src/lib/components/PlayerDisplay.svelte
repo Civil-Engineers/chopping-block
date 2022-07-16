@@ -16,7 +16,7 @@
 
 <style lang="scss">
 	.player-slot {
-		background: red;
+		background: rgb(100, 100, 100);
 		flex: 1;
 		display: flex;
 		flex-direction: column;

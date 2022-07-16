@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
 	import { player, enemy } from '$lib/store';
+	import Shop from './Shop.svelte';
 
 	let isFastFording = false;
 
@@ -19,6 +20,7 @@
 	<div class="main">
 		<PlayerDisplay {player} />
 		<PlayerDisplay player={enemy} />
+		<Shop on:click={() => isShopping = !isShopping} />
 	</div>
 </div>
 
