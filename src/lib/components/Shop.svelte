@@ -92,6 +92,12 @@
         background-color: rgb(43, 180, 54);
         align-items: center;
         justify-content: center;
+        transition: background-color 150ms ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgb(35, 141, 43);
+        }
       }
     }
 
