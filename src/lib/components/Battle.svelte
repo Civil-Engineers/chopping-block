@@ -3,6 +3,9 @@
 	import { player, enemy } from '$lib/store';
 
 	let isFastFording = false;
+
+  // wait speed in milliseconds
+  let waitSpeed = 1000;
 </script>
 
 <div class="container">

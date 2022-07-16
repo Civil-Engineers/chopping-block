@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Battle from '$lib/components/Battle.svelte';
 	import StartScreen from '$lib/components/StartScreen.svelte';
-	import Store from '$lib/components/Store.svelte';
 	import { globalGameState, EGlobalStates } from '$lib/store';
 
 	const fixedWindowSize = 1280;
@@ -19,14 +18,12 @@
 		<StartScreen />
 	{:else if $globalGameState === EGlobalStates.BATTLE}
 		<Battle />
-	{:else if $globalGameState === EGlobalStates.STORE}
-		<Store />
 	{/if}
 </main>
 
 <style>
 	main {
-    overflow: hidden;
+		overflow: hidden;
 		transform-origin: 0 0;
 		position: fixed;
 		top: 0;

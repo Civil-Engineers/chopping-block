@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 export enum EGlobalStates {
 	START_SCREEN,
-	STORE,
+	SHOP,
 	BATTLE
 }
 
