@@ -12,7 +12,8 @@ export interface IFace {
 export interface IDice {
 	faces: IFace[];
 }
-export interface Player {
+export interface IPlayer {
+	maxHealth: number;
 	health: number;
 	gold: number;
 	dice: IDice[];
@@ -49,22 +50,17 @@ export const allAbilities: IAbility[] = [
 	}
 ];
 
-export const player = writable<Player>();
-export const enemy = writable<Player>();
-
-export const createPlayer = () => {
-	player.set({
-		health: 10,
-		gold: 0,
-		dice: []
-	});
-};
-export const createEnemy = () => {
-	enemy.set({
-		health: 10,
-		gold: 0,
-		dice: []
-	});
-};
+export const player = writable<IPlayer>({
+	maxHealth: 30,
+	health: 10,
+	gold: 0,
+	dice: []
+});
+export const enemy = writable<IPlayer>({
+	maxHealth: 30,
+	health: 20,
+	gold: 0,
+	dice: []
+});
 
 export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREEN);

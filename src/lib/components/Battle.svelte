@@ -1,4 +1,7 @@
 <script lang="ts">
+	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
+	import { player, enemy } from '$lib/store';
+
 	let isFastFording = false;
 </script>
 
@@ -11,12 +14,8 @@
 		{/if}
 	</button>
 	<div class="main">
-		<div class="player-slot">
-			<img
-				src="https://images.unsplash.com/photo-1657942147658-6611325b5042?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-				alt=""
-			/>
-		</div>
+		<PlayerDisplay {player} />
+		<PlayerDisplay player={enemy} />
 	</div>
 </div>
 
@@ -37,9 +36,5 @@
 		display: flex;
 		width: 100%;
 		height: 100%;
-	}
-	.player-slot {
-		background: red;
-		flex: 1;
 	}
 </style>

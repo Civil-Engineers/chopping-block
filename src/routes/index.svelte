@@ -26,6 +26,7 @@
 
 <style>
 	main {
+    overflow: hidden;
 		transform-origin: 0 0;
 		position: fixed;
 		top: 0;
