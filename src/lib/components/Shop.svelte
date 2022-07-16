@@ -30,6 +30,7 @@
       </li>
     </ul>
     <p>Some description of something goes here. Lore, lorem ipsum dolor sit amet.</p>
+    <button class="reroll-button">Reroll</button>
   </section>
 </div>
 
@@ -92,6 +93,14 @@
         align-items: center;
         justify-content: center;
       }
+    }
+
+    .reroll-button {
+      width: 10rem;
+      height: 4rem;
+      background-color:rgb(37, 61, 141);
+      color: white;
+      border-radius: 10px;
     }
   }
 </style>
