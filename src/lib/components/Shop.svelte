@@ -19,14 +19,23 @@
       <li class="shop-item">
         <span>Item 1</span>
         <span>3G</span>
+        <div class="tooltip">
+          <span class="tooltip-text">Description of Item 1</span>
+        </div>
       </li>
       <li class="shop-item">
         <span>Item 2</span>
         <span>3G</span>
+        <div class="tooltip">
+          <span class="tooltip-text">Description of Item 2</span>
+        </div>
       </li>
       <li class="shop-item">
         <span>Item 3</span>
         <span>3G</span>
+        <div class="tooltip">
+          <span class="tooltip-text">Description of Item 2</span>
+        </div>
       </li>
     </ul>
     <p>Some description of something goes here. Lore, lorem ipsum dolor sit amet.</p>
@@ -97,6 +106,23 @@
         &:hover {
           cursor: pointer;
           background-color: rgb(35, 141, 43);
+
+          .tooltip .tooltip-text {
+            visibility: visible;
+          }
+        }
+
+        .tooltip .tooltip-text {
+          visibility: hidden;
+          width: 10rem;
+          background-color: white;
+          color: black;
+          text-align: center;
+          border-radius: 10px;
+          padding: 0.5rem;
+
+          position: absolute;
+          z-index: 1000;
         }
       }
     }
