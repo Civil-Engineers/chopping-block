@@ -61,7 +61,15 @@ export const enemies = writable<IPlayer[]>([
 		maxHealth: 30,
 		health: 20,
 		gold: 0,
-		dice: []
+		dice: [
+			{
+				faces: [
+					{
+						ability: allAbilities[0]
+					}
+				]
+			}
+		]
 	},
 	{
 		maxHealth: 30,
