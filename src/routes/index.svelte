@@ -1,11 +1,12 @@
 <script lang="ts">
+	import Battle from '$lib/components/Battle.svelte';
+	import StartScreen from '$lib/components/StartScreen.svelte';
 	import Store from '$lib/components/Store.svelte';
-	import { test } from '$lib/store';
+	import { globalGameState, EGlobalStates } from '$lib/store';
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-
-<p>test text {$test}</p>
-
-<Store y ={1}/>
+{#if $globalGameState === EGlobalStates.START_SCREEN}
+	<StartScreen />
+{:else if $globalGameState === EGlobalStates.BATTLE}
+	<Battle />
+{/if}
