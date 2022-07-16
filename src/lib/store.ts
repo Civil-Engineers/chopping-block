@@ -6,18 +6,31 @@ export enum EGlobalStates {
 	BATTLE
 }
 
-export interface Face {
-	icon: string;
-	eventHandler: () => void;
+export interface IFace {
+	ability: IAbility;
 }
-export interface Dice {
-	faces: Face[];
+export interface IDice {
+	faces: IFace[];
+}
+export interface Player {
+	health: number;
+	gold: number;
+	dice: IDice[];
 }
 
-export interface Ability {
+export interface IAbility {
+	icon: string;
+
+  // applies to the other player, can be negative to heal
 	damage: number;
-	defense?: number;
-	multiplier?: number;
+
+  // remove form attack damage value to a limit of 0
+	defense: number;
+
+  // applies to player health, can be negative
+	heal: number;
+
+	multiplier: number;
 }
 
 export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREEN);
