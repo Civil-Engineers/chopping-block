@@ -55,6 +55,8 @@
 	</div>
 </div>
 
+<audio src="shopper.mp3" type="audio/mpeg" autoplay></audio>
+
 <style>
 	.fast {
 		position: absolute;

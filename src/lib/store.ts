@@ -24,6 +24,7 @@ export interface IAbility {
 	rarity: number;
 
 	name: string;
+	description: string;
 	icon: string;
 
 	// applies to the other player, can be negative to heal
@@ -41,6 +42,7 @@ export interface IAbility {
 export const allAbilities: IAbility[] = [
 	{
 		name: 'test ability',
+		description: '',
 		rarity: 1,
 		icon: '',
 		damage: 10,
