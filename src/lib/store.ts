@@ -51,56 +51,56 @@ export interface IAbility {
 
 // If we make them non const, we can easily modify rarities on the fly
 // we can also make an array/dict of rarity to easily change rarity per level
-// or have rarity be a list of numbers that we try to access based on what level you are in 
+// or have rarity be a list of numbers that we try to access based on what level you are in
 const COMMON_R = 1;
-const UNCOMMON_R = .5;
+const UNCOMMON_R = 0.5;
 
 // When rendering description and name, convert %(str) into the apropriate attribute
 // could also make description "smart" by looking at what type of values it has
 
-export const allAbilities = {
+export const allAbilities: { [key: string]: IAbility } = {
 	d1: {
 		name: 'Attack 1',
 		description: 'Deals 1 damage',
 		rarity: 0,
 		icon: '',
-		damage: 2,
+		damage: 2
 	},
 	d2: {
 		name: 'Attack 2',
 		description: 'Deals 2 damage',
 		rarity: COMMON_R,
 		icon: '',
-		damage: 2,
+		damage: 2
 	},
 	d3: {
 		name: 'Attack %d',
 		description: 'Deals %d damage',
-		rarity: .8,
+		rarity: 0.8,
 		icon: '',
-		damage: 2,
+		damage: 2
 	},
 	d4: {
 		name: 'Attack %d',
 		description: 'Deals %d damage',
-		rarity: .6,
+		rarity: 0.6,
 		icon: '',
-		damage: 4,
+		damage: 4
 	},
 	d5: {
 		name: 'Attack %d',
 		description: 'Deals %d damage',
-		rarity: .4,
+		rarity: 0.4,
 		icon: '',
-		damage: 5,
+		damage: 5
 	},
 	d8: {
 		name: 'Attack %d',
 		description: 'Deals %d damage, take %hd damage',
-		rarity: .1,
+		rarity: 0.1,
 		icon: '',
 		damage: 8,
-		heal: -1,
+		heal: -1
 	},
 	b2: {
 		name: 'Berserk x%m',
@@ -115,57 +115,57 @@ export const allAbilities = {
 		description: 'Blocks 1 damage',
 		rarity: COMMON_R,
 		icon: '',
-		defense: 1,
+		defense: 1
 	},
 	s2: {
 		name: 'Shield 2',
 		description: 'Blocks 2 damage',
 		rarity: COMMON_R,
 		icon: '',
-		defense: 2,
+		defense: 2
 	},
 	s3: {
 		name: 'Shield 3',
 		description: 'Blocks 3 damage',
 		rarity: COMMON_R,
 		icon: '',
-		defense: 3,
+		defense: 3
 	},
 	s4: {
 		name: 'Shield 4',
 		description: 'Blocks 4 damage',
-		rarity: .8,
+		rarity: 0.8,
 		icon: '',
-		defense: 3,
+		defense: 3
 	},
 	s5: {
 		name: 'Shield 5',
 		description: 'Blocks 5 damage',
-		rarity: .4,
+		rarity: 0.4,
 		icon: '',
-		defense: 5,
+		defense: 5
 	},
 	h1: {
 		name: 'Heal 1',
 		description: 'Restores 1 HP',
 		rarity: 0,
 		icon: '',
-		heal: 1,
+		heal: 1
 	},
 	h2: {
 		name: 'Heal 2',
 		description: 'Restores 2 HP',
 		rarity: COMMON_R,
 		icon: '',
-		heal: 2,
+		heal: 2
 	},
 	h3: {
 		name: 'Heal 3',
 		description: 'Restores 3 HP',
 		rarity: UNCOMMON_R,
 		icon: '',
-		heal: 3,
-	},
+		heal: 3
+	}
 	// upgr: {
 	// 	name: 'Upgrade 1',
 	// 	description: 'Upgrade all faces by 1 for this battle',
@@ -181,35 +181,34 @@ export const allAbilities = {
 	// 	defense: 2,
 	//  growing: 1
 	// },
-
 };
 
 export const player = writable<IPlayer>({
 	maxHealth: 30,
 	health: 10,
 	gold: 0,
-	dice:  [
-				{
-					faces: [
-						{ability: allAbilities["d1"]},
-						{ability: allAbilities["d1"]},
-						{ability: allAbilities["d1"]},
-						{ability: allAbilities["d2"]},
-						{ability: allAbilities["d2"]},
-						{ability: allAbilities["d3"]},
-					]
-				},
-				{
-					faces: [
-						{ability: allAbilities["h1"]},
-						{ability: allAbilities["h2"]},
-						{ability: allAbilities["s1"]},
-						{ability: allAbilities["s1"]},
-						{ability: allAbilities["s1"]},
-						{ability: allAbilities["s2"]},
-					]
-				}
+	dice: [
+		{
+			faces: [
+				{ ability: allAbilities['d1'] },
+				{ ability: allAbilities['d1'] },
+				{ ability: allAbilities['d1'] },
+				{ ability: allAbilities['d2'] },
+				{ ability: allAbilities['d2'] },
+				{ ability: allAbilities['d3'] }
 			]
+		},
+		{
+			faces: [
+				{ ability: allAbilities['h1'] },
+				{ ability: allAbilities['h2'] },
+				{ ability: allAbilities['s1'] },
+				{ ability: allAbilities['s1'] },
+				{ ability: allAbilities['s1'] },
+				{ ability: allAbilities['s2'] }
+			]
+		}
+	]
 });
 
 export const enemies = writable<IPlayer[]>([
@@ -220,22 +219,22 @@ export const enemies = writable<IPlayer[]>([
 		dice: [
 			{
 				faces: [
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["d2"]},
-					{ability: allAbilities["d2"]},
-					{ability: allAbilities["d3"]},
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d2'] },
+					{ ability: allAbilities['d2'] },
+					{ ability: allAbilities['d3'] }
 				]
 			},
 			{
 				faces: [
-					{ability: allAbilities["h1"]},
-					{ability: allAbilities["h2"]},
-					{ability: allAbilities["s1"]},
-					{ability: allAbilities["s1"]},
-					{ability: allAbilities["s1"]},
-					{ability: allAbilities["s2"]},
+					{ ability: allAbilities['h1'] },
+					{ ability: allAbilities['h2'] },
+					{ ability: allAbilities['s1'] },
+					{ ability: allAbilities['s1'] },
+					{ ability: allAbilities['s1'] },
+					{ ability: allAbilities['s2'] }
 				]
 			}
 		]
