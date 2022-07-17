@@ -3,7 +3,9 @@ import { writable } from 'svelte/store';
 export enum EGlobalStates {
 	START_SCREEN,
 	SHOP,
-	BATTLE
+	BATTLE,
+	LOSE,
+	WIN
 }
 
 export interface IFace {
@@ -11,6 +13,7 @@ export interface IFace {
 }
 export interface IDice {
 	faces: IFace[];
+	rolled?: IFace;
 }
 export interface IPlayer {
 	name: string;
@@ -19,6 +22,7 @@ export interface IPlayer {
 	health: number;
 	gold?: number;
 	dice: IDice[];
+	defense: number;
 }
 
 export interface IAbility {
@@ -231,6 +235,7 @@ export const waveInitEnemies: IPlayer[][] = [
 			name: 'Training Dummy',
 			maxHealth: 10,
 			health: 10,
+			defense: 0,
 			dice: [
 				{
 					faces: [
@@ -250,6 +255,7 @@ export const waveInitEnemies: IPlayer[][] = [
 			name: 'Snake',
 			maxHealth: 8,
 			health: 8,
+			defense: 0,
 			dice: [
 				{
 					faces: [
@@ -271,6 +277,7 @@ export const player = writable<IPlayer>({
 	maxHealth: 30,
 	health: 10,
 	gold: 0,
+	defense: 0,
 	dice: [
 		{
 			faces: [
@@ -301,6 +308,7 @@ export const enemies = writable<IPlayer[]>([
 		maxHealth: 30,
 		health: 30,
 		gold: 0,
+		defense: 0,
 		dice: [
 			{
 				faces: [

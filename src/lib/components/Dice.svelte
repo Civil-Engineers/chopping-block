@@ -27,8 +27,8 @@ import DiceFace from "./DiceFace.svelte";
     display: grid;
     grid-template-columns: auto auto auto auto;
     background-color: #2196F3;
-    padding: 10px;
-    width:300px;
+    padding: 1px;
+    gap: 20px;
 }
 .grid-item {
     background-color: rgba(255, 255, 255, 0.8);
@@ -36,7 +36,6 @@ import DiceFace from "./DiceFace.svelte";
     
     width: 30px;
     height: 30px;
-    margin: 20px;
     font-size: 30px;
     text-align: center;
 }

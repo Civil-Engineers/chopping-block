@@ -3,6 +3,7 @@
 	import type { Writable } from 'svelte/store';
 	import Dice from './Dice.svelte';
 	import HealthBar from './HealthBar.svelte';
+	import RolledDice from './RolledDice.svelte';
 
 	export let player: IPlayer;
 </script>
@@ -13,6 +14,9 @@
 		<div>
 			{#each player.dice as dice}
 				<Dice {dice} />
+				{#if dice.rolled}
+					<RolledDice face={dice.rolled} />
+				{/if}
 			{/each}
 		</div>
 		<img src="test.jpg" alt="" />
