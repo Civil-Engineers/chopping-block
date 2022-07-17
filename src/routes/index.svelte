@@ -1,6 +1,9 @@
 <script lang="ts">
+	import { browser } from '$app/env';
+
 	import Battle from '$lib/components/Battle.svelte';
 	import StartScreen from '$lib/components/StartScreen.svelte';
+	import { preload } from '$lib/helper';
 	import { globalGameState, EGlobalStates } from '$lib/store';
 
 	const fixedWindowSizeW = 1280;
@@ -12,6 +15,10 @@
 	$: wide = innerHeight / innerWidth > fixedWindowSizeH / fixedWindowSizeW;
 
 	$: scale = wide ? innerWidth / fixedWindowSizeW : innerHeight / fixedWindowSizeH;
+
+	if (browser) {
+		preload(['/test.jpg']);
+	}
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />

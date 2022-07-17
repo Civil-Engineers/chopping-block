@@ -17,3 +17,11 @@ export function getRandomAbility() {
   const chosenNumber = Math.floor(Math.random()*probabilityArray.length);
   return allAbilities[probabilityArray[chosenNumber]];
 }
+
+const images: HTMLImageElement[] = [];
+export function preload(urls: string[]) {
+  for (let i = 0; i < urls.length; i++) {
+    images[i] = new Image();
+    images[i].src = urls[i];
+  }
+}
