@@ -58,8 +58,8 @@ export interface IAbility {
 // If we make them non const, we can easily modify rarities on the fly
 // we can also make an array/dict of rarity to easily change rarity per level
 // or have rarity be a list of numbers that we try to access based on what level you are in
-const COMMON_R = 1;
-const UNCOMMON_R = 0.5;
+const COMMON_R = 10;
+const UNCOMMON_R = 5;
 
 // When rendering description and name, convert %(str) into the apropriate attribute
 // could also make description "smart" by looking at what type of values it has
@@ -89,28 +89,28 @@ export const allAbilities: { [key: string]: IAbility } = {
 	d3: {
 		name: 'Attack %d',
 		description: 'Deals %d damage',
-		rarity: 0.8,
+		rarity: 8,
 		icon: '',
 		damage: 2
 	},
 	d4: {
 		name: 'Attack %d',
 		description: 'Deals %d damage',
-		rarity: 0.6,
+		rarity: 6,
 		icon: '',
 		damage: 4
 	},
 	d5: {
 		name: 'Attack %d',
 		description: 'Deals %d damage',
-		rarity: 0.4,
+		rarity: 4,
 		icon: '',
 		damage: 5
 	},
 	d8: {
 		name: 'Attack %d',
 		description: 'Deals %d damage, take %hd damage',
-		rarity: 0.1,
+		rarity: 1,
 		icon: '',
 		damage: 8,
 		heal: -1
@@ -129,7 +129,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Poison %p',
 		description:
 			'Inflicts 2 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-		rarity: 0.8,
+		rarity: 8,
 		icon: '',
 		poison: 2
 	},
@@ -137,7 +137,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Poison %p',
 		description:
 			'Inflicts 3 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-		rarity: 0.5,
+		rarity: 5,
 		icon: '',
 		poison: 3
 	},
@@ -167,14 +167,14 @@ export const allAbilities: { [key: string]: IAbility } = {
 	s4: {
 		name: 'Shield 4',
 		description: 'Blocks 4 damage',
-		rarity: 0.8,
+		rarity: 8,
 		icon: '',
 		defense: 3
 	},
 	s5: {
 		name: 'Shield 5',
 		description: 'Blocks 5 damage',
-		rarity: 0.4,
+		rarity: 4,
 		icon: '',
 		defense: 5
 	},
@@ -331,3 +331,4 @@ export const setEnemiesToWave = (n: number) => {
 export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREEN);
 
 export const isShopping = writable(false);
+export const selectedShopFace = writable<string>("");
