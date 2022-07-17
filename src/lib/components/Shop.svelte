@@ -1,5 +1,29 @@
 <script lang="ts">
+import { each } from 'svelte/internal';
+
   let isShopping = false;
+
+  let abilities = [
+    {
+      name: "Attack 2",
+      description: "Deals 2 damage",
+      value: 2,
+      cost: 2,
+    },
+    {
+      name: "Shield 3",
+      description: "Blocks 3 damage",
+      value: 3,
+      cost: 3,
+    },
+    {
+      name: "Heal 5",
+      description: "Restores 5 HP",
+      value: 5,
+      cost: 4,
+    },
+  ];
+  let selectedAbility = -1;
 </script>
 
 <div class="shop-container">
@@ -18,32 +42,25 @@
     <div class="cols">
       <div>
         <ul class="shop-items">
-          <li class="shop-item">
-            <span>Item 1</span>
-            <span>3G</span>
-            <div class="tooltip">
-              <span class="tooltip-text">Description of Item 1</span>
-            </div>
-          </li>
-          <li class="shop-item">
-            <span>Item 2</span>
-            <span>3G</span>
-            <div class="tooltip">
-              <span class="tooltip-text">Description of Item 2</span>
-            </div>
-          </li>
-          <li class="shop-item">
-            <span>Item 3</span>
-            <span>3G</span>
-            <div class="tooltip">
-              <span class="tooltip-text">Description of Item 3</span>
-            </div>
-          </li>
+          {#each abilities as ability, index}
+            <li
+              class="shop-item"
+              class:selected="{selectedAbility === index}"
+              on:click={() => selectedAbility = index}
+            >
+              <span>{ability.name}</span>
+              <span>{ability.cost} Gold</span>
+            </li>
+          {/each}
         </ul>
         <button class="reroll-button">Reroll</button>
       </div>
       <div class="item-description">
-        Descriptions
+        {#if selectedAbility >= 0}
+          <span>{abilities[selectedAbility].description}</span>
+        {:else}
+          <span>Select an ability to learn more</span>
+        {/if}
       </div>
     </div>
   </section>
@@ -123,23 +140,10 @@
         &:hover {
           cursor: pointer;
           background-color: rgb(35, 141, 43);
-
-          .tooltip .tooltip-text {
-            visibility: visible;
-          }
         }
 
-        .tooltip .tooltip-text {
-          visibility: hidden;
-          width: 10rem;
-          background-color: white;
-          color: black;
-          text-align: center;
-          border-radius: 10px;
-          padding: 0.5rem;
-
-          position: absolute;
-          z-index: 1000;
+        &.selected {
+          background-color: rgb(35, 141, 43);
         }
       }
     }
