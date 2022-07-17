@@ -49,11 +49,16 @@ export interface IAbility {
 	// applies to the other player, can be negative to heal
 	damage?: number;
 
+	//applies to all enemies
+	cleaveDamage?: number;
+
 	// remove form attack damage value to a limit of 0
 	defense?: number;
 
 	// applies to player health, can be negative
 	heal?: number;
+
+	healAll?: number;
 
 	// applies psn status that decreaases health by psn and then decreases psn by 1
 	poison?: number;
@@ -75,7 +80,8 @@ export interface IAbility {
 // we can also make an array/dict of rarity to easily change rarity per level
 // or have rarity be a list of numbers that we try to access based on what level you are in
 const COMMON_R = 10;
-const UNCOMMON_R = 5;
+const UNCOMMON_R = 6;
+const UNRARE_R = 3;
 const RARE_R = 2;
 
 // When rendering description and name, convert %(str) into the apropriate attribute
@@ -109,7 +115,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	d3: {
 		name: 'Attack 3',
 		description: 'Deals 3 damage',
-		rarity: 8,
+		rarity: UNCOMMON_R,
 		icon: '/images/Attack_Icon.png',
 		value: '3',
 		damage: 3
@@ -117,7 +123,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	d4: {
 		name: 'Attack 4',
 		description: 'Deals 4 damage',
-		rarity: 6,
+		rarity: UNRARE_R,
 		icon: '/images/Attack_Icon.png',
 		value: '4',
 		damage: 4
@@ -125,19 +131,19 @@ export const allAbilities: { [key: string]: IAbility } = {
 	d5: {
 		name: 'Attack 5',
 		description: 'Deals 5 damage',
-		rarity: 4,
+		rarity: RARE_R,
 		icon: '/images/Attack_Icon.png',
 		value: '5',
 		damage: 5
 	},
 	d8: {
 		name: 'Attack 8',
-		description: 'Deals 8 damage, take 1 damage',
+		description: 'Deals 8 damage, take 4 damage',
 		rarity: 1,
 		icon: '/images/Attack_Icon.png',
 		value: '8*',
 		damage: 8,
-		heal: -1
+		heal: -4
 	},
 	d10: {
 		name: 'Attack 10',
@@ -146,6 +152,58 @@ export const allAbilities: { [key: string]: IAbility } = {
 		icon: '/images/Attack_Icon.png',
 		value: '10',
 		damage: 10,
+	},
+
+	// cleave
+	dc1: {
+		name: 'Cleave 1',
+		description: 'Deals 1 damage to all enemies',
+		rarity: UNCOMMON_R,
+		icon: '/images/Cleave_Icon.png',
+		value: '1',
+		cleaveDamage: 1
+	},
+	dc2: {
+		name: 'Cleave 2',
+		description: 'Deals 2 damage to all enemies',
+		rarity: UNRARE_R,
+		icon: '/images/Cleave_Icon.png',
+		value: '2',
+		cleaveDamage: 2
+	},
+	dc3: {
+		name: 'Cleave 3',
+		description: 'Deals 3 damage to all enemies',
+		rarity: RARE_R,
+		icon: '/images/Cleave_Icon.png',
+		value: '3',
+		cleaveDamage: 3
+	},
+
+	// cleave heal
+	hc1: {
+		name: 'Heal All 1',
+		description: 'Heal 1 hp to all allies',
+		rarity: 0,
+		icon: '/images/Heal_all_Icon.png',
+		value: '1',
+		healAll: 1
+	},
+	hc2: {
+		name: 'Heal All 2',
+		description: 'Deals 2 damage to all enemies',
+		rarity: 0,
+		icon: '/images/Heal_all_Icon.png',
+		value: '2',
+		healAll: 2
+	},
+	hc3: {
+		name: 'Heal All 3',
+		description: 'Deals 3 damage to all enemies',
+		rarity: 0,
+		icon: '/images/Heal_all_Icon.png',
+		value: '3',
+		healAll: 3
 	},
 
 	// poison
@@ -205,16 +263,16 @@ export const allAbilities: { [key: string]: IAbility } = {
 	s4: {
 		name: 'Shield 4',
 		description: 'Blocks 4 damage',
-		rarity: 4,
+		rarity: UNRARE_R,
 		icon: '/images/Shield_Icon.png',
 		value: '4',
 		defense: 4
 	},
 	s5: {
-		name: 'Shield 5',
+		name: 'Shield 6',
 		description: 'Blocks 5 damage',
 		rarity: RARE_R,
-		value: '5',
+		value: '6',
 		icon: '/images/Shield_Icon.png',
 		defense: 5
 	},
@@ -275,7 +333,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	g2: {
 		name: 'Gold 2',
 		description: 'Passive: Increases gold generation next shop',
-		rarity: UNCOMMON_R-1,
+		rarity: UNRARE_R,
 		icon: '/images/Gold_Icon.png',
 		value: '2',
 		gold: 2,
@@ -293,7 +351,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	b2: {
 		name: 'Berserk x2',
 		description: 'Multiplies damage done by 2 and deals 1 damage to self',
-		rarity: 3,
+		rarity: RARE_R,
 		icon: '/images/Multiply_Icon.png',
 		value: '',
 		heal: -1,
@@ -303,8 +361,8 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Gold Attack',
 		description: 'Does damage based on how much gold you have',
 		rarity: RARE_R,
-		icon: '/images/Gold_Icon.png',
-		value: '$',
+		icon: '/images/Midas_Icon.png',
+		value: '',
 		goldAtt: true,
 	}
 	// upgr: {
