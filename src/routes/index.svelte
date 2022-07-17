@@ -3,17 +3,20 @@
 	import StartScreen from '$lib/components/StartScreen.svelte';
 	import { globalGameState, EGlobalStates } from '$lib/store';
 
-	const fixedWindowSize = 1280;
+	const fixedWindowSizeW = 1280;
+	const fixedWindowSizeH = 720;
 
 	let innerWidth = 0;
 	let innerHeight = 0;
 
-	$: scale = innerWidth / fixedWindowSize;
+	$: wide = innerHeight / innerWidth > fixedWindowSizeH / fixedWindowSizeW;
+
+	$: scale = wide ? innerWidth / fixedWindowSizeW : innerHeight / fixedWindowSizeH;
 </script>
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<main style={`width: ${fixedWindowSize}px; transform: scale(${scale})`}>
+<main style={`width: ${fixedWindowSizeW}px; transform: scale(${scale})`}>
 	{#if $globalGameState === EGlobalStates.START_SCREEN}
 		<StartScreen />
 	{:else if $globalGameState === EGlobalStates.BATTLE}
