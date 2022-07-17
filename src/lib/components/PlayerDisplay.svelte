@@ -11,8 +11,9 @@
 	<div class="player">
 		<HealthBar maxHealth={player.maxHealth} health={player.health} />
 		<div>
-			<Dice dice={player.dice[0]}/>
-			<Dice dice={player.dice[1]}/>
+			{#each player.dice as dice}
+				<Dice {dice} />
+			{/each}
 		</div>
 		<img src="test.jpg" alt="" />
 	</div>

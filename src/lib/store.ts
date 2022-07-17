@@ -62,11 +62,11 @@ const UNCOMMON_R = 0.5;
 
 export const allAbilities: { [key: string]: IAbility } = {
 	//damage
-	d0:{
-		name: "Nothing",
+	d0: {
+		name: 'Nothing',
 		description: '',
 		rarity: 0,
-		icon: '',
+		icon: ''
 	},
 	d1: {
 		name: 'Attack 1',
@@ -115,22 +115,25 @@ export const allAbilities: { [key: string]: IAbility } = {
 	// poison
 	p1: {
 		name: 'Poison %p',
-		description: 'Inflicts 1 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
+		description:
+			'Inflicts 1 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
 		rarity: 1,
 		icon: '',
 		poison: 1
 	},
 	p2: {
 		name: 'Poison %p',
-		description: 'Inflicts 2 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-		rarity: .8,
+		description:
+			'Inflicts 2 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
+		rarity: 0.8,
 		icon: '',
 		poison: 2
 	},
 	p3: {
 		name: 'Poison %p',
-		description: 'Inflicts 3 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-		rarity: .5,
+		description:
+			'Inflicts 3 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
+		rarity: 0.5,
 		icon: '',
 		poison: 3
 	},
@@ -193,7 +196,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Restores 3 HP',
 		rarity: UNCOMMON_R,
 		icon: '',
-		heal: 3,
+		heal: 3
 	},
 
 	// special
@@ -204,7 +207,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		icon: '',
 		heal: -1,
 		multiplier: 2
-	},
+	}
 	// upgr: {
 	// 	name: 'Upgrade 1',
 	// 	description: 'Upgrade all faces by 1 for this battle',
@@ -222,45 +225,49 @@ export const allAbilities: { [key: string]: IAbility } = {
 	// },
 };
 
-export const waveInitEnemies:IPlayer[][] = [
-	[{
-		name: "Training Dummy",
-		maxHealth: 10,
-		health: 10,
-		dice: [
-			{
-				faces: [
-					{ability: allAbilities["d0"]},
-					{ability: allAbilities["s1"]},
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["h1"]},
-				]
-			}
-		]
-	}],
-	[{
-		name: "Snake",
-		maxHealth: 8,
-		health: 8,
-		dice: [
-			{
-				faces: [
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["p1"]},
-					{ability: allAbilities["p1"]},
-					{ability: allAbilities["p2"]},
-					{ability: allAbilities["p2"]},
-					{ability: allAbilities["p3"]},
-				]
-			}
-		]
-	}]
-]
+export const waveInitEnemies: IPlayer[][] = [
+	[
+		{
+			name: 'Training Dummy',
+			maxHealth: 10,
+			health: 10,
+			dice: [
+				{
+					faces: [
+						{ ability: allAbilities['d0'] },
+						{ ability: allAbilities['s1'] },
+						{ ability: allAbilities['d1'] },
+						{ ability: allAbilities['d1'] },
+						{ ability: allAbilities['d1'] },
+						{ ability: allAbilities['h1'] }
+					]
+				}
+			]
+		}
+	],
+	[
+		{
+			name: 'Snake',
+			maxHealth: 8,
+			health: 8,
+			dice: [
+				{
+					faces: [
+						{ ability: allAbilities['d1'] },
+						{ ability: allAbilities['p1'] },
+						{ ability: allAbilities['p1'] },
+						{ ability: allAbilities['p2'] },
+						{ ability: allAbilities['p2'] },
+						{ ability: allAbilities['p3'] }
+					]
+				}
+			]
+		}
+	]
+];
 
 export const player = writable<IPlayer>({
-	name: "Roe",
+	name: 'Roe',
 	maxHealth: 30,
 	health: 10,
 	gold: 0,
@@ -290,7 +297,7 @@ export const player = writable<IPlayer>({
 
 export const enemies = writable<IPlayer[]>([
 	{
-		name: "2",
+		name: '2',
 		maxHealth: 30,
 		health: 30,
 		gold: 0,
@@ -310,7 +317,7 @@ export const enemies = writable<IPlayer[]>([
 ]);
 
 export const setEnemiesToWave = (n: number) => {
-	enemies.update(e => e = waveInitEnemies[n]);
-}
+	enemies.set(waveInitEnemies[n]);
+};
 
 export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREEN);
