@@ -4,6 +4,7 @@
 	import { EAnimationStates, type IPlayer } from '$lib/store';
 	import type { Writable } from 'svelte/store';
 	import Dice from './Dice.svelte';
+	import DiceContainer from './DiceContainer.svelte';
 	import HealthBar from './HealthBar.svelte';
 	import RolledDice from './RolledDice.svelte';
 
@@ -20,14 +21,7 @@
 <div class="player-slot">
 	<div class="player">
 		<HealthBar maxHealth={player.maxHealth} health={player.health} />
-		<div>
-			{#each player.dice as dice}
-				<Dice {dice} />
-				{#if dice.rolled}
-					<RolledDice face={dice.rolled} />
-				{/if}
-			{/each}
-		</div>
+		<DiceContainer playerDice={player.dice} />
 		<img
 			src={player.animations[player.animationState] ?? player.animations[EAnimationStates.IDLE]}
 			alt=""
@@ -52,8 +46,8 @@
 		align-items: center;
 		> img {
 			object-fit: cover;
-			width: 100px;
-			height: 100px;
+			width: 300px;
+			height: 300px;
 			display: block;
 			animation-duration: 1s;
 			animation-name: idle-bob;
@@ -66,13 +60,13 @@
 
 	@keyframes idle-bob {
 		0% {
-			transform: scale(1.05, .95);
+			transform: scale(1.05, 0.95);
 		}
 		50% {
-			transform: scale(.95, 1.05);
+			transform: scale(0.95, 1.05);
 		}
 		100% {
-			transform: scale(1.05, .95);
+			transform: scale(1.05, 0.95);
 		}
 	}
 </style>

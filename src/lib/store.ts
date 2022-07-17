@@ -89,7 +89,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Attack 1',
 		description: 'Deals 1 damage',
 		rarity: 0,
-		icon: '',
+		icon: '/images/Attack_Icon.png',
 		value: "1",
 		damage: 1
 	},
@@ -97,7 +97,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Attack 2',
 		description: 'Deals 2 damage',
 		rarity: COMMON_R,
-		icon: '',
+		icon: '/images/Attack_Icon.png',
 		value: "2",
 		damage: 2
 	},
@@ -105,7 +105,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Attack %d',
 		description: 'Deals %d damage',
 		rarity: 8,
-		icon: '',
+		icon: '/images/Attack_Icon.png',
 		value: "3",
 		damage: 3
 	},
@@ -113,7 +113,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Attack %d',
 		description: 'Deals %d damage',
 		rarity: 6,
-		icon: '',
+		icon: '/images/Attack_Icon.png',
 		value: "4",
 		damage: 4
 	},
@@ -121,7 +121,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Attack %d',
 		description: 'Deals %d damage',
 		rarity: 4,
-		icon: '',
+		icon: '/images/Attack_Icon.png',
 		value: "5",
 		damage: 5
 	},
@@ -129,47 +129,47 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Attack %d',
 		description: 'Deals %d damage, take %hd damage',
 		rarity: 1,
-		icon: '',
+		icon: '/images/Attack_Icon.png',
 		value: "8*",
 		damage: 8,
 		heal: -1
 	},
 
 	// poison
-	p1: {
-		name: 'Poison %p',
-		description:
-			'Inflicts 1 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-		rarity: 1,
-		icon: 'green',
-		value: "1",
-		poison: 1
-	},
-	p2: {
-		name: 'Poison %p',
-		description:
-			'Inflicts 2 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-		rarity: 8,
-		icon: 'green',
-		value: "2",
-		poison: 2
-	},
-	p3: {
-		name: 'Poison %p',
-		description:
-			'Inflicts 3 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-		rarity: 5,
-		icon: 'green',
-		value: "3",
-		poison: 3
-	},
+	// p1: {
+	// 	name: 'Poison %p',
+	// 	description:
+	// 		'Inflicts 1 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
+	// 	rarity: 1,
+	// 	icon: 'green',
+	// 	value: "1",
+	// 	poison: 1
+	// },
+	// p2: {
+	// 	name: 'Poison %p',
+	// 	description:
+	// 		'Inflicts 2 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
+	// 	rarity: 8,
+	// 	icon: 'green',
+	// 	value: "2",
+	// 	poison: 2
+	// },
+	// p3: {
+	// 	name: 'Poison %p',
+	// 	description:
+	// 		'Inflicts 3 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
+	// 	rarity: 5,
+	// 	icon: 'green',
+	// 	value: "3",
+	// 	poison: 3
+	// },
 
 	//shield
 	s1: {
 		name: 'Shield 1',
 		description: 'Blocks 1 damage',
 		rarity: COMMON_R,
-		icon: 'lightblue',
+		icon: '/images/Shield_Icon.png',
 		value: "1",
 		defense: 1
 	},
@@ -177,7 +177,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Shield 2',
 		description: 'Blocks 2 damage',
 		rarity: COMMON_R,
-		icon: 'lightblue',
+		icon: '/images/Shield_Icon.png',
 		value: "2",
 		defense: 2
 	},
@@ -185,7 +185,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Shield 3',
 		description: 'Blocks 3 damage',
 		rarity: COMMON_R,
-		icon: 'lightblue',
+		icon: '/images/Shield_Icon.png',
 		value: "3",
 		defense: 3
 	},
@@ -193,7 +193,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Shield 4',
 		description: 'Blocks 4 damage',
 		rarity: 8,
-		icon: 'lightblue',
+		icon: '/images/Shield_Icon.png',
 		value: "4",
 		defense: 4
 	},
@@ -202,7 +202,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Blocks 5 damage',
 		rarity: 4,
 		value: "5",
-		icon: 'lightblue',
+		icon: '/images/Shield_Icon.png',
 		defense: 5
 	},
 
@@ -213,7 +213,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Restores 1 HP',
 		rarity: 0,
 		value: "1",
-		icon: 'pink',
+		icon: '/images/Heal_Icon.png',
 		heal: 1
 	},
 	h2: {
@@ -221,7 +221,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Restores 2 HP',
 		rarity: COMMON_R,
 		value: "2",
-		icon: 'pink',
+		icon: '/images/Heal_Icon.png',
 		heal: 2
 	},
 	h3: {
@@ -229,17 +229,17 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Restores 3 HP',
 		rarity: UNCOMMON_R,
 		value: "3",
-		icon: 'pink',
+		icon: '/images/Heal_Icon.png',
 		heal: 3
 	},
-
+  
 	// special
 	b2: {
-		name: 'Berserk x%m',
+    name: 'Berserk x%m',
 		description: 'Multiplies damage done and deals %h damage to self',
 		rarity: UNCOMMON_R,
-		icon: 'yellow',
-		value: "x2",
+    icon: '/images/Multiply_Icon.png',
+		value: "",
 		heal: -1,
 		multiplier: 2
 	}
