@@ -125,8 +125,11 @@ import DiceFace from './DiceFace.svelte';
 		// dice merge
 		const mergedAbility = {
 			damage: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.damage ?? 0), 0),
+			cleaveDamage: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.cleaveDamage ?? 0), 0),
+			goldDamage: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.goldAtt ? $player.gold : 0), 0),
 			defense: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.defense ?? 0), 0),
 			heal: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.heal ?? 0), 0),
+			healAll: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.healAll ?? 0), 0),
 			poison: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.poison ?? 0), 0),
 			multiplier: attacker.dice.reduce(
 				(product, dice) => (product *= dice.rolled?.ability.multiplier ?? 1),
@@ -134,14 +137,34 @@ import DiceFace from './DiceFace.svelte';
 			)
 		};
 
-		let damage = mergedAbility.damage * mergedAbility.multiplier;
+		let damage = (mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier;
 		if (damage > 0) {
-			damage = mergedAbility.damage * mergedAbility.multiplier - target.defense;
+			damage = (mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier - target.defense;
 			damage = damage < 0 ? (damage = 0) : damage;
 		}
+
 		target.health -= damage;
 		target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
 		target.health = target.health < 0 ? 0 : target.health;
+
+		let cleaveDamage = (mergedAbility.cleaveDamage) * mergedAbility.multiplier;
+		if (cleaveDamage > 0) {
+			$enemies.forEach((enemy) => {
+				let targetCleaveDamage = mergedAbility.cleaveDamage * mergedAbility.multiplier - target.defense;
+				targetCleaveDamage = damage < 0 ? (damage = 0) : damage;
+				enemy.health -= cleaveDamage;
+				enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
+				enemy.health = enemy.health < 0 ? 0 : enemy.health;
+			});
+		}
+
+		if (mergedAbility.healAll > 0) {
+			$enemies.forEach((enemy) => {
+				enemy.health += mergedAbility.healAll;
+				enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
+				enemy.health = enemy.health < 0 ? 0 : enemy.health;
+			});
+		}
 
 		attacker.health += mergedAbility.heal;
 		attacker.health = attacker.health > attacker.maxHealth ? attacker.maxHealth : attacker.health;
