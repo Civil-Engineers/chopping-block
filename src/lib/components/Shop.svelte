@@ -15,31 +15,37 @@
   </button>
   <section class="shop" class:is-shopping={isShopping}>
     <span>Items to buy</span>
-    <ul class="shop-items">
-      <li class="shop-item">
-        <span>Item 1</span>
-        <span>3G</span>
-        <div class="tooltip">
-          <span class="tooltip-text">Description of Item 1</span>
-        </div>
-      </li>
-      <li class="shop-item">
-        <span>Item 2</span>
-        <span>3G</span>
-        <div class="tooltip">
-          <span class="tooltip-text">Description of Item 2</span>
-        </div>
-      </li>
-      <li class="shop-item">
-        <span>Item 3</span>
-        <span>3G</span>
-        <div class="tooltip">
-          <span class="tooltip-text">Description of Item 2</span>
-        </div>
-      </li>
-    </ul>
-    <p>Some description of something goes here. Lore, lorem ipsum dolor sit amet.</p>
-    <button class="reroll-button">Reroll</button>
+    <div class="cols">
+      <div>
+        <ul class="shop-items">
+          <li class="shop-item">
+            <span>Item 1</span>
+            <span>3G</span>
+            <div class="tooltip">
+              <span class="tooltip-text">Description of Item 1</span>
+            </div>
+          </li>
+          <li class="shop-item">
+            <span>Item 2</span>
+            <span>3G</span>
+            <div class="tooltip">
+              <span class="tooltip-text">Description of Item 2</span>
+            </div>
+          </li>
+          <li class="shop-item">
+            <span>Item 3</span>
+            <span>3G</span>
+            <div class="tooltip">
+              <span class="tooltip-text">Description of Item 3</span>
+            </div>
+          </li>
+        </ul>
+        <button class="reroll-button">Reroll</button>
+      </div>
+      <div class="item-description">
+        Descriptions
+      </div>
+    </div>
   </section>
 </div>
 
@@ -87,18 +93,29 @@
       transform: translateX(-25rem);
     }
 
+    .cols {
+      display: flex;
+      gap: 1rem;
+
+      .item-description {
+        margin: 1em 0;
+      }
+    }
+
     .shop-items {
       padding: 0;
       list-style: none;
       display: flex;
+      flex-direction: column;
       gap: 1rem;
 
       .shop-item {
         display: flex;
         flex-direction: column;
-        width: 16rem;
+        width: 8rem;
         height: 8rem;
         background-color: rgb(43, 180, 54);
+        border-radius: 10px;
         align-items: center;
         justify-content: center;
         transition: background-color 150ms ease-in-out;
@@ -128,7 +145,7 @@
     }
 
     .reroll-button {
-      width: 10rem;
+      width: 8rem;
       height: 4rem;
       background-color:rgb(37, 61, 141);
       color: white;
