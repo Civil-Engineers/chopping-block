@@ -269,7 +269,7 @@ export const waveInitEnemies: IPlayer[][] = [
 export const player = writable<IPlayer>({
 	name: 'Roe',
 	maxHealth: 30,
-	health: 10,
+	health: 30,
 	gold: 0,
 	dice: [
 		{
@@ -297,19 +297,19 @@ export const player = writable<IPlayer>({
 
 export const enemies = writable<IPlayer[]>([
 	{
-		name: '2',
-		maxHealth: 30,
-		health: 30,
+		name: "2",
+		maxHealth: 10,
+		health: 10,
 		gold: 0,
 		dice: [
 			{
 				faces: [
-					{ ability: allAbilities['d1'] },
-					{ ability: allAbilities['d1'] },
-					{ ability: allAbilities['d1'] },
-					{ ability: allAbilities['d2'] },
-					{ ability: allAbilities['d2'] },
-					{ ability: allAbilities['d3'] }
+					{ability: allAbilities["d0"]},
+					{ability: allAbilities["s1"]},
+					{ability: allAbilities["d1"]},
+					{ability: allAbilities["d1"]},
+					{ability: allAbilities["d1"]},
+					{ability: allAbilities["h1"]},
 				]
 			}
 		]
