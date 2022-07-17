@@ -25,6 +25,7 @@
 		// your dice roll
 		await sleep(waitSpeed);
 		$player.dice.forEach((dice, index) => {
+			$player.defense = 0;
 			const rolledNmber = rollDice(dice.faces.length);
 			dice.rolled = dice.faces[rolledNmber];
 			$player = $player;
@@ -44,6 +45,7 @@
 		await sleep(waitSpeed);
 		$enemies.forEach((enemy) => {
 			enemy.dice.forEach((dice) => {
+				enemy.defense = 0;
 				const rolledNumber = rollDice(dice.faces.length);
 				dice.rolled = dice.faces[rolledNumber];
 				$enemies = $enemies;
@@ -87,7 +89,12 @@
 			)
 		};
 
-		target.health -= mergedAbility.damage * mergedAbility.multiplier;
+		let damage = mergedAbility.damage * mergedAbility.multiplier;
+		if (damage > 0) {
+			damage = mergedAbility.damage * mergedAbility.multiplier - target.defense;
+			damage = damage < 0 ? (damage = 0) : damage;
+		}
+		target.health -= damage;
 		target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
 		target.health = target.health < 0 ? 0 : target.health;
 
