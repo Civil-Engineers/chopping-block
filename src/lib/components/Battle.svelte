@@ -7,7 +7,8 @@
 		setEnemiesToWave,
 		waveInitEnemies,
 		type IAbility,
-		type IPlayer
+		type IPlayer,
+		EAnimationStates
 	} from '$lib/store';
 	import { rollDice, sleep } from '$lib/helper';
 
@@ -24,6 +25,7 @@
 		// your dice roll
 		await sleep(waitSpeed);
 		$player.dice.forEach((dice, index) => {
+			$player.defense = 0;
 			const rolledNmber = rollDice(dice.faces.length);
 			dice.rolled = dice.faces[rolledNmber];
 			$player = $player;
@@ -33,7 +35,7 @@
 		await sleep(waitSpeed);
 
 		attack($player, $enemies[0]);
-    $enemies = $enemies.filter(enemy => enemy.health > 0);
+		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 		$player = $player;
 		$enemies = $enemies;
 
@@ -43,6 +45,7 @@
 		await sleep(waitSpeed);
 		$enemies.forEach((enemy) => {
 			enemy.dice.forEach((dice) => {
+				enemy.defense = 0;
 				const rolledNumber = rollDice(dice.faces.length);
 				dice.rolled = dice.faces[rolledNumber];
 				$enemies = $enemies;
@@ -56,7 +59,7 @@
 			$player = $player;
 			$enemies = $enemies;
 		});
-    $enemies = $enemies.filter(enemy => enemy.health > 0);
+		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 
 		// loop many times until all enemies die or you die
 		if ($player.health > 0 && $enemies.length > 0) {
@@ -86,8 +89,13 @@
 			)
 		};
 
-		target.health -= mergedAbility.damage * mergedAbility.multiplier;
-    target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
+		let damage = mergedAbility.damage * mergedAbility.multiplier;
+		if (damage > 0) {
+			damage = mergedAbility.damage * mergedAbility.multiplier - target.defense;
+			damage = damage < 0 ? (damage = 0) : damage;
+		}
+		target.health -= damage;
+		target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
 		target.health = target.health < 0 ? 0 : target.health;
 
 		attacker.health += mergedAbility.heal;
@@ -95,6 +103,8 @@
 		attacker.health = attacker.health < 0 ? 0 : attacker.health;
 
 		attacker.defense = mergedAbility.defense;
+
+		attacker.animationState = EAnimationStates.ATTACK;
 	};
 
 	// wait speed in milliseconds

@@ -15,6 +15,11 @@ export interface IDice {
 	faces: IFace[];
 	rolled?: IFace;
 }
+export enum EAnimationStates {
+	IDLE,
+	HIT,
+	ATTACK
+}
 export interface IPlayer {
 	name: string;
 	description?: string;
@@ -23,6 +28,12 @@ export interface IPlayer {
 	gold?: number;
 	dice: IDice[];
 	defense: number;
+	animationState: EAnimationStates;
+	animations: {
+		[EAnimationStates.IDLE]: string;
+		[EAnimationStates.HIT]?: string;
+		[EAnimationStates.ATTACK]?: string;
+	};
 }
 
 export interface IAbility {
@@ -256,6 +267,10 @@ export const waveInitEnemies: IPlayer[][] = [
 			maxHealth: 10,
 			health: 10,
 			defense: 0,
+			animationState: EAnimationStates.IDLE,
+			animations: {
+				[EAnimationStates.IDLE]: 'test.jpg'
+			},
 			dice: [
 				{
 					faces: [
@@ -276,6 +291,10 @@ export const waveInitEnemies: IPlayer[][] = [
 			maxHealth: 8,
 			health: 8,
 			defense: 0,
+			animationState: EAnimationStates.IDLE,
+			animations: {
+				[EAnimationStates.IDLE]: 'test.jpg'
+			},
 			dice: [
 				{
 					faces: [
@@ -298,6 +317,11 @@ export const player = writable<IPlayer>({
 	health: 30,
 	gold: 0,
 	defense: 0,
+	animationState: EAnimationStates.IDLE,
+	animations: {
+		[EAnimationStates.IDLE]: 'test.jpg',
+		[EAnimationStates.ATTACK]: 'favicon.png'
+	},
 	dice: [
 		{
 			faces: [
@@ -324,20 +348,24 @@ export const player = writable<IPlayer>({
 
 export const enemies = writable<IPlayer[]>([
 	{
-		name: "2",
+		name: '2',
 		maxHealth: 10,
 		health: 10,
 		gold: 0,
 		defense: 0,
+		animationState: EAnimationStates.IDLE,
+		animations: {
+			[EAnimationStates.IDLE]: 'test.jpg'
+		},
 		dice: [
 			{
 				faces: [
-					{ability: allAbilities["d0"]},
-					{ability: allAbilities["s1"]},
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["d1"]},
-					{ability: allAbilities["h1"]},
+					{ ability: allAbilities['d0'] },
+					{ ability: allAbilities['s1'] },
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['h1'] }
 				]
 			}
 		]
