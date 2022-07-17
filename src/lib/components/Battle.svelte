@@ -15,6 +15,8 @@
 	let isFastFording = false;
 	let wave = 0;
 
+  setEnemiesToWave(wave);
+
 	const battleLoop = async () => {
 		if ($enemies.length === 0) {
 			return;

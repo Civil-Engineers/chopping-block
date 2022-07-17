@@ -17,7 +17,14 @@
 	$: scale = wide ? innerWidth / fixedWindowSizeW : innerHeight / fixedWindowSizeH;
 
 	if (browser) {
-		preload(['/test.jpg']);
+		preload([
+			'/test.jpg',
+			'/images/Catfish.png',
+			'/images/Eel.png',
+			'/images/Fish_Goon.png',
+			'/images/Fisher.png',
+			'/images/Piranha.png'
+		]);
 	}
 </script>
 
