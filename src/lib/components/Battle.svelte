@@ -100,6 +100,7 @@
 					});
 				});
 				$player.gold += sum;
+				$player.health = $player.maxHealth;
 				$isShopping = true;
 
 				$enemies.forEach((enemy) => {
