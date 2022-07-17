@@ -13,8 +13,10 @@
 	export let isEnemy: boolean = false;
 
 	const resetState = async () => {
-		await sleep(500);
-		player.animationState = EAnimationStates.IDLE;
+		if (player.animationState !== EAnimationStates.IDLE) {
+			await sleep(500);
+			player.animationState = EAnimationStates.IDLE;
+		}
 	};
 
 	$: player.animationState, resetState();
