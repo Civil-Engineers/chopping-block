@@ -39,7 +39,7 @@ import DiceFace from './DiceFace.svelte';
 		$beRolling = true;
 
 		// your dice roll
-		await sleep(waitSpeed);
+		await sleep(waitSpeed*1.5);
 		$beRolling = false;
 		await sleep(.2);
 		$player.dice.forEach((dice, index) => {

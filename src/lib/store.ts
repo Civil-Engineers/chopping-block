@@ -637,7 +637,7 @@ export const isShopping = writable(false);
 export const selectedShopFace = writable<string>('');
 export const shopBuy = writable<boolean>(false);
 
-export const beRolling = writable(false);
+export const beRolling = writable(true);
 
 export const audioList = writable<{ id: number; audio: string }[]>([]);
 export const playAudio = (audio: string) => {
