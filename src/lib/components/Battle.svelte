@@ -180,13 +180,19 @@ import DiceFace from './DiceFace.svelte';
 </script>
 
 <div class="container">
-	<button class="fast" on:click={() => (isFastFording = !isFastFording)}>
+	<div class="fast" on:click={() => (isFastFording = !isFastFording)}>
 		{#if isFastFording}
-			regular speed
+			<div class="regular-speed">
+				<img src={"/images/Play.png"} alt="Regular Speed" />
+				<span>regular speed</span>
+			</div>
 		{:else}
-			fast forward
+			<div class="fast-forward">
+				<img src={"images/Fast_Forward.png"} alt="Fast Forward"/>
+				<span>fast forward</span>
+			</div>
 		{/if}
-	</button>
+	</div>
 	<div class="main">
 		<PlayerDisplay bind:player={$player} />
 			{#each $enemies as enemy}
@@ -200,12 +206,31 @@ import DiceFace from './DiceFace.svelte';
 	<audio src="/music/battle1.mp3" type="audio/mpeg" autoplay loop />
 {/if}
 
-<style>
+<style type="scss">
 	.fast {
 		position: absolute;
 		top: 10px;
 		left: 50%;
 		transform: translateX(-50%);
+		background-color: rgba(128, 128, 128, 0.85);
+		padding: 0.5rem;
+		border-radius: 10px;
+		&:hover {
+			cursor: pointer;
+		}
+
+		* {
+			display: flex;
+			align-items: center;
+
+			img {
+				width: 2.5rem;
+			}
+
+			span {
+
+			}
+		}
 	}
 	.container {
 		top: 0;
