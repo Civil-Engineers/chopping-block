@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { audioList } from '$lib/store';
 
-	const ended = (audio: string) => {
+	const ended = (audioToBeRemoved: string) => {
 		audioList.update((old) => {
 			old.splice(
-				old.findIndex((a) => a === audio),
+				old.findIndex((a) => a === audioToBeRemoved),
 				1
 			);
 			return old;
