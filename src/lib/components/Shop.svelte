@@ -92,13 +92,15 @@
 					<img src={"/images/Reroll.png"} alt="Reroll" class="reroll-img" />
 					<span class="reroll-text">Reroll - 1 Gold</span>
 				</div>
-				<button
+				<div
 					on:click={() => {
 						$shopPhase = false;
 						$isShopping = false;
 					}}
-					class="next-battle-button">Next battle</button
-				>
+					class="next-battle-button">
+					<img src={"/images/Start_battle.png"} alt="Next Battle" class="next-battle-img" />
+					<span class="next-battle-text">Next battle</span>
+				</div>
 			</div>
       <!-- {#each abilities as ability, index} -->
 			<div class="item-description">
@@ -264,6 +266,10 @@
 				cursor: pointer;
 			}
 
+			&:hover .reroll-text {
+				color: greenyellow;
+			}
+
 			.reroll-img {
 				width: 10rem;
 			}
@@ -277,17 +283,27 @@
 		}
 
 		.next-battle-button {
-			width: 8rem;
-			height: 4rem;
-			background-color: rgb(37, 61, 141);
 			color: white;
-			border-radius: 10px;
 			bottom: 10px;
 			position: fixed;
-			margin-left: 243px;
+			margin-left: 215px;
 			&:hover {
 				cursor: pointer;
-				background-color: rgb(29, 47, 109);
+			}
+
+			&:hover .next-battle-text {
+				color: greenyellow;
+			}
+
+			.next-battle-img {
+				width: 10rem;
+			}
+
+			.next-battle-text {
+				position: fixed;
+				right: 40px;
+				bottom: 38px;
+				text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
 			}
 		}
 	}
