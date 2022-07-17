@@ -3,7 +3,7 @@
 	import type { IPlayer } from '$lib/store';
 	import { getRandomAbility } from './../helper';
 	import Dice from './Dice.svelte';
-import TileFaceIcon from './TileFaceIcon.svelte';
+	import TileFaceIcon from './TileFaceIcon.svelte';
 	export let player: IPlayer;
 
 	let newItem = () => {
@@ -11,6 +11,13 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 		return {
 			key: abi,
 			data: allAbilities[abi]
+		};
+	};
+
+  let NoItem = () => {
+		return {
+			key: "d0",
+			data: allAbilities["d0"]
 		};
 	};
 
@@ -25,7 +32,7 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 
 	shopBuy.subscribe((value) => {
 		if (value && $shopBuy) {
-			abilities[selectedAbility] = newItem();
+			abilities[selectedAbility] = NoItem();
 			player.gold = player.gold - 3;
 			$shopBuy = false;
 			selectedAbility = -1;
@@ -35,6 +42,9 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 	let isShoppingAllowed = false;
 	shopPhase.subscribe((value) => {
 		isShoppingAllowed = value;
+    if(isShoppingAllowed) {
+      rerollShop();
+    }
 	});
 </script>
 
@@ -59,7 +69,7 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 						<li
 							class="shop-item"
 							class:selected={selectedAbility === index}
-							style={`box-shadow: 0 0 ${(10-ability.data.rarity)*2}px ${(10-ability.data.rarity)*2}px white`}
+							style={`box-shadow: 0 0 ${(10-ability.data.rarity)*2}px ${(10-ability.data.rarity)*2}px red`}
 							on:click={() => {
 								if (player.gold >= 3) {
 									selectedAbility = index;
@@ -80,7 +90,7 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 						</li>
 					{/each}
 				</ul>
-				<button
+				<div
 					on:click={() => {
 						if (player.gold >= 1) {
 							selectedAbility = -1;
@@ -89,15 +99,19 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 							player.gold -= 1;
 						}
 					}}
-					class="reroll-button">Reroll - $1</button
-				>
-				<button
+					class="reroll-button">
+					<img src={"/images/Reroll.png"} alt="Reroll" class="reroll-img" />
+					<span class="reroll-text">Reroll - 1 Gold</span>
+				</div>
+				<div
 					on:click={() => {
 						$shopPhase = false;
 						$isShopping = false;
 					}}
-					class="next-battle-button">Next battle</button
-				>
+					class="next-battle-button">
+					<img src={"/images/Start_battle.png"} alt="Next Battle" class="next-battle-img" />
+					<span class="next-battle-text">Next battle</span>
+				</div>
 			</div>
       <!-- {#each abilities as ability, index} -->
 			<div class="item-description">
@@ -112,6 +126,9 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 		</div>
 	</section>
 	<section class="bkg" class:is-shopping={$isShopping} />
+	<p class="instructions" class:is-shopping={$isShopping}>
+		Select an item in shop, then click a slot in any of your dice to replace
+	</p>
 	<section class="current-abi" class:is-shopping={$isShopping}>
 		{#each player.dice as dice}
 			<div class="dice-wrapper"><Dice {dice} /></div>
@@ -182,6 +199,22 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 		transform: rotate(-10deg);
 	}
 
+	.instructions {
+		position: fixed;
+		top: 1rem;
+		left: 18rem;
+		color: white;
+		text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
+		z-index: 2;
+		font-size: 2rem;
+		width: 25rem;
+		display: none;
+
+		&.is-shopping {
+			display: initial;
+		}
+	}
+
 	.current-abi {
 		//background-color: rgba(30, 30, 30);
 		color: white;
@@ -224,6 +257,7 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 			.item-description {
 				margin: 1em 0;
         padding: 1em;
+        font-size: 28px;
 			}
 		}
 
@@ -259,31 +293,52 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 		}
 
 		.reroll-button {
-			width: 8rem;
-			height: 4rem;
-			background-color: rgb(37, 61, 141);
 			color: white;
-			border-radius: 10px;
 			bottom: 10px;
+			margin-left: -2px;
 			position: fixed;
 			&:hover {
 				cursor: pointer;
-				background-color: rgb(29, 47, 109);
+			}
+
+			&:hover .reroll-text {
+				color: greenyellow;
+			}
+
+			.reroll-img {
+				width: 10rem;
+			}
+
+			.reroll-text {
+				position: fixed;
+				margin-left:-103px;
+				bottom: 38px;
+				text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
 			}
 		}
 
 		.next-battle-button {
-			width: 8rem;
-			height: 4rem;
-			background-color: rgb(37, 61, 141);
 			color: white;
-			border-radius: 10px;
 			bottom: 10px;
 			position: fixed;
-			margin-left: 243px;
+			margin-left: 215px;
 			&:hover {
 				cursor: pointer;
-				background-color: rgb(29, 47, 109);
+			}
+
+			&:hover .next-battle-text {
+				color: greenyellow;
+			}
+
+			.next-battle-img {
+				width: 10rem;
+			}
+
+			.next-battle-text {
+				position: fixed;
+        margin-left: -98px;
+				bottom: 38px;
+				text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
 			}
 		}
 	}
