@@ -69,7 +69,7 @@
 						<li
 							class="shop-item"
 							class:selected={selectedAbility === index}
-							style={`box-shadow: 0 0 ${(10-ability.data.rarity)*2}px ${(10-ability.data.rarity)*2}px white`}
+							style={`box-shadow: 0 0 ${(10-ability.data.rarity)*2}px ${(10-ability.data.rarity)*2}px red`}
 							on:click={() => {
 								if (player.gold >= 3) {
 									selectedAbility = index;
