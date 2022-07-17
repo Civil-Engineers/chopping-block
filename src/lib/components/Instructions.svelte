@@ -3,8 +3,8 @@
 </script>
 
 <div class="con">
-	<h1>Chopping Block</h1>
-	<button on:click={() => ($globalGameState = EGlobalStates.INSTRUCTIONS)}>Start</button>
+	<h1>Instructions</h1>
+	<button on:click={() => ($globalGameState = EGlobalStates.BATTLE)}>Start</button>
 </div>
 
 <style lang="scss">

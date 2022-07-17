@@ -3,9 +3,10 @@
 	import AudioPlayer from '$lib/components/AudioPlayer.svelte';
 
 	import Battle from '$lib/components/Battle.svelte';
-import LoseScreen from '$lib/components/LoseScreen.svelte';
+	import Instructions from '$lib/components/Instructions.svelte';
+	import LoseScreen from '$lib/components/LoseScreen.svelte';
 	import StartScreen from '$lib/components/StartScreen.svelte';
-import WinScreen from '$lib/components/WinScreen.svelte';
+	import WinScreen from '$lib/components/WinScreen.svelte';
 	import { preload } from '$lib/helper';
 	import { globalGameState, EGlobalStates } from '$lib/store';
 
@@ -21,7 +22,6 @@ import WinScreen from '$lib/components/WinScreen.svelte';
 
 	// $: leftIndent = (innerWidth > fixedWindowSizeW) ? (innerWidth - fixedWindowSizeW)/2 : 0;
 	// $: topIndent =  (innerWidth <= fixedWindowSizeW) ? (fixedWindowSizeW - innerWidth)/4 : 0;
-
 
 	if (browser) {
 		preload([
@@ -40,6 +40,8 @@ import WinScreen from '$lib/components/WinScreen.svelte';
 <main style={`width: ${fixedWindowSizeW}px; transform: scale(${scale}) `}>
 	{#if $globalGameState === EGlobalStates.START_SCREEN}
 		<StartScreen />
+	{:else if $globalGameState === EGlobalStates.INSTRUCTIONS}
+		<Instructions />
 	{:else if $globalGameState === EGlobalStates.BATTLE}
 		<Battle />
 	{:else if $globalGameState === EGlobalStates.WIN}
