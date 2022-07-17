@@ -350,11 +350,10 @@ export const allAbilities: { [key: string]: IAbility } = {
 	// special
 	b2: {
 		name: 'Berserk x2',
-		description: 'Multiplies damage done by 2 and deals 1 damage to self',
-		rarity: RARE_R,
+		description: 'Multiplies damage done by 2',
+		rarity: UNRARE_R,
 		icon: '/images/Multiply_Icon.png',
 		value: '',
-		heal: -1,
 		multiplier: 2
 	},
 	gx: {

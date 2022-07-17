@@ -14,6 +14,13 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 		};
 	};
 
+  let NoItem = () => {
+		return {
+			key: "d0",
+			data: allAbilities["d0"]
+		};
+	};
+
 	let abilities = [newItem(), newItem(), newItem()];
 
 	let rerollShop = () => {
@@ -25,7 +32,7 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 
 	shopBuy.subscribe((value) => {
 		if (value && $shopBuy) {
-			abilities[selectedAbility] = newItem();
+			abilities[selectedAbility] = NoItem();
 			player.gold = player.gold - 3;
 			$shopBuy = false;
 			selectedAbility = -1;
@@ -35,6 +42,9 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 	let isShoppingAllowed = false;
 	shopPhase.subscribe((value) => {
 		isShoppingAllowed = value;
+    if(isShoppingAllowed) {
+      rerollShop();
+    }
 	});
 </script>
 
@@ -224,6 +234,7 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 			.item-description {
 				margin: 1em 0;
         padding: 1em;
+        font-size: 28px;
 			}
 		}
 
