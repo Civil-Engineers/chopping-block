@@ -1,6 +1,8 @@
 <script lang="ts">
   import { isShopping } from "$lib/store";
-
+  import type { IPlayer } from '$lib/store';
+  import Dice from './Dice.svelte';
+  export let player: IPlayer;
   let abilities = [
     {
       name: "Attack 2",
@@ -61,6 +63,13 @@
       </div>
     </div>
   </section>
+  <section class="bkg" class:is-shopping={$isShopping}>
+  </section>
+  <section class="current-abi" class:is-shopping={$isShopping}>
+			{#each player.dice as dice}
+				<div class="dice-wrapper"><Dice {dice} /></div>
+			{/each}
+  </section>
 </div>
 
 <style lang="scss">
@@ -76,6 +85,7 @@
     padding: none;
     border-radius: 10px 0 0 10px;
     transition: transform 500ms ease;
+    z-index: 3;
 
     &:hover {
       cursor: pointer;
@@ -87,6 +97,44 @@
 
     &:focus-visible {
       outline: none;
+    }
+  }
+
+  .dice-wrapper{
+    margin-bottom: 5rem;
+  }
+  .bkg {
+    background-color: rgba(30, 30, 30);
+    color: white;
+    position: fixed;
+    top: rem;
+    left: 00rem;
+    width: 100rem;
+    height: 100rem;
+    border-bottom-left-radius: 10px;
+    box-sizing: border-box;
+    transition: opacity 500ms ease;
+    z-index: 2;
+    opacity: 0;
+
+    &.is-shopping {
+      opacity: .9;
+    }
+  }
+
+  .current-abi {
+    //background-color: rgba(30, 30, 30);
+    color: white;
+    position: fixed;
+    top:10rem;
+    left: 20rem;
+    box-sizing: border-box;
+    transition: opacity 600ms ease;
+    z-index: 2;
+    opacity: 0;
+
+    &.is-shopping {
+      opacity: 1;
     }
   }
 
@@ -102,6 +150,7 @@
     box-sizing: border-box;
     padding: 1rem;
     transition: transform 500ms ease;
+    z-index: 3;
 
     &.is-shopping {
       transform: translateX(-25rem);

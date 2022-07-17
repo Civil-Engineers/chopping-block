@@ -117,7 +117,7 @@
 		{#each $enemies as enemy}
 			<PlayerDisplay bind:player={enemy} />
 		{/each}
-		<Shop />
+		<Shop bind:player={$player} />
 	</div>
 </div>
 
