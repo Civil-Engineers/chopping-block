@@ -8,7 +8,6 @@
 	export let dice: IDice;
 
 	let hover = false;
-	$: console.log(face.ability.icon);
 </script>
 
 <div class="con" on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)}>

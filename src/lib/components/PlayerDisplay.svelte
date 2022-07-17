@@ -45,7 +45,8 @@
 		justify-content: flex-end;
 		align-items: center;
 		> img {
-			object-fit: cover;
+			object-fit: contain;
+			object-position: 50% 100%;
 			width: 300px;
 			height: 300px;
 			display: block;

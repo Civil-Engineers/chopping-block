@@ -82,7 +82,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Nothing',
 		description: '',
 		rarity: 0,
-		icon: '',
+    icon: '/images/Blank_Icon.png',
 		value: ""
 	},
 	d1: {
@@ -322,7 +322,7 @@ export const player = writable<IPlayer>({
 	animationState: EAnimationStates.IDLE,
 	animations: {
 		[EAnimationStates.IDLE]: '/images/Fisher.png',
-		[EAnimationStates.ATTACK]: 'favicon.png'
+		[EAnimationStates.ATTACK]: '/images/Fisher_Attack.png'
 	},
 	dice: [
 		{
