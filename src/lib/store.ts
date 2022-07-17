@@ -249,3 +249,5 @@ export const enemies = writable<IPlayer[]>([
 ]);
 
 export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREEN);
+
+export const isShopping = writable(false);

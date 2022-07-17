@@ -1,7 +1,5 @@
 <script lang="ts">
-import { each } from 'svelte/internal';
-
-  let isShopping = false;
+  import { isShopping } from "$lib/store";
 
   let abilities = [
     {
@@ -29,15 +27,14 @@ import { each } from 'svelte/internal';
 <div class="shop-container">
   <button
     class="shop-button"
-    class:is-shopping={isShopping}
+    class:is-shopping={$isShopping}
     on:click={() => {
-      isShopping = !isShopping;
-      console.log(isShopping);
+      isShopping.update(val => !val);
     }}
   >
     Shop
   </button>
-  <section class="shop" class:is-shopping={isShopping}>
+  <section class="shop" class:is-shopping={$isShopping}>
     <span>Items to buy</span>
     <div class="cols">
       <div>
