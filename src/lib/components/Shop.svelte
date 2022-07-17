@@ -276,7 +276,7 @@
 		.reroll-button {
 			color: white;
 			bottom: 10px;
-			left: 10px;
+			margin-left: -2px;
 			position: fixed;
 			&:hover {
 				cursor: pointer;
@@ -292,7 +292,7 @@
 
 			.reroll-text {
 				position: fixed;
-				left: 68px;
+				margin-left:-103px;
 				bottom: 38px;
 				text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
 			}
@@ -317,7 +317,7 @@
 
 			.next-battle-text {
 				position: fixed;
-				right: 40px;
+        margin-left: -98px;
 				bottom: 38px;
 				text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
 			}

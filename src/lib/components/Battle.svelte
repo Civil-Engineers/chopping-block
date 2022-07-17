@@ -176,7 +176,7 @@ import DiceFace from './DiceFace.svelte';
 	};
 
 	// wait speed in milliseconds
-	$: waitSpeed = isFastFording ? 100 : 250;
+	$: waitSpeed = isFastFording ? 200 : 400;
 </script>
 
 <div class="container">
