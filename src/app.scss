@@ -7,3 +7,10 @@
 body {
   background-color: black;
 }
+
+button, .shop-item {
+  transition: .5s ease !important;
+  &:hover {
+    transform: translateY(-10px) rotate(-5deg) scale(1.1);
+  }
+}
