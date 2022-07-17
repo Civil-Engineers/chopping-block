@@ -155,7 +155,7 @@
 	<div class="main">
 		<PlayerDisplay bind:player={$player} />
 		{#each $enemies as enemy}
-			<PlayerDisplay bind:player={enemy} />
+			<PlayerDisplay bind:player={enemy} isEnemy={true} />
 		{/each}
 		<Shop bind:player={$player} />
 	</div>
