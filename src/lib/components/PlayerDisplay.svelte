@@ -124,7 +124,8 @@
 		animation-duration: 5s;
 		animation-name: foat-up;
 		animation-timing-function: ease;
-		animation-iteration-count: infinite;
+		animation-fill-mode: forwards;
+		animation-iteration-count: 1;
 		animation-play-state: running;
 	}
 
