@@ -384,4 +384,4 @@ export const isShopping = writable(false);
 export const selectedShopFace = writable<string>('');
 export const shopBuy = writable<boolean>(false);
 
-export const audioList = writable<string[]>();
+export const audioList = writable<string[]>([]);
