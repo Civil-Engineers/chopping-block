@@ -1,6 +1,7 @@
 <script lang="ts">
 	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
 	import Shop from './Shop.svelte';
+	import { isShopping } from '$lib/store';
 	import {
 		player,
 		enemies,
@@ -15,7 +16,7 @@
 	let isFastFording = false;
 	let wave = 0;
 
-  setEnemiesToWave(wave);
+	setEnemiesToWave(wave);
 
 	const battleLoop = async () => {
 		if ($enemies.length === 0) {
@@ -130,7 +131,9 @@
 	</div>
 </div>
 
-<audio src="shopper.mp3" type="audio/mpeg" autoplay />
+{#if !$isShopping}
+	<audio src="/music/battle1.mp3" type="audio/mpeg" autoplay loop/>
+{/if}
 
 <style>
 	.fast {
@@ -144,8 +147,8 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-    background-size: cover;
-    background-image: url("/images/Backup_Layout.png");
+		background-size: cover;
+		background-image: url('/images/Backup_Layout.png');
 	}
 	.main {
 		display: flex;
