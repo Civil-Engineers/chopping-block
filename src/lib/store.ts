@@ -61,6 +61,7 @@ export interface IAbility {
 	// multiplies damage (currently)
 	multiplier?: number;
 
+	gold?: number;
 	// allows the dice to be rolled again and stack the effects
 	// rolling?: boolean;
 
@@ -258,6 +259,16 @@ export const allAbilities: { [key: string]: IAbility } = {
 		icon: '/images/Heal_Icon.png',
 		heal: 10
 	},
+
+	//gold
+	g2: {
+		name: 'Gold 2',
+		description: 'Passive: Increases gold generation next shop',
+		rarity: UNCOMMON_R,
+		icon: '/images/Gold_Icon.png',
+		value: '2',
+		gold: 2,
+	}
 
 	// special
 	b2: {
