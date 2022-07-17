@@ -81,7 +81,7 @@
 		}
 		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 
-		await sleep(waitSpeed*3.2);
+		await sleep(waitSpeed*2.2);
 		// loop many times until all enemies die or you die
 		if ($player.health > 0 && $enemies.length > 0) {
 			battleLoop();
