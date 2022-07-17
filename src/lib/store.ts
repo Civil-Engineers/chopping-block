@@ -120,7 +120,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	},
 	d5: {
 		name: 'Attack 5',
-		description: 'Deals %d damage',
+		description: 'Deals 5 damage',
 		rarity: 4,
 		icon: '/images/Attack_Icon.png',
 		value: '5',
@@ -134,6 +134,14 @@ export const allAbilities: { [key: string]: IAbility } = {
 		value: '8*',
 		damage: 8,
 		heal: -1
+	},
+	d10: {
+		name: 'Attack 10',
+		description: 'Deals 10 damage',
+		rarity: 0,
+		icon: '/images/Attack_Icon.png',
+		value: '10',
+		damage: 10,
 	},
 
 	// poison
@@ -169,7 +177,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	s1: {
 		name: 'Shield 1',
 		description: 'Blocks 1 damage',
-		rarity: COMMON_R,
+		rarity: 0,
 		icon: '/images/Shield_Icon.png',
 		value: '1',
 		defense: 1
@@ -193,7 +201,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	s4: {
 		name: 'Shield 4',
 		description: 'Blocks 4 damage',
-		rarity: 8,
+		rarity: 4,
 		icon: '/images/Shield_Icon.png',
 		value: '4',
 		defense: 4
@@ -201,11 +209,20 @@ export const allAbilities: { [key: string]: IAbility } = {
 	s5: {
 		name: 'Shield 5',
 		description: 'Blocks 5 damage',
-		rarity: 4,
+		rarity: 2,
 		value: '5',
 		icon: '/images/Shield_Icon.png',
 		defense: 5
 	},
+	s10: {
+		name: 'Shield 10',
+		description: 'Blocks 10 damage',
+		rarity: 0,
+		value: '10',
+		icon: '/images/Shield_Icon.png',
+		defense: 10
+	},
+
 
 	// healing
 
@@ -232,6 +249,14 @@ export const allAbilities: { [key: string]: IAbility } = {
 		value: '3',
 		icon: '/images/Heal_Icon.png',
 		heal: 3
+	},
+	h10: {
+		name: 'Heal 10',
+		description: 'Restores 10 HP',
+		rarity: 0,
+		value: '10',
+		icon: '/images/Heal_Icon.png',
+		heal: 10
 	},
 
 	// special
@@ -357,7 +382,32 @@ export const waveInitEnemies: IPlayer[][] = [
 				}
 			]
 		}
-	]
+	],
+	[
+		{
+			name: 'Dragon',
+			maxHealth: 50,
+			health: 50,
+			defense: 0,
+			gold: 0,
+			animationState: EAnimationStates.IDLE,
+			animations: {
+				[EAnimationStates.IDLE]: '/images/Eel.png'
+			},
+			dice: [
+				{
+					faces: [
+						{ ability: allAbilities['d10'] },
+						{ ability: allAbilities['s10'] },
+						{ ability: allAbilities['h10'] },
+						{ ability: allAbilities['d10'] },
+						{ ability: allAbilities['d10'] },
+						{ ability: allAbilities['d0'] }
+					]
+				}
+			]
+		}
+	],
 ];
 
 export const player = writable<IPlayer>({
@@ -376,20 +426,20 @@ export const player = writable<IPlayer>({
 			faces: [
 				{ ability: allAbilities['d1'] },
 				{ ability: allAbilities['d1'] },
-				{ ability: allAbilities['d1'] },
 				{ ability: allAbilities['d2'] },
 				{ ability: allAbilities['d2'] },
-				{ ability: allAbilities['d3'] }
+				{ ability: allAbilities['s1'] },
+				{ ability: allAbilities['s1'] }
 			]
 		},
 		{
 			faces: [
-				{ ability: allAbilities['h1'] },
-				{ ability: allAbilities['h2'] },
+				{ ability: allAbilities['d1'] },
+				{ ability: allAbilities['d1'] },
+				{ ability: allAbilities['d2'] },
+				{ ability: allAbilities['d2'] },
 				{ ability: allAbilities['s1'] },
-				{ ability: allAbilities['s1'] },
-				{ ability: allAbilities['s1'] },
-				{ ability: allAbilities['s2'] }
+				{ ability: allAbilities['s1'] }
 			]
 		}
 	]

@@ -87,6 +87,7 @@
 			if (wave < waveInitEnemies.length) {
 				setEnemiesToWave(wave);
 				$shopPhase = true;
+				$player.gold = 10;
 				$isShopping = true;
 				$enemies.forEach((enemy) => {
 					enemy.dice.forEach((dice) => {
