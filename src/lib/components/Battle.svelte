@@ -144,6 +144,8 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
+    background-size: cover;
+    background-image: url("/images/Backup_Layout.png");
 	}
 	.main {
 		display: flex;
