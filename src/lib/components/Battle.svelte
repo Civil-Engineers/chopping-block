@@ -90,8 +90,8 @@ import DiceFace from './DiceFace.svelte';
 				$shopPhase = true;
 				$player.gold = 10;
 				let sum = 0;
-				$player.dice.forEach((dice, index) => {
-					dice.faces.forEach((face){
+				$player.dice.forEach((dice) => {
+					dice.faces.forEach((face) => {
 						sum += face.ability.gold ? face.ability.gold : 0;
 					});
 				});

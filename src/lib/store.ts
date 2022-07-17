@@ -268,7 +268,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		icon: '/images/Gold_Icon.png',
 		value: '2',
 		gold: 2,
-	}
+	},
 
 	// special
 	b2: {
