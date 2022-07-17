@@ -1,11 +1,20 @@
 <script lang="ts">
-	import type { IPlayer } from '$lib/store';
+	import { sleep } from '$lib/helper';
+
+	import { EAnimationStates, type IPlayer } from '$lib/store';
 	import type { Writable } from 'svelte/store';
 	import Dice from './Dice.svelte';
 	import HealthBar from './HealthBar.svelte';
 	import RolledDice from './RolledDice.svelte';
 
 	export let player: IPlayer;
+
+	const resetState = async () => {
+		await sleep(500);
+		player.animationState = EAnimationStates.IDLE;
+	};
+
+	$: player.animationState, resetState();
 </script>
 
 <div class="player-slot">
@@ -19,7 +28,10 @@
 				{/if}
 			{/each}
 		</div>
-		<img src="test.jpg" alt="" />
+		<img
+			src={player.animations[player.animationState] ?? player.animations[EAnimationStates.IDLE]}
+			alt=""
+		/>
 	</div>
 </div>
 

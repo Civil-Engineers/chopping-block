@@ -7,7 +7,8 @@
 		setEnemiesToWave,
 		waveInitEnemies,
 		type IAbility,
-		type IPlayer
+		type IPlayer,
+		EAnimationStates
 	} from '$lib/store';
 	import { rollDice, sleep } from '$lib/helper';
 
@@ -33,7 +34,7 @@
 		await sleep(waitSpeed);
 
 		attack($player, $enemies[0]);
-    $enemies = $enemies.filter(enemy => enemy.health > 0);
+		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 		$player = $player;
 		$enemies = $enemies;
 
@@ -56,7 +57,7 @@
 			$player = $player;
 			$enemies = $enemies;
 		});
-    $enemies = $enemies.filter(enemy => enemy.health > 0);
+		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 
 		// loop many times until all enemies die or you die
 		if ($player.health > 0 && $enemies.length > 0) {
@@ -87,7 +88,7 @@
 		};
 
 		target.health -= mergedAbility.damage * mergedAbility.multiplier;
-    target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
+		target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
 		target.health = target.health < 0 ? 0 : target.health;
 
 		attacker.health += mergedAbility.heal;
@@ -95,6 +96,8 @@
 		attacker.health = attacker.health < 0 ? 0 : attacker.health;
 
 		attacker.defense = mergedAbility.defense;
+
+		attacker.animationState = EAnimationStates.ATTACK;
 	};
 
 	// wait speed in milliseconds
