@@ -65,43 +65,47 @@
 
 <style lang="scss">
 	.shop-button {
-		background-color: rgb(180, 116, 43);
-		color: white;
-		position: fixed;
-		top: 1rem;
-		right: 0;
-		width: 4rem;
-		height: 4rem;
-		border: none;
-		padding: none;
-		border-radius: 10px 0 0 10px;
-		transition: transform 500ms ease;
+    background-color: rgb(180, 116, 43);
+    color: white;
+    position: fixed;
+    top: 1rem;
+    right: 0;
+    width: 4rem;
+    height: 4rem;
+    border: none;
+    padding: none;
+    border-radius: 10px 0 0 10px;
+    transition: transform 500ms ease;
 
-		&:hover {
-			cursor: pointer;
-		}
+    &:hover {
+      cursor: pointer;
+    }
 
-		&.is-shopping {
-			transform: translateX(-25rem);
-		}
+    &.is-shopping {
+      transform: translateX(-25rem);
+    }
 
-		&:focus-visible {
-			outline: none;
-		}
-	}
+    &:focus-visible {
+      outline: none;
+    }
+  }
 
-	.shop {
-		background-color: rgb(180, 116, 43);
-		color: white;
-		position: fixed;
-		top: 1rem;
-		right: -25rem;
-		width: 25rem;
-		height: 35rem;
-		border-bottom-left-radius: 10px;
-		box-sizing: border-box;
-		padding: 1rem;
-		transition: transform 500ms ease;
+  .shop {
+    background-color: rgb(180, 116, 43);
+    color: white;
+    position: fixed;
+    top: 1rem;
+    right: -25rem;
+    width: 25rem;
+    height: 35rem;
+    border-bottom-left-radius: 10px;
+    box-sizing: border-box;
+    padding: 1rem;
+    transition: transform 500ms ease;
+
+    &.is-shopping {
+      transform: translateX(-25rem);
+    }
 
     .cols {
       display: flex;
