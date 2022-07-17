@@ -50,10 +50,11 @@
 			$player = $player;
 		});
 		$enemies.forEach((enemy) => {
+			enemy.defense = 0;
 			enemy.dice.forEach((dice) => {
-				enemy.defense = 0;
 				const rolledNumber = rollDice(dice.faces.length);
 				dice.rolled = dice.faces[rolledNumber];
+				enemy.defense += dice.rolled.ability.defense ?? 0;
 				$enemies = $enemies;
 			});
 		});
