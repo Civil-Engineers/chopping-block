@@ -3,6 +3,7 @@
 	import type { IPlayer } from '$lib/store';
 	import { getRandomAbility } from './../helper';
 	import Dice from './Dice.svelte';
+import TileFaceIcon from './TileFaceIcon.svelte';
 	export let player: IPlayer;
 
 	let newItem = () => {
@@ -20,9 +21,10 @@
 	};
 
 	let selectedAbility = -1;
+  let highlightedAbility = -1;
 
 	shopBuy.subscribe((value) => {
-		if (value) {
+		if (value && $shopBuy) {
 			abilities[selectedAbility] = newItem();
 			player.gold = player.gold - 3;
 			$shopBuy = false;
@@ -49,7 +51,7 @@
 	</button>
 
 	<section class="shop" class:is-shopping={$isShopping && isShoppingAllowed}>
-		<span>{player.gold}</span>
+		<span style="font-size: 30px;">{"Gold: "+ player.gold}</span>
 		<div class="cols">
 			<div width="min-content">
 				<ul class="shop-items">
@@ -63,9 +65,17 @@
 									$selectedShopFace = ability.key;
 								}
 							}}
+     
+              on:mouseenter={() => {
+                highlightedAbility = index;
+                console.log(index);
+              }}
+              on:mouseleave={() => {
+                highlightedAbility = -1;
+                console.log(index);
+              }}
 						>
-							<span>{ability.data.name}</span>
-							<span>{3} Gold</span>
+              <TileFaceIcon icon={ability.data.icon} value={ability.data.value}/>
 						</li>
 					{/each}
 				</ul>
@@ -78,7 +88,7 @@
 							player.gold -= 1;
 						}
 					}}
-					class="reroll-button">Reroll</button
+					class="reroll-button">Reroll - $1</button
 				>
 				<button
 					on:click={() => {
@@ -88,12 +98,15 @@
 					class="next-battle-button">Next battle</button
 				>
 			</div>
+      <!-- {#each abilities as ability, index} -->
 			<div class="item-description">
 				{#if selectedAbility >= 0}
 					<span>{abilities[selectedAbility].data.description}</span>
-				{:else}
-					<span>Select an ability to learn more</span>
+				{:else if highlightedAbility >= 0 }
+          <span>{abilities[highlightedAbility].data.description}</span>
+					<!-- <span>Select an ability to learn more</span> -->
 				{/if}
+      <!-- {/each} -->
 			</div>
 		</div>
 	</section>
@@ -205,6 +218,7 @@
 
 			.item-description {
 				margin: 1em 0;
+        padding: 1em;
 			}
 		}
 
@@ -217,6 +231,8 @@
 
 			.shop-item {
 				display: flex;
+        margin-top: 10px;
+        margin-bottom: 20px;
 				flex-direction: column;
 				width: 8rem;
 				height: 8rem;
