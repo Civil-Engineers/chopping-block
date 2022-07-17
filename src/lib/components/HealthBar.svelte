@@ -21,7 +21,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url('test.jpg');
+    background-image: url('/test.jpg');
     height: 100%;
     width: 100%;
 	}
