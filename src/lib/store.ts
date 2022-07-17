@@ -82,15 +82,15 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Nothing',
 		description: '',
 		rarity: 0,
-    icon: '/images/Blank_Icon.png',
-		value: ""
+		icon: '/images/Blank_Icon.png',
+		value: ''
 	},
 	d1: {
 		name: 'Attack 1',
 		description: 'Deals 1 damage',
 		rarity: 0,
 		icon: '/images/Attack_Icon.png',
-		value: "1",
+		value: '1',
 		damage: 1
 	},
 	d2: {
@@ -98,7 +98,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Deals 2 damage',
 		rarity: COMMON_R,
 		icon: '/images/Attack_Icon.png',
-		value: "2",
+		value: '2',
 		damage: 2
 	},
 	d3: {
@@ -106,7 +106,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Deals %d damage',
 		rarity: 8,
 		icon: '/images/Attack_Icon.png',
-		value: "3",
+		value: '3',
 		damage: 3
 	},
 	d4: {
@@ -114,7 +114,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Deals %d damage',
 		rarity: 6,
 		icon: '/images/Attack_Icon.png',
-		value: "4",
+		value: '4',
 		damage: 4
 	},
 	d5: {
@@ -122,7 +122,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Deals %d damage',
 		rarity: 4,
 		icon: '/images/Attack_Icon.png',
-		value: "5",
+		value: '5',
 		damage: 5
 	},
 	d8: {
@@ -130,7 +130,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Deals %d damage, take %hd damage',
 		rarity: 1,
 		icon: '/images/Attack_Icon.png',
-		value: "8*",
+		value: '8*',
 		damage: 8,
 		heal: -1
 	},
@@ -170,7 +170,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Blocks 1 damage',
 		rarity: COMMON_R,
 		icon: '/images/Shield_Icon.png',
-		value: "1",
+		value: '1',
 		defense: 1
 	},
 	s2: {
@@ -178,7 +178,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Blocks 2 damage',
 		rarity: COMMON_R,
 		icon: '/images/Shield_Icon.png',
-		value: "2",
+		value: '2',
 		defense: 2
 	},
 	s3: {
@@ -186,7 +186,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Blocks 3 damage',
 		rarity: COMMON_R,
 		icon: '/images/Shield_Icon.png',
-		value: "3",
+		value: '3',
 		defense: 3
 	},
 	s4: {
@@ -194,14 +194,14 @@ export const allAbilities: { [key: string]: IAbility } = {
 		description: 'Blocks 4 damage',
 		rarity: 8,
 		icon: '/images/Shield_Icon.png',
-		value: "4",
+		value: '4',
 		defense: 4
 	},
 	s5: {
 		name: 'Shield 5',
 		description: 'Blocks 5 damage',
 		rarity: 4,
-		value: "5",
+		value: '5',
 		icon: '/images/Shield_Icon.png',
 		defense: 5
 	},
@@ -212,7 +212,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Heal 1',
 		description: 'Restores 1 HP',
 		rarity: 0,
-		value: "1",
+		value: '1',
 		icon: '/images/Heal_Icon.png',
 		heal: 1
 	},
@@ -220,7 +220,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Heal 2',
 		description: 'Restores 2 HP',
 		rarity: COMMON_R,
-		value: "2",
+		value: '2',
 		icon: '/images/Heal_Icon.png',
 		heal: 2
 	},
@@ -228,18 +228,18 @@ export const allAbilities: { [key: string]: IAbility } = {
 		name: 'Heal 3',
 		description: 'Restores 3 HP',
 		rarity: UNCOMMON_R,
-		value: "3",
+		value: '3',
 		icon: '/images/Heal_Icon.png',
 		heal: 3
 	},
-  
+
 	// special
 	b2: {
-    name: 'Berserk x%m',
+		name: 'Berserk x%m',
 		description: 'Multiplies damage done and deals %h damage to self',
 		rarity: UNCOMMON_R,
-    icon: '/images/Multiply_Icon.png',
-		value: "",
+		icon: '/images/Multiply_Icon.png',
+		value: '',
 		heal: -1,
 		multiplier: 2
 	}
@@ -383,3 +383,5 @@ export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREE
 export const isShopping = writable(false);
 export const selectedShopFace = writable<string>('');
 export const shopBuy = writable<boolean>(false);
+
+export const audioList = writable<string[]>();
