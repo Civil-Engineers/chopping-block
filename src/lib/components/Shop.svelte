@@ -59,6 +59,7 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 						<li
 							class="shop-item"
 							class:selected={selectedAbility === index}
+							style={`box-shadow: 0 0 ${(ability.data.rarity-1)*2}px ${(ability.data.rarity-1)*2}px white`}
 							on:click={() => {
 								if (player.gold >= 3) {
 									selectedAbility = index;
@@ -175,6 +176,10 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 			opacity: 0.95;
 			display: block;
 		}
+	}
+
+	.selected {
+		transform: rotate(-10deg);
 	}
 
 	.current-abi {
