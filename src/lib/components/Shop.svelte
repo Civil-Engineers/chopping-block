@@ -3,7 +3,7 @@
 	import type { IPlayer } from '$lib/store';
 	import { getRandomAbility } from './../helper';
 	import Dice from './Dice.svelte';
-import TileFaceIcon from './TileFaceIcon.svelte';
+	import TileFaceIcon from './TileFaceIcon.svelte';
 	export let player: IPlayer;
 
 	let newItem = () => {
@@ -90,7 +90,7 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 						</li>
 					{/each}
 				</ul>
-				<button
+				<div
 					on:click={() => {
 						if (player.gold >= 1) {
 							selectedAbility = -1;
@@ -99,15 +99,19 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 							player.gold -= 1;
 						}
 					}}
-					class="reroll-button">Reroll - $1</button
-				>
-				<button
+					class="reroll-button">
+					<img src={"/images/Reroll.png"} alt="Reroll" class="reroll-img" />
+					<span class="reroll-text">Reroll - 1 Gold</span>
+				</div>
+				<div
 					on:click={() => {
 						$shopPhase = false;
 						$isShopping = false;
 					}}
-					class="next-battle-button">Next battle</button
-				>
+					class="next-battle-button">
+					<img src={"/images/Start_battle.png"} alt="Next Battle" class="next-battle-img" />
+					<span class="next-battle-text">Next battle</span>
+				</div>
 			</div>
       <!-- {#each abilities as ability, index} -->
 			<div class="item-description">
@@ -270,31 +274,52 @@ import TileFaceIcon from './TileFaceIcon.svelte';
 		}
 
 		.reroll-button {
-			width: 8rem;
-			height: 4rem;
-			background-color: rgb(37, 61, 141);
 			color: white;
-			border-radius: 10px;
 			bottom: 10px;
+			left: 10px;
 			position: fixed;
 			&:hover {
 				cursor: pointer;
-				background-color: rgb(29, 47, 109);
+			}
+
+			&:hover .reroll-text {
+				color: greenyellow;
+			}
+
+			.reroll-img {
+				width: 10rem;
+			}
+
+			.reroll-text {
+				position: fixed;
+				left: 68px;
+				bottom: 38px;
+				text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
 			}
 		}
 
 		.next-battle-button {
-			width: 8rem;
-			height: 4rem;
-			background-color: rgb(37, 61, 141);
 			color: white;
-			border-radius: 10px;
 			bottom: 10px;
 			position: fixed;
-			margin-left: 243px;
+			margin-left: 215px;
 			&:hover {
 				cursor: pointer;
-				background-color: rgb(29, 47, 109);
+			}
+
+			&:hover .next-battle-text {
+				color: greenyellow;
+			}
+
+			.next-battle-img {
+				width: 10rem;
+			}
+
+			.next-battle-text {
+				position: fixed;
+				right: 40px;
+				bottom: 38px;
+				text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
 			}
 		}
 	}
