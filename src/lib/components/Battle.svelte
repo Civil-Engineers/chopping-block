@@ -125,6 +125,7 @@ import DiceFace from './DiceFace.svelte';
 		// dice merge
 		const mergedAbility = {
 			damage: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.damage ?? 0), 0),
+			goldDamage: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.goldAtt ? $player.gold : 0), 0),
 			defense: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.defense ?? 0), 0),
 			heal: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.heal ?? 0), 0),
 			poison: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.poison ?? 0), 0),
@@ -134,7 +135,7 @@ import DiceFace from './DiceFace.svelte';
 			)
 		};
 
-		let damage = mergedAbility.damage * mergedAbility.multiplier;
+		let damage = (mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier;
 		if (damage > 0) {
 			damage = mergedAbility.damage * mergedAbility.multiplier - target.defense;
 			damage = damage < 0 ? (damage = 0) : damage;

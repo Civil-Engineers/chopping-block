@@ -62,6 +62,8 @@ export interface IAbility {
 	multiplier?: number;
 
 	gold?: number;
+
+	goldAtt?: boolean;
 	// allows the dice to be rolled again and stack the effects
 	// rolling?: boolean;
 
@@ -74,6 +76,7 @@ export interface IAbility {
 // or have rarity be a list of numbers that we try to access based on what level you are in
 const COMMON_R = 10;
 const UNCOMMON_R = 5;
+const RARE_R = 2;
 
 // When rendering description and name, convert %(str) into the apropriate attribute
 // could also make description "smart" by looking at what type of values it has
@@ -194,7 +197,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	s3: {
 		name: 'Shield 3',
 		description: 'Blocks 3 damage',
-		rarity: COMMON_R,
+		rarity: UNCOMMON_R,
 		icon: '/images/Shield_Icon.png',
 		value: '3',
 		defense: 3
@@ -210,7 +213,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	s5: {
 		name: 'Shield 5',
 		description: 'Blocks 5 damage',
-		rarity: 2,
+		rarity: RARE_R,
 		value: '5',
 		icon: '/images/Shield_Icon.png',
 		defense: 5
@@ -261,24 +264,48 @@ export const allAbilities: { [key: string]: IAbility } = {
 	},
 
 	//gold
-	g2: {
-		name: 'Gold 2',
+	g1: {
+		name: 'Gold 1',
 		description: 'Passive: Increases gold generation next shop',
 		rarity: UNCOMMON_R,
 		icon: '/images/Gold_Icon.png',
+		value: '1',
+		gold: 1,
+	},
+	g2: {
+		name: 'Gold 2',
+		description: 'Passive: Increases gold generation next shop',
+		rarity: UNCOMMON_R-1,
+		icon: '/images/Gold_Icon.png',
 		value: '2',
 		gold: 2,
+	},
+	g3: {
+		name: 'Gold 3',
+		description: 'Passive: Increases gold generation next shop',
+		rarity: RARE_R,
+		icon: '/images/Gold_Icon.png',
+		value: '3',
+		gold: 3,
 	},
 
 	// special
 	b2: {
 		name: 'Berserk x2',
 		description: 'Multiplies damage done by 2 and deals 1 damage to self',
-		rarity: UNCOMMON_R,
+		rarity: 3,
 		icon: '/images/Multiply_Icon.png',
 		value: '',
 		heal: -1,
 		multiplier: 2
+	},
+	gx: {
+		name: 'Gold Attack',
+		description: 'Does damage based on how much gold you have',
+		rarity: RARE_R,
+		icon: '/images/Gold_Icon.png',
+		value: '$',
+		goldAtt: true,
 	}
 	// upgr: {
 	// 	name: 'Upgrade 1',
