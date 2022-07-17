@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { sleep } from '$lib/helper';
+	import { getRandomAbility, sleep } from '$lib/helper';
 
 	import { EAnimationStates, type IPlayer } from '$lib/store';
 	import type { Writable } from 'svelte/store';
@@ -12,6 +12,10 @@
 
 	export let isEnemy: boolean = false;
 
+	let particles: number[] = [];
+
+	let oldHealth = player.health;
+
 	const resetState = async () => {
 		if (player.animationState !== EAnimationStates.IDLE) {
 			await sleep(500);
@@ -19,6 +23,20 @@
 		}
 	};
 
+	const healthDelta = () => {
+		const delta = player.health - oldHealth;
+		oldHealth = player.health;
+
+		if (delta != 0) {
+			particles.push(delta);
+			while (particles.length > 100) {
+				particles.shift();
+			}
+			particles = particles;
+		}
+	};
+
+	$: player.health, healthDelta();
 	$: player.animationState, resetState();
 </script>
 
@@ -26,6 +44,16 @@
 	<div class="player" class:is-enemy={isEnemy}>
 		<HealthBar maxHealth={player.maxHealth} health={player.health} />
 		<DiceContainer playerDice={player.dice} />
+		{#each particles as particle}
+			<div class="particle">
+				<div
+					class:damage={particle < 0}
+					style={`transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * 6 - 3}px)`}
+				>
+					{particle}
+				</div>
+			</div>
+		{/each}
 		<img
 			src={player.animations[player.animationState] ?? player.animations[EAnimationStates.IDLE]}
 			alt=""
@@ -49,6 +77,7 @@
 		flex-direction: column;
 		justify-content: flex-end;
 		align-items: center;
+		position: relative;
 		> img {
 			object-fit: contain;
 			object-position: 50% 100%;
@@ -74,7 +103,44 @@
 			}
 		}
 	}
+	.particle {
+		> div {
+			width: 50px;
+			height: 50px;
+			background-color: lightblue;
+			border-radius: 25%;
+			display: flex;
+			align-items: center;
+			font-size: 20px;
+			justify-content: center;
+			
+			&.damage {
+				background-color: pink;
+			}
+		}
+		position: absolute;
+		bottom: 300px;
 
+		animation-duration: 5s;
+		animation-name: foat-up;
+		animation-timing-function: ease;
+		animation-iteration-count: infinite;
+		animation-play-state: running;
+	}
+
+	@keyframes foat-up {
+		0% {
+			transform: translateY(0);
+			opacity: 0;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+			transform: translateY(-200px);
+		}
+	}
 	@keyframes idle-bob {
 		0% {
 			transform: scale(1.05, 0.95);
