@@ -142,7 +142,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		rarity: 0,
 		icon: '/images/Attack_Icon.png',
 		value: '10',
-		damage: 10,
+		damage: 10
 	},
 
 	// poison
@@ -224,7 +224,6 @@ export const allAbilities: { [key: string]: IAbility } = {
 		defense: 10
 	},
 
-
 	// healing
 
 	h1: {
@@ -267,7 +266,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 		rarity: UNCOMMON_R,
 		icon: '/images/Gold_Icon.png',
 		value: '2',
-		gold: 2,
+		gold: 2
 	},
 
 	// special
@@ -422,7 +421,7 @@ export const waveInitEnemies: IPlayer[][] = [
 				}
 			]
 		}
-	],
+	]
 ];
 
 export const player = writable<IPlayer>({
@@ -499,4 +498,10 @@ export const shopBuy = writable<boolean>(false);
 
 export const beRolling = writable(false);
 
-export const audioList = writable<string[]>([]);
+export const audioList = writable<{ id: number; audio: string }[]>([]);
+export const playAudio = (audio: string) => {
+	audioList.update((old) => {
+		old.push({ id: Math.random(), audio });
+		return old;
+	});
+};
