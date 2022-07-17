@@ -26,11 +26,31 @@
 	if (browser) {
 		preload([
 			'/test.jpg',
+			'/images/Attack_Icon.png',
+			'/images/Backup_Layout.png',
+			'/images/Blank_Icon.png',
 			'/images/Catfish.png',
+			'/images/Catfish_Attack.png',
+			'/images/Cleave_Icon.png',
 			'/images/Eel.png',
+			'/images/Eel_Attack.png',
+			'/images/Fast_Forward.png',
 			'/images/Fish_Goon.png',
+			'/images/Fish_Goon_Attack.png',
 			'/images/Fisher.png',
-			'/images/Piranha.png'
+			'/images/Fisher_Attack.png',
+			'/images/Gold.png',
+			'/images/Gold_Icon.png',
+			'/images/Heal_all_Icon.png',
+			'/images/Heal_Icon.png',
+			'/images/Midas_Icon.png',
+			'/images/Multiply_Icon.png',
+			'/images/Piranha.png',
+			'/images/Piranha_Attack.png',
+			'/images/Play.png',
+			'/images/Reroll.png',
+			'/images/Shield_Icon.png',
+			'/images/Start_battle.png',
 		]);
 	}
 </script>
