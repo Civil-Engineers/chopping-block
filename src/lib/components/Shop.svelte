@@ -1,27 +1,37 @@
 <script lang="ts">
-  import { isShopping } from "$lib/store";
+  import { isShopping, allAbilities, selectedShopFace} from "$lib/store";
   import type { IPlayer } from '$lib/store';
+  import { getRandomAbility } from './../helper';
   import Dice from './Dice.svelte';
   export let player: IPlayer;
+
+  let newItem = () =>{
+    const abi = getRandomAbility();
+    return {
+      key: abi,
+      data: allAbilities[abi]
+    }
+  }
+
   let abilities = [
-    {
-      name: "Attack 2",
-      description: "Deals 2 damage",
-      value: 2,
-      cost: 2,
-    },
-    {
-      name: "Shield 3",
-      description: "Blocks 3 damage",
-      value: 3,
-      cost: 3,
-    },
-    {
-      name: "Heal 5",
-      description: "Restores 5 HP",
-      value: 5,
-      cost: 4,
-    },
+    newItem(),
+    newItem(),
+    newItem()
+    // {
+    //   getRandomAbility()
+    // },
+    // {
+    //   name: "Shield 3",
+    //   description: "Blocks 3 damage",
+    //   value: 3,
+    //   cost: 3,
+    // },
+    // {
+    //   name: "Heal 5",
+    //   description: "Restores 5 HP",
+    //   value: 5,
+    //   cost: 4,
+    // },
   ];
   let selectedAbility = -1;
 </script>
@@ -37,7 +47,7 @@
     Shop
   </button>
   <section class="shop" class:is-shopping={$isShopping}>
-    <span>Items to buy</span>
+    <span>{player.gold}</span>
     <div class="cols">
       <div>
         <ul class="shop-items">
@@ -45,10 +55,10 @@
             <li
               class="shop-item"
               class:selected="{selectedAbility === index}"
-              on:click={() => selectedAbility = index}
+              on:click={() => {selectedAbility = index; $selectedShopFace = ability.key}}
             >
-              <span>{ability.name}</span>
-              <span>{ability.cost} Gold</span>
+              <span>{ability.data.name}</span>
+              <span>{3} Gold</span>
             </li>
           {/each}
         </ul>
@@ -56,7 +66,7 @@
       </div>
       <div class="item-description">
         {#if selectedAbility >= 0}
-          <span>{abilities[selectedAbility].description}</span>
+          <span>{abilities[selectedAbility].data.description}</span>
         {:else}
           <span>Select an ability to learn more</span>
         {/if}

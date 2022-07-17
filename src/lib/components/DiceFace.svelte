@@ -7,14 +7,14 @@
     let trySetNewFace = () => {
         $selectedShopFace = $selectedShopFace;
         $isShopping = $isShopping;
-        if(isShopping && selectedShopFace) {
-            // face.ability = allAbilities[selectedShopFace];
-            // selectedShopFace = "";
+        if(isShopping && $selectedShopFace) {
+            face.ability = allAbilities[$selectedShopFace];
+            $selectedShopFace = "";
         }
     }
 </script>
 
-<div class="face" style={`background-color: ${face.ability.icon}`}>
+<div class="face" on:click={() => {trySetNewFace()}} style={`background-color: ${face.ability.icon}`}>
     {face.ability.value}
 </div>
 

@@ -8,15 +8,11 @@ export let dice: IDice;
 
 
 <div class="grid-container">
-    <div/>
     <DiceFace face= {dice.faces[0]}/>
-    <div/>
-    <div/>
     <DiceFace face= {dice.faces[1]}/>
     <DiceFace face= {dice.faces[2]}/>
     <DiceFace face= {dice.faces[3]}/>
     <DiceFace face= {dice.faces[4]}/>
-    <div/>
     <DiceFace face= {dice.faces[5]}/>
 </div>
   
@@ -24,7 +20,7 @@ export let dice: IDice;
 <style>
 .grid-container {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto;
    
     padding: 1px;
     gap: 20px;
