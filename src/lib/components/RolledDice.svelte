@@ -2,6 +2,7 @@
 	import type { IDice, IFace } from '$lib/store';
 	import Dice from './Dice.svelte';
 	import { fade } from 'svelte/transition';
+	import TileFaceIcon from './TileFaceIcon.svelte';
 
 	export let face: IFace;
 	export let dice: IDice;
@@ -16,10 +17,7 @@
 			<Dice {dice} />
 		</div>
 	{/if}
-	<div class="icon">
-		<img src={face.ability.icon} alt="" />
-		<p>{face.ability.value}</p>
-	</div>
+	<TileFaceIcon icon={face.ability.icon} value={face.ability.value} />
 </div>
 
 <style lang="scss">
@@ -28,26 +26,9 @@
 	}
 	.tool-tip {
 		position: absolute;
-		top: -70px;
+		top: -130px;
 		left: 50%;
+    z-index: 10;
 		transform: translateX(-50%);
-	}
-	.icon {
-		width: 200px;
-		height: 200px;
-		position: relative;
-		> img {
-			width: 100%;
-			height: 100%;
-		}
-		> p {
-			position: absolute;
-			bottom: 30px;
-			margin: 0;
-			right: 50px;
-			color: white;
-			font-size: 50px;
-			text-shadow: -2px -2px 0 #391302, 2px -2px 0 #391302, -2px 2px 0 #391302, 2px 2px 0 #391302;
-		}
 	}
 </style>
