@@ -136,6 +136,14 @@ export const allAbilities: { [key: string]: IAbility } = {
 		value: '5',
 		damage: 5
 	},
+	d7: {
+		name: 'Attack 7',
+		description: 'Deals 7 damage',
+		rarity: 0,
+		icon: '/images/Attack_Icon.png',
+		value: '7',
+		damage: 7,
+	},
 	d8: {
 		name: 'Attack 8',
 		description: 'Deals 8 damage, take 4 damage',
@@ -311,13 +319,13 @@ export const allAbilities: { [key: string]: IAbility } = {
 		icon: '/images/Heal_Icon.png',
 		heal: 3
 	},
-	h10: {
-		name: 'Heal 10',
-		description: 'Restores 10 HP',
+	h5: {
+		name: 'Heal 5',
+		description: 'Restores 5 HP',
 		rarity: 0,
-		value: '10',
+		value: '5',
 		icon: '/images/Heal_Icon.png',
-		heal: 10
+		heal: 5
 	},
 
 	//gold
@@ -473,6 +481,44 @@ const createCatFish = () => {
 	return ret;
 }
 
+const createEelBoss = () => {
+	let ret:IPlayer = {
+		name: 'Training Dummy',
+		maxHealth: 20,
+		health: 20,
+		defense: 0,
+		gold: 0,
+		animationState: EAnimationStates.IDLE,
+		animations: {
+			[EAnimationStates.IDLE]: '/images/Eel.png',
+			[EAnimationStates.ATTACK]: '/images/Eel_Attack.png'
+		},
+		dice: [
+			{
+				faces: [
+					{ ability: allAbilities['d5'] },
+					{ ability: allAbilities['d5'] },
+					{ ability: allAbilities['d7'] },
+					{ ability: allAbilities['h5'] },
+					{ ability: allAbilities['d0'] },
+					{ ability: allAbilities['d0'] }
+				]
+			},
+			{
+				faces: [
+					{ ability: allAbilities['b2'] },
+					{ ability: allAbilities['b2'] },
+					{ ability: allAbilities['b2'] },
+					{ ability: allAbilities['s4'] },
+					{ ability: allAbilities['d0'] },
+					{ ability: allAbilities['d0'] }
+				]
+			},
+		]
+	}
+	return ret;
+}
+
 export const waveInitEnemies: IPlayer[][] = [
 	[
 		createFishGoon()
@@ -514,6 +560,9 @@ export const waveInitEnemies: IPlayer[][] = [
 		createPiranha(),
 		createPiranha(),
 	],
+	[
+		createEelBoss()
+	]
 ];
 
 export const player = writable<IPlayer>({

@@ -37,7 +37,7 @@
 			<Dice {dice} />
 		</div>
 	{/if}
-	{#if beRolling}
+	{#if $beRolling}
 		<TileFaceIcon icon={currRoll.ability.icon} value={currRoll.ability.value} />
 	{:else}
 		<TileFaceIcon icon={face.ability.icon} value={face.ability.value} />
