@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isShopping, allAbilities, selectedShopFace} from "$lib/store";
+  import { isShopping, allAbilities, selectedShopFace, shopBuy} from "$lib/store";
   import type { IPlayer } from '$lib/store';
   import { getRandomAbility } from './../helper';
   import Dice from './Dice.svelte';
@@ -17,23 +17,28 @@
     newItem(),
     newItem(),
     newItem()
-    // {
-    //   getRandomAbility()
-    // },
-    // {
-    //   name: "Shield 3",
-    //   description: "Blocks 3 damage",
-    //   value: 3,
-    //   cost: 3,
-    // },
-    // {
-    //   name: "Heal 5",
-    //   description: "Restores 5 HP",
-    //   value: 5,
-    //   cost: 4,
-    // },
   ];
+
+  let rerollShop = () => {
+    abilities = [
+      newItem(),
+      newItem(),
+      newItem()
+    ];
+  }
+
+  
+
   let selectedAbility = -1;
+
+  shopBuy.subscribe(value => {
+		if (value) {
+      abilities[selectedAbility] = newItem();
+      player.gold = player.gold - 3;
+      $shopBuy = false;
+      selectedAbility = -1;
+    }
+	});
 </script>
 
 <div class="shop-container">
@@ -55,14 +60,15 @@
             <li
               class="shop-item"
               class:selected="{selectedAbility === index}"
-              on:click={() => {selectedAbility = index; $selectedShopFace = ability.key}}
+              on:click={() => {if (player.gold >= 3) {selectedAbility = index; $selectedShopFace = ability.key}}}
             >
               <span>{ability.data.name}</span>
               <span>{3} Gold</span>
             </li>
           {/each}
         </ul>
-        <button class="reroll-button">Reroll</button>
+        <button on:click={() => {if (player.gold >= 1) {selectedAbility = -1; $selectedShopFace = ""; rerollShop(); player.gold -=1;}}}
+        class="reroll-button">Reroll</button>
       </div>
       <div class="item-description">
         {#if selectedAbility >= 0}

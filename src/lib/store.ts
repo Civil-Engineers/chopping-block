@@ -25,7 +25,7 @@ export interface IPlayer {
 	description?: string;
 	maxHealth: number;
 	health: number;
-	gold?: number;
+	gold: number;
 	dice: IDice[];
 	defense: number;
 	animationState: EAnimationStates;
@@ -267,6 +267,7 @@ export const waveInitEnemies: IPlayer[][] = [
 			maxHealth: 10,
 			health: 10,
 			defense: 0,
+			gold: 0,
 			animationState: EAnimationStates.IDLE,
 			animations: {
 				[EAnimationStates.IDLE]: '/images/Catfish.png'
@@ -291,6 +292,7 @@ export const waveInitEnemies: IPlayer[][] = [
 			maxHealth: 8,
 			health: 8,
 			defense: 0,
+			gold: 0,
 			animationState: EAnimationStates.IDLE,
 			animations: {
 				[EAnimationStates.IDLE]: '/images/Eel.png'
@@ -315,7 +317,7 @@ export const player = writable<IPlayer>({
 	name: 'Roe',
 	maxHealth: 30,
 	health: 30,
-	gold: 0,
+	gold: 10,
 	defense: 0,
 	animationState: EAnimationStates.IDLE,
 	animations: {
@@ -380,3 +382,4 @@ export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREE
 
 export const isShopping = writable(false);
 export const selectedShopFace = writable<string>('');
+export const shopBuy = writable<boolean>(false);

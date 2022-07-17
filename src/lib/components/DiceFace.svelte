@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { IFace } from '$lib/store';
-    import {isShopping, selectedShopFace, allAbilities,} from '$lib/store'
+    import {isShopping, selectedShopFace, allAbilities, shopBuy} from '$lib/store'
 
 	export let face: IFace;
+    // export let inShop: boolean;
 	// $: scale = health / maxHealth * 100;
     let trySetNewFace = () => {
         $selectedShopFace = $selectedShopFace;
@@ -10,6 +11,7 @@
         if(isShopping && $selectedShopFace) {
             face.ability = allAbilities[$selectedShopFace];
             $selectedShopFace = "";
+            $shopBuy = true;
         }
     }
 </script>
