@@ -12,16 +12,16 @@ export function getRandomAbility() {
 	let probabilityArray = Object.keys(allAbilities).reduce((arr, key) => {
 		arr.push(...new Array(allAbilities[key].rarity).fill(key));
 		return arr;
-	}, [] as number[]);
+	}, [] as string[]);
 
-  const chosenNumber = Math.floor(Math.random()*probabilityArray.length);
-  return allAbilities[probabilityArray[chosenNumber]];
+	const chosenNumber = Math.floor(Math.random() * probabilityArray.length);
+	return probabilityArray[chosenNumber];
 }
 
 const images: HTMLImageElement[] = [];
 export function preload(urls: string[]) {
-  for (let i = 0; i < urls.length; i++) {
-    images[i] = new Image();
-    images[i].src = urls[i];
-  }
+	for (let i = 0; i < urls.length; i++) {
+		images[i] = new Image();
+		images[i].src = urls[i];
+	}
 }
