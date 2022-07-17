@@ -18,7 +18,6 @@
 	let isFastFording = false;
 	let wave = 0;
 
-	
 	setEnemiesToWave(wave);
 
 	$enemies.forEach((enemy) => {
@@ -29,7 +28,6 @@
 			$enemies = $enemies;
 		});
 	});
-
 
 	const battleLoop = async () => {
 		if ($enemies.length === 0) {
@@ -159,9 +157,9 @@
 	</button>
 	<div class="main">
 		<PlayerDisplay bind:player={$player} />
-		{#each $enemies as enemy}
-			<PlayerDisplay bind:player={enemy} isEnemy={true} />
-		{/each}
+			{#each $enemies as enemy}
+				<PlayerDisplay bind:player={enemy} isEnemy={true} />
+			{/each}
 		<Shop bind:player={$player} />
 	</div>
 </div>

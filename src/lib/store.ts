@@ -319,7 +319,30 @@ export const waveInitEnemies: IPlayer[][] = [
 			gold: 0,
 			animationState: EAnimationStates.IDLE,
 			animations: {
-				[EAnimationStates.IDLE]: '/images/Eel.png'
+				[EAnimationStates.IDLE]: '/images/Piranha.png'
+			},
+			dice: [
+				{
+					faces: [
+						{ ability: allAbilities['d1'] },
+						{ ability: allAbilities['d1'] },
+						{ ability: allAbilities['d1'] },
+						{ ability: allAbilities['d2'] },
+						{ ability: allAbilities['d2'] },
+						{ ability: allAbilities['d3'] }
+					]
+				}
+			]
+		},
+		{
+			name: 'Snake',
+			maxHealth: 8,
+			health: 8,
+			defense: 0,
+			gold: 0,
+			animationState: EAnimationStates.IDLE,
+			animations: {
+				[EAnimationStates.IDLE]: '/images/Fish_Goon.png'
 			},
 			dice: [
 				{

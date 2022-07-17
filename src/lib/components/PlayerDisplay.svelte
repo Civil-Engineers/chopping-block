@@ -37,6 +37,7 @@
 	.player-slot {
 		// background: rgb(100, 100, 100);
 		flex: 1;
+		width: 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
