@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { browser } from '$app/env';
+	import AudioPlayer from '$lib/components/AudioPlayer.svelte';
 
 	import Battle from '$lib/components/Battle.svelte';
 	import StartScreen from '$lib/components/StartScreen.svelte';
@@ -40,6 +41,7 @@
 	{:else if $globalGameState === EGlobalStates.BATTLE}
 		<Battle />
 	{/if}
+	<AudioPlayer />
 </main>
 
 <style>
