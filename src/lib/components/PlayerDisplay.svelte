@@ -10,6 +10,8 @@
 
 	export let player: IPlayer;
 
+	export let isEnemy: boolean = false;
+
 	const resetState = async () => {
 		await sleep(500);
 		player.animationState = EAnimationStates.IDLE;
@@ -19,7 +21,7 @@
 </script>
 
 <div class="player-slot">
-	<div class="player">
+	<div class="player" class:is-enemy={isEnemy}>
 		<HealthBar maxHealth={player.maxHealth} health={player.health} />
 		<DiceContainer playerDice={player.dice} />
 		<img
@@ -47,15 +49,26 @@
 		> img {
 			object-fit: contain;
 			object-position: 50% 100%;
-			width: 300px;
-			height: 300px;
+			margin-top: -130px;
+			margin-right: -150px;
+			width: 450px;
+			height: 450px;
 			display: block;
+			pointer-events: none;
 			animation-duration: 1s;
 			animation-name: idle-bob;
 			animation-timing-function: ease;
 			animation-iteration-count: infinite;
 			animation-play-state: running;
 			transform-origin: 50% 100%;
+		}
+		&.is-enemy {
+			> img {
+				margin-right: 100px;
+				margin-top: -180px;
+				width: 500px;
+				height: 500px;
+			}
 		}
 	}
 

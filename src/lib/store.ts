@@ -5,6 +5,7 @@ export enum EGlobalStates {
 	SHOP,
 	BATTLE,
 	LOSE,
+	INSTRUCTIONS,
 	WIN
 }
 
