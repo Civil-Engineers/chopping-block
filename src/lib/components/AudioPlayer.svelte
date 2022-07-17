@@ -13,5 +13,5 @@
 </script>
 
 {#each $audioList as audio}
-	<audio src="audio" on:ended={() => ended(audio)} />
+	<audio src="audio" on:ended={() => ended(audio)} autoplay />
 {/each}
