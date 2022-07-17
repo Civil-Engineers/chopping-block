@@ -296,7 +296,8 @@ export const waveInitEnemies: IPlayer[][] = [
 			gold: 0,
 			animationState: EAnimationStates.IDLE,
 			animations: {
-				[EAnimationStates.IDLE]: '/images/Catfish.png'
+				[EAnimationStates.IDLE]: '/images/Catfish.png',
+				[EAnimationStates.ATTACK]: '/images/Catfish_Attack.png'
 			},
 			dice: [
 				{
@@ -321,7 +322,8 @@ export const waveInitEnemies: IPlayer[][] = [
 			gold: 0,
 			animationState: EAnimationStates.IDLE,
 			animations: {
-				[EAnimationStates.IDLE]: '/images/Eel.png'
+				[EAnimationStates.IDLE]: '/images/Eel.png',
+				[EAnimationStates.ATTACK]: '/images/Eel_Attack.png'
 			},
 			dice: [
 				{
@@ -344,7 +346,8 @@ export const waveInitEnemies: IPlayer[][] = [
 			gold: 0,
 			animationState: EAnimationStates.IDLE,
 			animations: {
-				[EAnimationStates.IDLE]: '/images/Piranha.png'
+				[EAnimationStates.IDLE]: '/images/Piranha.png',
+				[EAnimationStates.ATTACK]: '/images/Piranha_Attack.png'
 			},
 			dice: [
 				{
@@ -367,7 +370,8 @@ export const waveInitEnemies: IPlayer[][] = [
 			gold: 0,
 			animationState: EAnimationStates.IDLE,
 			animations: {
-				[EAnimationStates.IDLE]: '/images/Fish_Goon.png'
+				[EAnimationStates.IDLE]: '/images/Fish_Goon.png',
+				[EAnimationStates.ATTACK]: '/images/Fish_Goon_Attack.png'
 			},
 			dice: [
 				{
