@@ -8,6 +8,7 @@
 		setEnemiesToWave,
 		waveInitEnemies,
 		shopPhase,
+		beRolling,
 		type IAbility,
 		type IPlayer,
 		EAnimationStates
@@ -17,6 +18,7 @@
 	let isFastFording = false;
 	let wave = 0;
 
+	
 	setEnemiesToWave(wave);
 
 	$enemies.forEach((enemy) => {
@@ -28,15 +30,18 @@
 		});
 	});
 
+
 	const battleLoop = async () => {
 		if ($enemies.length === 0) {
 			return;
 		}
 
 		// your turn -------
+		$beRolling = true;
 
 		// your dice roll
 		await sleep(waitSpeed);
+		$beRolling = false;
 		$player.dice.forEach((dice, index) => {
 			$player.defense = 0;
 			const rolledNmber = rollDice(dice.faces.length);
