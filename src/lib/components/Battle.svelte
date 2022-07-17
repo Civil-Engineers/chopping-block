@@ -73,11 +73,12 @@
 		await sleep(waitSpeed*2);
 
 		// do ability to player
-		$enemies.forEach((enemy) => {
-			attack(enemy, $player);
+		for (let i = 0; i < $enemies.length; i++) {
+			attack($enemies[i], $player);
 			$player = $player;
 			$enemies = $enemies;
-		});
+			await sleep(waitSpeed);
+		}
 		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 
 		await sleep(waitSpeed*3.2);
