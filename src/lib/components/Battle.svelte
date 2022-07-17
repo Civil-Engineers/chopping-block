@@ -1,10 +1,11 @@
 <script lang="ts">
 	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
 	import Shop from './Shop.svelte';
-	import { player, enemies } from '$lib/store';
+	import { player, enemies, setEnemiesToWave } from '$lib/store';
 	import { sleep } from '$lib/helper';
 
 	let isFastFording = false;
+	let wave = 0;
 
 	const battleLoop = async () => {
 		// your turn -------

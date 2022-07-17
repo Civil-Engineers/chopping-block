@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { IPlayer } from '$lib/store';
 	import type { Writable } from 'svelte/store';
-
+	import Dice from './Dice.svelte';
 	import HealthBar from './HealthBar.svelte';
 
 	export let player: IPlayer;
@@ -10,6 +10,10 @@
 <div class="player-slot">
 	<div class="player">
 		<HealthBar maxHealth={player.maxHealth} health={player.health} />
+		<div>
+			<Dice dice={player.dice[0]}/>
+			<Dice dice={player.dice[1]}/>
+		</div>
 		<img src="test.jpg" alt="" />
 	</div>
 </div>
