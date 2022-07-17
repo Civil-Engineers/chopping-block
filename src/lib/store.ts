@@ -321,3 +321,5 @@ export const setEnemiesToWave = (n: number) => {
 };
 
 export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREEN);
+
+export const isShopping = writable(false);
