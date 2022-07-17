@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isShopping, allAbilities, selectedShopFace, shopBuy} from "$lib/store";
+  import { isShopping, allAbilities, selectedShopFace, shopBuy, shopPhase} from "$lib/store";
   import type { IPlayer } from '$lib/store';
   import { getRandomAbility } from './../helper';
   import Dice from './Dice.svelte';
@@ -39,22 +39,29 @@
       selectedAbility = -1;
     }
 	});
+
+  let isShoppingAllowed = false;
+  shopPhase.subscribe(value => {
+		isShoppingAllowed = value;
+	});
+
 </script>
 
 <div class="shop-container">
   <button
     class="shop-button"
-    class:is-shopping={$isShopping}
+    class:is-shopping={$isShopping && isShoppingAllowed} 
     on:click={() => {
-      isShopping.update(val => !val);
+      if(isShoppingAllowed) isShopping.update(val => !val);
     }}
   >
     Shop
   </button>
-  <section class="shop" class:is-shopping={$isShopping}>
+  
+  <section class="shop" class:is-shopping={$isShopping && isShoppingAllowed} >
     <span>{player.gold}</span>
     <div class="cols">
-      <div>
+      <div width="min-content">
         <ul class="shop-items">
           {#each abilities as ability, index}
             <li
@@ -69,6 +76,8 @@
         </ul>
         <button on:click={() => {if (player.gold >= 1) {selectedAbility = -1; $selectedShopFace = ""; rerollShop(); player.gold -=1;}}}
         class="reroll-button">Reroll</button>
+        <button on:click={() => {$shopPhase = false; $isShopping = false;}}
+          class="next-battle-button">Next battle</button>
       </div>
       <div class="item-description">
         {#if selectedAbility >= 0}
@@ -164,7 +173,7 @@
     top: 1rem;
     right: -25rem;
     width: 25rem;
-    height: 35rem;
+    height: 43rem;
     border-bottom-left-radius: 10px;
     box-sizing: border-box;
     padding: 1rem;
@@ -219,6 +228,27 @@
       background-color:rgb(37, 61, 141);
       color: white;
       border-radius: 10px;
+      bottom: 10px;
+      position: fixed;
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(29, 47, 109);
+      }
+    }
+
+    .next-battle-button {
+      width: 8rem;
+      height: 4rem;
+      background-color:rgb(37, 61, 141);
+      color: white;
+      border-radius: 10px;
+      bottom: 10px;
+      position: fixed;
+      margin-left: 243px;
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(29, 47, 109);
+      }
     }
   }
 </style>

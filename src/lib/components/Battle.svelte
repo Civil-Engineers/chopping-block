@@ -6,17 +6,17 @@
 		enemies,
 		setEnemiesToWave,
 		waveInitEnemies,
+		shopPhase,
 		type IAbility,
 		type IPlayer,
-		EAnimationStates
+		EAnimationStates,
 	} from '$lib/store';
 	import { rollDice, sleep } from '$lib/helper';
 
 	let isFastFording = false;
 	let wave = 0;
 
-  setEnemiesToWave(wave);
-
+	setEnemiesToWave(wave);
 	const battleLoop = async () => {
 		if ($enemies.length === 0) {
 			return;
@@ -66,17 +66,27 @@
 		// loop many times until all enemies die or you die
 		if ($player.health > 0 && $enemies.length > 0) {
 			battleLoop();
+		} else if ($player.health <= 0) {
+			// game over
 		} else {
 			wave++;
 			if (wave < waveInitEnemies.length) {
 				setEnemiesToWave(wave);
+				$shopPhase = true;
 			} else {
 				// WIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			}
 		}
 	};
 
-	battleLoop();
+	shopPhase.subscribe(value => {
+		if (value === false) {
+			console.log("value: "+value)
+			battleLoop();
+    	}
+	});
+
+	// battleLoop();
 
 	const attack = (attacker: IPlayer, target: IPlayer) => {
 		// dice merge

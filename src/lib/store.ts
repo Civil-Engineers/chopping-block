@@ -301,11 +301,11 @@ export const waveInitEnemies: IPlayer[][] = [
 				{
 					faces: [
 						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['p1'] },
-						{ ability: allAbilities['p1'] },
-						{ ability: allAbilities['p2'] },
-						{ ability: allAbilities['p2'] },
-						{ ability: allAbilities['p3'] }
+						{ ability: allAbilities['d1'] },
+						{ ability: allAbilities['d1'] },
+						{ ability: allAbilities['d2'] },
+						{ ability: allAbilities['d2'] },
+						{ ability: allAbilities['d3'] }
 					]
 				}
 			]
@@ -380,6 +380,7 @@ export const setEnemiesToWave = (n: number) => {
 
 export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREEN);
 
+export const shopPhase = writable(false);
 export const isShopping = writable(false);
 export const selectedShopFace = writable<string>('');
 export const shopBuy = writable<boolean>(false);

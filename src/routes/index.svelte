@@ -16,6 +16,10 @@
 
 	$: scale = wide ? innerWidth / fixedWindowSizeW : innerHeight / fixedWindowSizeH;
 
+	// $: leftIndent = (innerWidth > fixedWindowSizeW) ? (innerWidth - fixedWindowSizeW)/2 : 0;
+	// $: topIndent =  (innerWidth <= fixedWindowSizeW) ? (fixedWindowSizeW - innerWidth)/4 : 0;
+
+
 	if (browser) {
 		preload([
 			'/test.jpg',
@@ -30,7 +34,7 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<main style={`width: ${fixedWindowSizeW}px; transform: scale(${scale})`}>
+<main style={`width: ${fixedWindowSizeW}px; transform: scale(${scale}) `}>
 	{#if $globalGameState === EGlobalStates.START_SCREEN}
 		<StartScreen />
 	{:else if $globalGameState === EGlobalStates.BATTLE}
