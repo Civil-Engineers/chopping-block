@@ -126,6 +126,9 @@
 		</div>
 	</section>
 	<section class="bkg" class:is-shopping={$isShopping} />
+	<p class="instructions" class:is-shopping={$isShopping}>
+		Select an item in shop, then click a slot in any of your dice to replace
+	</p>
 	<section class="current-abi" class:is-shopping={$isShopping}>
 		{#each player.dice as dice}
 			<div class="dice-wrapper"><Dice {dice} /></div>
@@ -194,6 +197,22 @@
 
 	.selected {
 		transform: rotate(-10deg);
+	}
+
+	.instructions {
+		position: fixed;
+		top: 1rem;
+		left: 18rem;
+		color: white;
+		text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
+		z-index: 2;
+		font-size: 2rem;
+		width: 25rem;
+		display: none;
+
+		&.is-shopping {
+			display: initial;
+		}
 	}
 
 	.current-abi {
