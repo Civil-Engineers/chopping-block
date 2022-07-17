@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
 	import Shop from './Shop.svelte';
-	import { EGlobalStates, isShopping, globalGameState } from '$lib/store';
+	import { EGlobalStates, isShopping, globalGameState, playAudio } from '$lib/store';
 	import {
 		player,
 		enemies,
@@ -14,7 +14,7 @@
 		EAnimationStates
 	} from '$lib/store';
 	import { rollDice, sleep } from '$lib/helper';
-import DiceFace from './DiceFace.svelte';
+	import DiceFace from './DiceFace.svelte';
 
 	let isFastFording = false;
 	let wave = 0;
@@ -42,6 +42,7 @@ import DiceFace from './DiceFace.svelte';
 		await sleep(waitSpeed*1.5);
 		$beRolling = false;
 		await sleep(.2);
+		playAudio('/music/dice-roll.wav');
 		$player.dice.forEach((dice, index) => {
 			$player.defense = 0;
 			const rolledNmber = rollDice(dice.faces.length);
@@ -99,6 +100,7 @@ import DiceFace from './DiceFace.svelte';
 				});
 				$player.gold += sum;
 				$isShopping = true;
+
 				$enemies.forEach((enemy) => {
 					enemy.dice.forEach((dice) => {
 						enemy.defense = 0;
@@ -127,8 +129,14 @@ import DiceFace from './DiceFace.svelte';
 		// dice merge
 		const mergedAbility = {
 			damage: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.damage ?? 0), 0),
-			cleaveDamage: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.cleaveDamage ?? 0), 0),
-			goldDamage: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.goldAtt ? $player.gold : 0), 0),
+			cleaveDamage: attacker.dice.reduce(
+				(sum, dice) => (sum += dice.rolled?.ability.cleaveDamage ?? 0),
+				0
+			),
+			goldDamage: attacker.dice.reduce(
+				(sum, dice) => (sum += dice.rolled?.ability.goldAtt ? $player.gold : 0),
+				0
+			),
 			defense: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.defense ?? 0), 0),
 			heal: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.heal ?? 0), 0),
 			healAll: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.healAll ?? 0), 0),
@@ -141,7 +149,9 @@ import DiceFace from './DiceFace.svelte';
 
 		let damage = (mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier;
 		if (damage > 0) {
-			damage = (mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier - target.defense;
+			damage =
+				(mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier -
+				target.defense;
 			damage = damage < 0 ? (damage = 0) : damage;
 		}
 
@@ -149,24 +159,24 @@ import DiceFace from './DiceFace.svelte';
 		target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
 		target.health = target.health < 0 ? 0 : target.health;
 
-		// let cleaveDamage = (mergedAbility.cleaveDamage) * mergedAbility.multiplier;
-		// if (cleaveDamage > 0) {
-		// 	$enemies.forEach((enemy) => {
-		// 		let targetCleaveDamage = mergedAbility.cleaveDamage * mergedAbility.multiplier - target.defense;
-		// 		targetCleaveDamage = cleaveDamage < 0 ? (cleaveDamage = 0) : cleaveDamage;
-		// 		enemy.health -= cleaveDamage;
-		// 		enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
-		// 		enemy.health = enemy.health < 0 ? 0 : enemy.health;
-		// 	});
-		// }
+		let cleaveDamage = (mergedAbility.cleaveDamage) * mergedAbility.multiplier;
+		if (cleaveDamage > 0) {
+			$enemies.forEach((enemy) => {
+				let targetCleaveDamage = mergedAbility.cleaveDamage * mergedAbility.multiplier - target.defense;
+				targetCleaveDamage = cleaveDamage < 0 ? (cleaveDamage = 0) : cleaveDamage;
+				enemy.health -= targetCleaveDamage;
+				enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
+				enemy.health = enemy.health < 0 ? 0 : enemy.health;
+			});
+		}
 
-		// if (mergedAbility.healAll > 0) {
-		// 	$enemies.forEach((enemy) => {
-		// 		enemy.health += mergedAbility.healAll;
-		// 		enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
-		// 		enemy.health = enemy.health < 0 ? 0 : enemy.health;
-		// 	});
-		// }/
+		if (mergedAbility.healAll > 0) {
+			$enemies.forEach((enemy) => {
+				enemy.health += mergedAbility.healAll;
+				enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
+				enemy.health = enemy.health < 0 ? 0 : enemy.health;
+			});
+		}
 
 		attacker.health += mergedAbility.heal;
 		attacker.health = attacker.health > attacker.maxHealth ? attacker.maxHealth : attacker.health;
@@ -185,21 +195,21 @@ import DiceFace from './DiceFace.svelte';
 	<div class="fast" on:click={() => (isFastFording = !isFastFording)}>
 		{#if isFastFording}
 			<div class="regular-speed">
-				<img src={"/images/Play.png"} alt="Regular Speed" />
+				<img src={'/images/Play.png'} alt="Regular Speed" />
 				<span>regular speed</span>
 			</div>
 		{:else}
 			<div class="fast-forward">
-				<img src={"images/Fast_Forward.png"} alt="Fast Forward"/>
+				<img src={'images/Fast_Forward.png'} alt="Fast Forward" />
 				<span>fast forward</span>
 			</div>
 		{/if}
 	</div>
 	<div class="main">
 		<PlayerDisplay bind:player={$player} />
-			{#each $enemies as enemy}
-				<PlayerDisplay bind:player={enemy} isEnemy={true} />
-			{/each}
+		{#each $enemies as enemy}
+			<PlayerDisplay bind:player={enemy} isEnemy={true} />
+		{/each}
 		<Shop bind:player={$player} />
 	</div>
 </div>
@@ -229,10 +239,6 @@ import DiceFace from './DiceFace.svelte';
 
 			img {
 				width: 2.5rem;
-			}
-
-			span {
-
 			}
 		}
 	}

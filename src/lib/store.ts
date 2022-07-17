@@ -643,6 +643,9 @@ export const audioList = writable<{ id: number; audio: string }[]>([]);
 export const playAudio = (audio: string) => {
 	audioList.update((old) => {
 		old.push({ id: Math.random(), audio });
+		while (old.length > 10) {
+			old.shift();
+		}
 		return old;
 	});
 };
