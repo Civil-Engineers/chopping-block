@@ -102,23 +102,23 @@ export const allAbilities: { [key: string]: IAbility } = {
 		damage: 2
 	},
 	d3: {
-		name: 'Attack %d',
-		description: 'Deals %d damage',
+		name: 'Attack 3',
+		description: 'Deals 3 damage',
 		rarity: 8,
 		icon: '/images/Attack_Icon.png',
 		value: '3',
 		damage: 3
 	},
 	d4: {
-		name: 'Attack %d',
-		description: 'Deals %d damage',
+		name: 'Attack 4',
+		description: 'Deals 4 damage',
 		rarity: 6,
 		icon: '/images/Attack_Icon.png',
 		value: '4',
 		damage: 4
 	},
 	d5: {
-		name: 'Attack %d',
+		name: 'Attack 5',
 		description: 'Deals %d damage',
 		rarity: 4,
 		icon: '/images/Attack_Icon.png',
@@ -126,8 +126,8 @@ export const allAbilities: { [key: string]: IAbility } = {
 		damage: 5
 	},
 	d8: {
-		name: 'Attack %d',
-		description: 'Deals %d damage, take %hd damage',
+		name: 'Attack 8',
+		description: 'Deals 8 damage, take 1 damage',
 		rarity: 1,
 		icon: '/images/Attack_Icon.png',
 		value: '8*',
@@ -235,8 +235,8 @@ export const allAbilities: { [key: string]: IAbility } = {
 
 	// special
 	b2: {
-		name: 'Berserk x%m',
-		description: 'Multiplies damage done and deals %h damage to self',
+		name: 'Berserk x2',
+		description: 'Multiplies damage done by 2 and deals 1 damage to self',
 		rarity: UNCOMMON_R,
 		icon: '/images/Multiply_Icon.png',
 		value: '',

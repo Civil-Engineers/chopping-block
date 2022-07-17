@@ -41,6 +41,7 @@
   <button
     class="shop-button"
     class:is-shopping={$isShopping && isShoppingAllowed} 
+    class:is-visible={isShoppingAllowed}
     on:click={() => {
       if(isShoppingAllowed) isShopping.update(val => !val);
     }}
@@ -87,7 +88,7 @@
   </section>
 </div>
 
-{#if $isShopping}
+{#if $shopPhase}
 	<audio src="/music/game_game-1.mp3" type="audio/mpeg" autoplay loop />
 {/if}
 
@@ -105,13 +106,16 @@
 		border-radius: 10px 0 0 10px;
 		transition: transform 500ms ease;
 		z-index: 3;
-
+    opacity: 0;
 		&:hover {
 			cursor: pointer;
 		}
 
 		&.is-shopping {
 			transform: translateX(-25rem);
+		}
+    &.is-visible {
+			opacity: 1;
 		}
 
 		&:focus-visible {
