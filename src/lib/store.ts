@@ -91,7 +91,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	//damage
 	d0: {
 		name: 'Nothing',
-		description: '',
+		description: 'Does nothing',
 		rarity: 0,
 		icon: '/images/Blank_Icon.png',
 		value: ''
