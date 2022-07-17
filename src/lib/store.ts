@@ -269,7 +269,7 @@ export const waveInitEnemies: IPlayer[][] = [
 			defense: 0,
 			animationState: EAnimationStates.IDLE,
 			animations: {
-				[EAnimationStates.IDLE]: 'test.jpg'
+				[EAnimationStates.IDLE]: '/images/Catfish.png'
 			},
 			dice: [
 				{
@@ -293,7 +293,7 @@ export const waveInitEnemies: IPlayer[][] = [
 			defense: 0,
 			animationState: EAnimationStates.IDLE,
 			animations: {
-				[EAnimationStates.IDLE]: 'test.jpg'
+				[EAnimationStates.IDLE]: '/images/Eel.png'
 			},
 			dice: [
 				{
@@ -319,7 +319,7 @@ export const player = writable<IPlayer>({
 	defense: 0,
 	animationState: EAnimationStates.IDLE,
 	animations: {
-		[EAnimationStates.IDLE]: 'test.jpg',
+		[EAnimationStates.IDLE]: '/images/Fisher.png',
 		[EAnimationStates.ATTACK]: 'favicon.png'
 	},
 	dice: [
@@ -379,4 +379,4 @@ export const setEnemiesToWave = (n: number) => {
 export const globalGameState = writable<EGlobalStates>(EGlobalStates.START_SCREEN);
 
 export const isShopping = writable(false);
-export const selectedShopFace = writable<string>("");
+export const selectedShopFace = writable<string>('');

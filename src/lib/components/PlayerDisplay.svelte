@@ -55,6 +55,24 @@
 			width: 100px;
 			height: 100px;
 			display: block;
+			animation-duration: 1s;
+			animation-name: idle-bob;
+			animation-timing-function: ease;
+			animation-iteration-count: infinite;
+			animation-play-state: running;
+			transform-origin: 50% 100%;
+		}
+	}
+
+	@keyframes idle-bob {
+		0% {
+			transform: scale(1.05, .95);
+		}
+		50% {
+			transform: scale(.95, 1.05);
+		}
+		100% {
+			transform: scale(1.05, .95);
 		}
 	}
 </style>
