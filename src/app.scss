@@ -1,8 +1,9 @@
 /* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
 
+* {
+  font-family: 'Caveat Brush', cursive;
+}
+
 body {
   background-color: black;
-}
-* {
-	font-family: 'Caveat Brush', cursive;
 }
