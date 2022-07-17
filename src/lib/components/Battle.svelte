@@ -18,13 +18,13 @@
 	let wave = 0;
 
 	setEnemiesToWave(wave);
-	
+
 	$enemies.forEach((enemy) => {
 		enemy.dice.forEach((dice) => {
-		enemy.defense = 0;
-		const rolledNumber = rollDice(dice.faces.length);
-		dice.rolled = dice.faces[rolledNumber];
-		$enemies = $enemies;
+			enemy.defense = 0;
+			const rolledNumber = rollDice(dice.faces.length);
+			dice.rolled = dice.faces[rolledNumber];
+			$enemies = $enemies;
 		});
 	});
 
@@ -87,10 +87,10 @@
 				$isShopping = true;
 				$enemies.forEach((enemy) => {
 					enemy.dice.forEach((dice) => {
-					enemy.defense = 0;
-					const rolledNumber = rollDice(dice.faces.length);
-					dice.rolled = dice.faces[rolledNumber];
-					$enemies = $enemies;
+						enemy.defense = 0;
+						const rolledNumber = rollDice(dice.faces.length);
+						dice.rolled = dice.faces[rolledNumber];
+						$enemies = $enemies;
 					});
 				});
 			} else {
@@ -162,7 +162,7 @@
 </div>
 
 {#if !$shopPhase}
-	<audio src="/music/battle1.mp3" type="audio/mpeg" autoplay loop/>
+	<audio src="/music/battle1.mp3" type="audio/mpeg" autoplay loop />
 {/if}
 
 <style>
