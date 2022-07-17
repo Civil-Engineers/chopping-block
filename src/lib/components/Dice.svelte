@@ -3,23 +3,23 @@ import type { IDice } from "$lib/store";
 
 import DiceFace from "./DiceFace.svelte";
 
-	export let dice: IDice;
+export let dice: IDice;
 	// $: scale = health / maxHealth * 100;
 </script>
 
 
 <div class="grid-container">
     <div/>
-    <div class="grid-item">1</div>
+    <DiceFace face= {dice.faces[0]}/>
     <div/>
     <div/>
-    <div class="grid-item">2</div>
-    <div class="grid-item">3</div> 
-    <div class="grid-item">4</div>
-    <div class="grid-item">5</div>
+    <DiceFace face= {dice.faces[1]}/>
+    <DiceFace face= {dice.faces[2]}/>
+    <DiceFace face= {dice.faces[3]}/>
+    <DiceFace face= {dice.faces[4]}/>
     <div/>
-    <div class="grid-item">6</div>
-  </div>
+    <DiceFace face= {dice.faces[5]}/>
+</div>
   
 
 <style>
