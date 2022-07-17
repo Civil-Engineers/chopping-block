@@ -39,28 +39,16 @@
 		$beRolling = true;
 
 		// your dice roll
-		await sleep(waitSpeed);
-		playAudio('/music/dice-roll.wav');
+		await sleep(waitSpeed*1.5);
 		$beRolling = false;
+		await sleep(.2);
+		playAudio('/music/dice-roll.wav');
 		$player.dice.forEach((dice, index) => {
 			$player.defense = 0;
 			const rolledNmber = rollDice(dice.faces.length);
 			dice.rolled = dice.faces[rolledNmber];
 			$player = $player;
 		});
-
-		// do ability to enemy
-		await sleep(waitSpeed);
-
-		attack($player, $enemies[0]);
-		$enemies = $enemies.filter((enemy) => enemy.health > 0);
-		$player = $player;
-		$enemies = $enemies;
-
-		// enemy turn -------
-
-		// all enemies roll at the same time
-		await sleep(waitSpeed);
 		$enemies.forEach((enemy) => {
 			enemy.dice.forEach((dice) => {
 				enemy.defense = 0;
@@ -70,8 +58,21 @@
 			});
 		});
 
+		// do ability to enemy
+		await sleep(waitSpeed);
+
+		attack($player, $enemies[0]);
+		await sleep(waitSpeed*2.7);
+		$enemies = $enemies.filter((enemy) => enemy.health > 0);
+		$player = $player;
+		$enemies = $enemies;
+
+		// enemy turn -------
+
+		// all enemies roll at the same time
+		await sleep(waitSpeed*2);
+
 		// do ability to player
-		await sleep(waitSpeed * 2.5);
 		$enemies.forEach((enemy) => {
 			attack(enemy, $player);
 			$player = $player;
@@ -79,6 +80,7 @@
 		});
 		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 
+		await sleep(waitSpeed*3.2);
 		// loop many times until all enemies die or you die
 		if ($player.health > 0 && $enemies.length > 0) {
 			battleLoop();
@@ -157,13 +159,12 @@
 		target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
 		target.health = target.health < 0 ? 0 : target.health;
 
-		let cleaveDamage = mergedAbility.cleaveDamage * mergedAbility.multiplier;
+		let cleaveDamage = (mergedAbility.cleaveDamage) * mergedAbility.multiplier;
 		if (cleaveDamage > 0) {
 			$enemies.forEach((enemy) => {
-				let targetCleaveDamage =
-					mergedAbility.cleaveDamage * mergedAbility.multiplier - target.defense;
-				targetCleaveDamage = damage < 0 ? (damage = 0) : damage;
-				enemy.health -= cleaveDamage;
+				let targetCleaveDamage = mergedAbility.cleaveDamage * mergedAbility.multiplier - target.defense;
+				targetCleaveDamage = cleaveDamage < 0 ? (cleaveDamage = 0) : cleaveDamage;
+				enemy.health -= targetCleaveDamage;
 				enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
 				enemy.health = enemy.health < 0 ? 0 : enemy.health;
 			});
@@ -213,7 +214,9 @@
 	</div>
 </div>
 
-{#if !$shopPhase}
+{#if wave == 9}
+	<audio src="/music/boss_shit.mp3" type="audio/mpeg" autoplay loop />
+{:else if !$shopPhase}
 	<audio src="/music/battle1.mp3" type="audio/mpeg" autoplay loop />
 {/if}
 
@@ -236,9 +239,6 @@
 
 			img {
 				width: 2.5rem;
-			}
-
-			span {
 			}
 		}
 	}

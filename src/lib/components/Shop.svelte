@@ -263,6 +263,7 @@
 
 		.shop-items {
 			padding: 0;
+			margin-left: 1rem;
 			list-style: none;
 			display: flex;
 			flex-direction: column;
