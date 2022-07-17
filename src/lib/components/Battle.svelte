@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
 	import Shop from './Shop.svelte';
-	import { isShopping } from '$lib/store';
+	import { EGlobalStates, isShopping, globalGameState } from '$lib/store';
 	import {
 		player,
 		enemies,
@@ -10,7 +10,7 @@
 		shopPhase,
 		type IAbility,
 		type IPlayer,
-		EAnimationStates,
+		EAnimationStates
 	} from '$lib/store';
 	import { rollDice, sleep } from '$lib/helper';
 
@@ -78,7 +78,7 @@
 		if ($player.health > 0 && $enemies.length > 0) {
 			battleLoop();
 		} else if ($player.health <= 0) {
-			// game over
+			$globalGameState = EGlobalStates.LOSE;
 		} else {
 			wave++;
 			if (wave < waveInitEnemies.length) {
@@ -95,15 +95,16 @@
 				});
 			} else {
 				// WIN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				$globalGameState = EGlobalStates.WIN;
 			}
 		}
 	};
 
-	shopPhase.subscribe(value => {
+	shopPhase.subscribe((value) => {
 		if (value === false) {
-			console.log("value: "+value)
+			console.log('value: ' + value);
 			battleLoop();
-    	}
+		}
 	});
 
 	// battleLoop();
