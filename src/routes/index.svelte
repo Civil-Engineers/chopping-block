@@ -3,7 +3,9 @@
 	import AudioPlayer from '$lib/components/AudioPlayer.svelte';
 
 	import Battle from '$lib/components/Battle.svelte';
+import LoseScreen from '$lib/components/LoseScreen.svelte';
 	import StartScreen from '$lib/components/StartScreen.svelte';
+import WinScreen from '$lib/components/WinScreen.svelte';
 	import { preload } from '$lib/helper';
 	import { globalGameState, EGlobalStates } from '$lib/store';
 
@@ -40,6 +42,10 @@
 		<StartScreen />
 	{:else if $globalGameState === EGlobalStates.BATTLE}
 		<Battle />
+	{:else if $globalGameState === EGlobalStates.WIN}
+		<WinScreen />
+	{:else if $globalGameState === EGlobalStates.LOSE}
+		<LoseScreen />
 	{/if}
 	<AudioPlayer />
 </main>
