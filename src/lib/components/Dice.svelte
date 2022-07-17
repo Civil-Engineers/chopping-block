@@ -1,7 +1,6 @@
 <script lang="ts">
 import type { IDice } from "$lib/store";
-
-import DiceFace from "./DiceFace.svelte";
+import DiceFace from './DiceFace.svelte';
 
 export let dice: IDice;
 	// $: scale = health / maxHealth * 100;

@@ -116,9 +116,11 @@
     transition: opacity 500ms ease;
     z-index: 2;
     opacity: 0;
+    display: none;
 
     &.is-shopping {
-      opacity: .9;
+      opacity: .95;
+      display: block;
     }
   }
 
@@ -129,12 +131,13 @@
     top:10rem;
     left: 20rem;
     box-sizing: border-box;
-    transition: opacity 600ms ease;
+    transition: opacity 500ms ease display 500ms ease;
     z-index: 2;
     opacity: 0;
-
+    display:none;
     &.is-shopping {
       opacity: 1;
+      display: initial;
     }
   }
 

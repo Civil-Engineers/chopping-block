@@ -1,9 +1,17 @@
 <script lang="ts">
 	import type { IFace } from '$lib/store';
-	import DiceFace from './DiceFace.svelte';
+    import {isShopping, selectedShopFace, allAbilities,} from '$lib/store'
 
 	export let face: IFace;
 	// $: scale = health / maxHealth * 100;
+    let trySetNewFace = () => {
+        $selectedShopFace = $selectedShopFace;
+        $isShopping = $isShopping;
+        if(isShopping && selectedShopFace) {
+            // face.ability = allAbilities[selectedShopFace];
+            // selectedShopFace = "";
+        }
+    }
 </script>
 
 <div class="face" style={`background-color: ${face.ability.icon}`}>
