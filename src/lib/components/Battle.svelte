@@ -70,7 +70,7 @@ import DiceFace from './DiceFace.svelte';
 		});
 
 		// do ability to player
-		await sleep(waitSpeed);
+		await sleep(waitSpeed*2.5);
 		$enemies.forEach((enemy) => {
 			attack(enemy, $player);
 			$player = $player;

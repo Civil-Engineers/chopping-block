@@ -362,7 +362,16 @@ export const allAbilities: { [key: string]: IAbility } = {
 		icon: '/images/Midas_Icon.png',
 		value: '',
 		goldAtt: true,
-	}
+	},
+	dp4: {
+		name: 'Vicious Attack 4',
+		description: 'Deals 4 damage, take 2',
+		rarity: 0,
+		icon: '/images/Attack_Icon.png',
+		value: '4',
+		damage: 4,
+		heal: -2
+	},
 	// upgr: {
 	// 	name: 'Upgrade 1',
 	// 	description: 'Upgrade all faces by 1 for this battle',
@@ -380,132 +389,131 @@ export const allAbilities: { [key: string]: IAbility } = {
 	// },
 };
 
+const createFishGoon = () => {
+	let ret:IPlayer = {
+		name: 'Training Dummy',
+		maxHealth: 10,
+		health: 10,
+		defense: 0,
+		gold: 0,
+		animationState: EAnimationStates.IDLE,
+		animations: {
+			[EAnimationStates.IDLE]: '/images/Fish_Goon.png',
+			[EAnimationStates.ATTACK]: '/images/Fish_Goon_Attack.png'
+		},
+		dice: [
+			{
+				faces: [
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d2'] },
+					{ ability: allAbilities['h1'] },
+					{ ability: allAbilities['s2'] }
+				]
+			}
+		]
+	}
+	return ret;
+}
+
+const createPiranha = () => {
+	let ret:IPlayer = {
+		name: 'Training Dummy',
+		maxHealth: 12,
+		health: 12,
+		defense: 0,
+		gold: 0,
+		animationState: EAnimationStates.IDLE,
+		animations: {
+			[EAnimationStates.IDLE]: '/images/Piranha.png',
+			[EAnimationStates.ATTACK]: '/images/Piranha_Attack.png'
+		},
+		dice: [
+			{
+				faces: [
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d2'] },
+					{ ability: allAbilities['d2'] },
+					{ ability: allAbilities['dp4'] },
+					{ ability: allAbilities['dp4'] }
+				]
+			}
+		]
+	}
+	return ret;
+}
+
+const createCatFish = () => {
+	let ret:IPlayer = {
+		name: 'Training Dummy',
+		maxHealth: 6,
+		health: 6,
+		defense: 0,
+		gold: 0,
+		animationState: EAnimationStates.IDLE,
+		animations: {
+			[EAnimationStates.IDLE]: '/images/Catfish.png',
+			[EAnimationStates.ATTACK]: '/images/Catfish_Attack.png'
+		},
+		dice: [
+			{
+				faces: [
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['d1'] },
+					{ ability: allAbilities['hc2'] },
+					{ ability: allAbilities['hc2'] },
+					{ ability: allAbilities['s2'] },
+					{ ability: allAbilities['s2'] }
+				]
+			}
+		]
+	}
+	return ret;
+}
+
 export const waveInitEnemies: IPlayer[][] = [
 	[
-		{
-			name: 'Training Dummy',
-			maxHealth: 10,
-			health: 10,
-			defense: 0,
-			gold: 0,
-			animationState: EAnimationStates.IDLE,
-			animations: {
-				[EAnimationStates.IDLE]: '/images/Catfish.png',
-				[EAnimationStates.ATTACK]: '/images/Catfish_Attack.png'
-			},
-			dice: [
-				{
-					faces: [
-						{ ability: allAbilities['d0'] },
-						{ ability: allAbilities['s1'] },
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['h1'] }
-					]
-				}
-			]
-		}
+		createFishGoon()
 	],
 	[
-		{
-			name: 'Snake',
-			maxHealth: 8,
-			health: 8,
-			defense: 0,
-			gold: 0,
-			animationState: EAnimationStates.IDLE,
-			animations: {
-				[EAnimationStates.IDLE]: '/images/Eel.png',
-				[EAnimationStates.ATTACK]: '/images/Eel_Attack.png'
-			},
-			dice: [
-				{
-					faces: [
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d2'] },
-						{ ability: allAbilities['d2'] },
-						{ ability: allAbilities['d3'] }
-					]
-				}
-			]
-		},
-		{
-			name: 'Snake',
-			maxHealth: 8,
-			health: 8,
-			defense: 0,
-			gold: 0,
-			animationState: EAnimationStates.IDLE,
-			animations: {
-				[EAnimationStates.IDLE]: '/images/Piranha.png',
-				[EAnimationStates.ATTACK]: '/images/Piranha_Attack.png'
-			},
-			dice: [
-				{
-					faces: [
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d2'] },
-						{ ability: allAbilities['d2'] },
-						{ ability: allAbilities['d3'] }
-					]
-				}
-			]
-		},
-		{
-			name: 'Snake',
-			maxHealth: 8,
-			health: 8,
-			defense: 0,
-			gold: 0,
-			animationState: EAnimationStates.IDLE,
-			animations: {
-				[EAnimationStates.IDLE]: '/images/Fish_Goon.png',
-				[EAnimationStates.ATTACK]: '/images/Fish_Goon_Attack.png'
-			},
-			dice: [
-				{
-					faces: [
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d1'] },
-						{ ability: allAbilities['d2'] },
-						{ ability: allAbilities['d2'] },
-						{ ability: allAbilities['d3'] }
-					]
-				}
-			]
-		}
+		createFishGoon(),
+		createFishGoon()
 	],
 	[
-		{
-			name: 'Dragon',
-			maxHealth: 50,
-			health: 50,
-			defense: 0,
-			gold: 0,
-			animationState: EAnimationStates.IDLE,
-			animations: {
-				[EAnimationStates.IDLE]: '/images/Eel.png'
-			},
-			dice: [
-				{
-					faces: [
-						{ ability: allAbilities['d10'] },
-						{ ability: allAbilities['s10'] },
-						{ ability: allAbilities['h10'] },
-						{ ability: allAbilities['d10'] },
-						{ ability: allAbilities['d10'] },
-						{ ability: allAbilities['d0'] }
-					]
-				}
-			]
-		}
-	]
+		createFishGoon(),
+		createPiranha()
+	],
+	[
+		createFishGoon(),
+		createFishGoon(),
+		createFishGoon()
+	],
+	[
+		createFishGoon(),
+		createFishGoon(),
+		createCatFish()
+	],
+	[
+		createPiranha(),
+		createCatFish()
+	],
+	[
+		createFishGoon(),
+		createPiranha(),
+		createCatFish()
+	],
+	[
+		createPiranha(),
+		createPiranha(),
+		createCatFish()
+	],
+	[
+		createPiranha(),
+		createPiranha(),
+		createPiranha(),
+	],
 ];
 
 export const player = writable<IPlayer>({
