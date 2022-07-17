@@ -1,17 +1,14 @@
 <script lang="ts">
 	import { audioList } from '$lib/store';
 
-	const ended = (audioToBeRemoved: string) => {
+	const ended = (id: number) => {
 		audioList.update((old) => {
-			old.splice(
-				old.findIndex((a) => a === audioToBeRemoved),
-				1
-			);
+			old.splice($audioList.findIndex(audio => audio.id === id), 1);
 			return old;
 		});
 	};
 </script>
 
-{#each $audioList as audio}
-	<audio src={audio} on:ended={() => ended(audio)} autoplay />
+{#each $audioList as audio, i}
+	<audio src={audio.audio} on:ended={() => ended(audio.id)} autoplay />
 {/each}

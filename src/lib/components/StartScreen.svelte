@@ -1,10 +1,15 @@
 <script lang="ts">
-	import { EGlobalStates, globalGameState } from '$lib/store';
+	import { playAudio, EGlobalStates, globalGameState } from '$lib/store';
 </script>
 
 <div class="con">
 	<h1>Chopping Block</h1>
-	<button on:click={() => ($globalGameState = EGlobalStates.INSTRUCTIONS)}>Start</button>
+	<button
+		on:click={() => {
+			$globalGameState = EGlobalStates.INSTRUCTIONS;
+			playAudio('/music/button.wav');
+		}}>Start</button
+	>
 </div>
 
 <style lang="scss">
