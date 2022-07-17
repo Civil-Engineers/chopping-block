@@ -14,6 +14,7 @@
 		EAnimationStates
 	} from '$lib/store';
 	import { rollDice, sleep } from '$lib/helper';
+import DiceFace from './DiceFace.svelte';
 
 	let isFastFording = false;
 	let wave = 0;
@@ -87,6 +88,14 @@
 			if (wave < waveInitEnemies.length) {
 				setEnemiesToWave(wave);
 				$shopPhase = true;
+				$player.gold = 10;
+				let sum = 0;
+				$player.dice.forEach((dice) => {
+					dice.faces.forEach((face) => {
+						sum += face.ability.gold ? face.ability.gold : 0;
+					});
+				});
+				$player.gold += sum;
 				$isShopping = true;
 				$enemies.forEach((enemy) => {
 					enemy.dice.forEach((dice) => {
