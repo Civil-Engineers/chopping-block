@@ -71,7 +71,10 @@
 							class:selected={selectedAbility === index}
 							style={`box-shadow: 0 0 ${(10-ability.data.rarity)*2}px ${(10-ability.data.rarity)*2}px red`}
 							on:click={() => {
-								if (player.gold >= 3) {
+								if(selectedAbility == index) {
+									selectedAbility = -1;
+									$selectedShopFace = -1;
+								} else if (player.gold >= 3) {
 									selectedAbility = index;
 									$selectedShopFace = ability.key;
 								}
@@ -151,12 +154,14 @@
 		height: 4rem;
 		border: none;
 		padding: none;
+		margin-right: -2px;
 		border-radius: 10px 0 0 10px;
 		transition: transform 500ms ease;
 		z-index: 3;
 		opacity: 0;
 		&:hover {
 			cursor: pointer;
+			transform:none
 		}
 
 		&.is-shopping {

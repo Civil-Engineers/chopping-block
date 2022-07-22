@@ -14,17 +14,24 @@
 	let rampTime = 10;
 	let xMargin = 0;
     let yMargin = 0;
+	let shakeDist = 10;
+	let shakeConst = 12;
+
+	const randomSign = () => {
+		return Math.random() < 0.5 ? 1 : -1;
+	}
+
 	const diceLoop = async () => {
 		if($beRolling) {
 			currRoll = dice.faces[Math.floor(Math.random() * 5 + 1)];
 			rampTime = rampTime + 5;
-			xMargin = Math.floor(Math.random() * 20 - 10);
-			yMargin = Math.floor(Math.random() * 20 - 10);
+			xMargin = Math.floor(Math.random() * shakeDist + shakeConst) * randomSign();
+			yMargin = Math.floor(Math.random() * shakeDist + shakeConst) * randomSign();
 		} else {
 			xMargin = 0;
 			yMargin = 0;
 		}
-		await sleep(10);
+		await sleep(35);
 		diceLoop();
 	};
 	diceLoop();

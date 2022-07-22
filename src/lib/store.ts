@@ -278,7 +278,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	},
 	s5: {
 		name: 'Shield 6',
-		description: 'Blocks 5 damage',
+		description: 'Blocks 6 damage',
 		rarity: RARE_R,
 		value: '6',
 		icon: '/images/Shield_Icon.png',

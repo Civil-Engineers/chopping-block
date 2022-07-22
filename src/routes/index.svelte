@@ -20,8 +20,8 @@
 
 	$: scale = wide ? innerWidth / fixedWindowSizeW : innerHeight / fixedWindowSizeH;
 
-	// $: leftIndent = (innerWidth > fixedWindowSizeW) ? (innerWidth - fixedWindowSizeW)/2 : 0;
-	// $: topIndent =  (innerWidth <= fixedWindowSizeW) ? (fixedWindowSizeW - innerWidth)/4 : 0;
+	$: leftIndent = wide ? 0 : (innerWidth - fixedWindowSizeW*scale)/2;
+	$: topIndent =  wide ? (innerHeight - fixedWindowSizeH*scale)/2 : 0;
 
 	if (browser) {
 		preload([
@@ -57,7 +57,7 @@
 
 <svelte:window bind:innerWidth bind:innerHeight />
 
-<main style={`width: ${fixedWindowSizeW}px; transform: scale(${scale}) `}>
+<main style={`width: ${fixedWindowSizeW}px; margin-left: ${leftIndent}px; margin-top: ${topIndent}px; transform: scale(${scale}) `}>
 	{#if $globalGameState === EGlobalStates.START_SCREEN}
 		<StartScreen />
 	{:else if $globalGameState === EGlobalStates.INSTRUCTIONS}
