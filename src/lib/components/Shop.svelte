@@ -73,7 +73,7 @@
 							on:click={() => {
 								if(selectedAbility == index) {
 									selectedAbility = -1;
-									$selectedShopFace = -1;
+									$selectedShopFace = "";
 								} else if (player.gold >= 3) {
 									selectedAbility = index;
 									$selectedShopFace = ability.key;
@@ -221,7 +221,6 @@
 	}
 
 	.current-abi {
-		//background-color: rgba(30, 30, 30);
 		color: white;
 		position: fixed;
 		top: 10rem;
