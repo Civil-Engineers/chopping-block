@@ -27,6 +27,7 @@ export interface IPlayer {
 	maxHealth: number;
 	health: number;
 	gold: number;
+	poison: number;
 	dice: IDice[];
 	defense: number;
 	animationState: EAnimationStates;
@@ -215,33 +216,33 @@ export const allAbilities: { [key: string]: IAbility } = {
 	},
 
 	// poison
-	// p1: {
-	// 	name: 'Poison %p',
-	// 	description:
-	// 		'Inflicts 1 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-	// 	rarity: 1,
-	// 	icon: 'green',
-	// 	value: "1",
-	// 	poison: 1
-	// },
-	// p2: {
-	// 	name: 'Poison %p',
-	// 	description:
-	// 		'Inflicts 2 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-	// 	rarity: 8,
-	// 	icon: 'green',
-	// 	value: "2",
-	// 	poison: 2
-	// },
-	// p3: {
-	// 	name: 'Poison %p',
-	// 	description:
-	// 		'Inflicts 3 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
-	// 	rarity: 5,
-	// 	icon: 'green',
-	// 	value: "3",
-	// 	poison: 3
-	// },
+	p1: {
+		name: 'Poison %p',
+		description:
+			'Inflicts 1 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
+		rarity: 1,
+		icon: '/images/Shield_Icon.png',
+		value: "1",
+		poison: 1
+	},
+	p2: {
+		name: 'Poison %p',
+		description:
+			'Inflicts 2 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
+		rarity: 8,
+		icon: '/images/Shield_Icon.png',
+		value: "2",
+		poison: 2
+	},
+	p3: {
+		name: 'Poison %p',
+		description:
+			'Inflicts 3 Poison \n (Enemy takes damage equal to the # of Poison stacks they have, then decreases Poison by 1.)',
+		rarity: 5,
+		icon: '/images/Shield_Icon.png',
+		value: "3",
+		poison: 3
+	},
 
 	//shield
 	s1: {
@@ -403,6 +404,7 @@ const createFishGoon = () => {
 		maxHealth: 10,
 		health: 10,
 		defense: 0,
+		poison: 0,
 		gold: 0,
 		animationState: EAnimationStates.IDLE,
 		animations: {
@@ -431,6 +433,7 @@ const createPiranha = () => {
 		maxHealth: 12,
 		health: 12,
 		defense: 0,
+		poison: 0,
 		gold: 0,
 		animationState: EAnimationStates.IDLE,
 		animations: {
@@ -458,6 +461,7 @@ const createCatFish = () => {
 		name: 'Training Dummy',
 		maxHealth: 6,
 		health: 6,
+		poison: 0,
 		defense: 0,
 		gold: 0,
 		animationState: EAnimationStates.IDLE,
@@ -487,6 +491,7 @@ const createEelBoss = () => {
 		maxHealth: 20,
 		health: 20,
 		defense: 0,
+		poison: 0,
 		gold: 0,
 		animationState: EAnimationStates.IDLE,
 		animations: {
@@ -569,6 +574,7 @@ export const player = writable<IPlayer>({
 	name: 'Roe',
 	maxHealth: 30,
 	health: 30,
+	poison: 0,
 	gold: 10,
 	defense: 0,
 	animationState: EAnimationStates.IDLE,
@@ -606,6 +612,7 @@ export const enemies = writable<IPlayer[]>([
 		maxHealth: 10,
 		health: 10,
 		gold: 0,
+		poison: 0,
 		defense: 0,
 		animationState: EAnimationStates.IDLE,
 		animations: {

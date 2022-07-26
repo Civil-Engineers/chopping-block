@@ -158,6 +158,8 @@
 			damage = damage < 0 ? (damage = 0) : damage;
 		}
 
+		target.poison += mergedAbility.poison;
+
 		target.health -= damage;
 		target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
 		target.health = target.health < 0 ? 0 : target.health;
@@ -184,9 +186,14 @@
 		attacker.health += mergedAbility.heal;
 		attacker.health = attacker.health > attacker.maxHealth ? attacker.maxHealth : attacker.health;
 		attacker.health = attacker.health < 0 ? 0 : attacker.health;
+		
+		attacker.health -= attacker.poison;
+		attacker.health = attacker.health > attacker.maxHealth ? attacker.maxHealth : attacker.health;
+		attacker.health = attacker.health < 0 ? 0 : attacker.health;
+		
+		attacker.poison--;
 
 		attacker.defense = mergedAbility.defense;
-
 		attacker.animationState = EAnimationStates.ATTACK;
 	};
 
