@@ -2,7 +2,7 @@
 	import { audioList } from '$lib/store';
 
 	const ended = (id: number) => {
-		console.log(id);
+
 		audioList.update((old) => {
 			old.splice(
 				$audioList.findIndex((audio) => audio.id === id),

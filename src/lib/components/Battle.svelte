@@ -121,7 +121,6 @@
 
 	shopPhase.subscribe((value) => {
 		if (value === false) {
-			console.log('value: ' + value);
 			battleLoop();
 		}
 	});

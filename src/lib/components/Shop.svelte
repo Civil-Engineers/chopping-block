@@ -79,15 +79,13 @@
 									$selectedShopFace = ability.key;
 								}
 							}}
-     
-              on:mouseenter={() => {
-                highlightedAbility = index;
-                console.log(index);
-              }}
-              on:mouseleave={() => {
-                highlightedAbility = -1;
-                console.log(index);
-              }}
+				
+							on:mouseenter={() => {
+								highlightedAbility = index;
+							}}
+							on:mouseleave={() => {
+								highlightedAbility = -1;
+							}}
 						>
               <TileFaceIcon icon={ability.data.icon} value={ability.data.value}/>
 						</li>
@@ -130,7 +128,7 @@
 	</section>
 	<section class="bkg" class:is-shopping={$isShopping} />
 	<p class="instructions" class:is-shopping={$isShopping}>
-		Select an item in shop, then click a slot in any of your dice to replace
+		Select an item in shop, then click a slot in any of your dice to replace. Each face costs 3 coins.
 	</p>
 	<section class="current-abi" class:is-shopping={$isShopping}>
 		{#each player.dice as dice}

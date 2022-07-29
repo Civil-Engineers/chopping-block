@@ -4,7 +4,7 @@
 
 <div class="con">
 	<h1 class="titl">Instructions</h1>
-	<p class="inst">How to play! <br><br>
+	<p class="inst">
 		You have two 6 sided dice with each face representing an ability. <br><br>
 		These abilities are randomized during the fight and used against the enemy!<br><br> 
 		These are the abilities:<br>
@@ -40,11 +40,11 @@
 		margin-top: 20px;
 		text-align: center;
 		font-size: 80px;
-		margin-bottom: 30px;
+		margin-bottom: 20px;
 	}
 	p {
 		text-align: center;
-		font-size: 15px;
+		font-size: 20px;
 		margin-bottom: 30px;
 	}
 	button {
