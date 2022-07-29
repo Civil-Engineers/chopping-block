@@ -45,9 +45,9 @@
 		</div>
 	{/if}
 	{#if $beRolling}
-		<TileFaceIcon icon={currRoll.ability.icon} value={currRoll.ability.value} />
+		<TileFaceIcon ability = {currRoll.ability}  temp={currRoll.temp_bonus} />
 	{:else}
-		<TileFaceIcon icon={face.ability.icon} value={face.ability.value} />
+		<TileFaceIcon ability = {face.ability}  temp={face.temp_bonus} />
 	{/if}
 </div>
 

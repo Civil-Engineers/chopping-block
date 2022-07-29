@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { audioList, playAudio, type IFace } from '$lib/store';
+	import { audioList, makeAbility, playAudio, type IFace } from '$lib/store';
 	import { isShopping, selectedShopFace, allAbilities, shopBuy } from '$lib/store';
 	import TileFaceIcon from './TileFaceIcon.svelte';
 
@@ -10,7 +10,7 @@
 		$selectedShopFace = $selectedShopFace;
 		$isShopping = $isShopping;
 		if (isShopping && $selectedShopFace) {
-			face.ability = allAbilities[$selectedShopFace];
+			face.ability = makeAbility($selectedShopFace);
 			$selectedShopFace = '';
 			$shopBuy = true;
 			playAudio('/music/cash-register.mp3');
@@ -25,5 +25,5 @@
 		trySetNewFace();
 	}}
 >
-	<TileFaceIcon icon={face.ability.icon} value={face.ability.value} small={true}/>
+	<TileFaceIcon ability={face.ability} temp={face.temp_bonus} small={true}/>
 </div>

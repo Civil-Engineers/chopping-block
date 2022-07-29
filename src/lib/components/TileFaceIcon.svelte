@@ -1,12 +1,34 @@
 <script lang="ts">
-	export let icon: string;
-	export let value: string;
-	export let small: boolean = false;
+	import type { IAbility, IFace } from "$lib/store";
+	export let ability: IAbility;
+	export let temp: IAbility | undefined = undefined;
+	export let small: boolean = false
+	
+
+	const getSum = (key: keyof IAbility) => {
+		const x = ability[key];
+		if(temp && typeof temp !== "undefined") {
+			const y = temp[key];
+			if(typeof x === "number" && typeof y === "number") {
+				return ""+(x+y);
+			}
+		}
+		return ""+x;
+	}
+
+	const display = (text: string) => {
+		let display = text;
+		display = display.replaceAll("%d", getSum("damage"));
+		display = display.replaceAll("%cd", getSum("cleaveDamage"));
+		display = display.replaceAll("%h", getSum("heal"));
+		display = display.replaceAll("%s", getSum("defense"));
+		return display;
+	}
 </script>
 
 <div class="icon" class:small={small}>
-	<img src={icon} alt="" />
-	<p>{value}</p>
+	<img src={ability.icon} alt="" />
+	<p>{display(ability.value)}</p>
 </div>
 
 <style lang="scss">

@@ -87,7 +87,7 @@
 								highlightedAbility = -1;
 							}}
 						>
-              <TileFaceIcon icon={ability.data.icon} value={ability.data.value}/>
+							<TileFaceIcon ability={ability.data}/>
 						</li>
 					{/each}
 				</ul>
