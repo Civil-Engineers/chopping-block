@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
 	import Shop from './Shop.svelte';
-	import { EGlobalStates, isShopping, globalGameState, playAudio } from '$lib/store';
+	import { EGlobalStates, isShopping, globalGameState, playAudio, newAbility, resetTempBonus, type IDice, type IFace } from '$lib/store';
 	import {
 		player,
 		enemies,
@@ -61,7 +61,9 @@
 
 		// do ability to enemy
 		await sleep(waitSpeed);
-
+		for(const d of $player.dice) {
+			dicePreattack(d);
+		}
 		attack($player, $enemies[0]);
 		await sleep(waitSpeed*2.7);
 		$enemies = $enemies.filter((enemy) => enemy.health > 0);
@@ -89,6 +91,7 @@
 		} else if ($player.health <= 0) {
 			$globalGameState = EGlobalStates.LOSE;
 		} else {
+			resetTempBonus($player);
 			wave++;
 			if (wave < waveInitEnemies.length) {
 				setEnemiesToWave(wave);
@@ -101,7 +104,7 @@
 					});
 				});
 				$player.gold += sum;
-				$player.health = $player.maxHealth;
+				// $player.health = $player.maxHealth;
 				$isShopping = true;
 
 				$enemies.forEach((enemy) => {
@@ -126,25 +129,47 @@
 	});
 
 	// battleLoop();
+	const dicePreattack = (dice: IDice) => {
+		if(dice.rolled?.ability.grow) {
+			dice.rolled.temp_bonus	= mergeAbilities(dice.rolled.ability.grow, dice.rolled.temp_bonus)
+		}
+		// if(dice.rolled?.ability.rolling) {
+		// 	// animation?
+			
+		// }
+	}
+
+	const mergeAbilities = (a1:IAbility, a2:IAbility) => {
+		const mergedAbility:IAbility = newAbility({
+			damage: a1.damage + a2.damage,
+			cleaveDamage: a1.cleaveDamage + a2.cleaveDamage,
+			defense: a1.defense + a2.defense,
+			heal: a1.heal + a2.heal,
+			healAll: a1.healAll + a2.healAll,
+			poison: a1.poison + a2.poison,
+			multiplier: a1.multiplier + a2.multiplier,
+		});
+		return mergedAbility;
+	}
 
 	const attack = (attacker: IPlayer, target: IPlayer) => {
 		// dice merge
 		const mergedAbility = {
-			damage: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.damage ?? 0), 0),
+			damage: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.damage ?? 0) + (dice.rolled?.temp_bonus?.damage ?? 0)), 0),
 			cleaveDamage: attacker.dice.reduce(
-				(sum, dice) => (sum += dice.rolled?.ability.cleaveDamage ?? 0),
+				(sum, dice) => (sum += (dice.rolled?.ability.cleaveDamage ?? 0) + (dice.rolled?.temp_bonus?.cleaveDamage ?? 0)),
 				0
 			),
 			goldDamage: attacker.dice.reduce(
 				(sum, dice) => (sum += dice.rolled?.ability.goldAtt ? $player.gold : 0),
 				0
 			),
-			defense: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.defense ?? 0), 0),
-			heal: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.heal ?? 0), 0),
-			healAll: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.healAll ?? 0), 0),
-			poison: attacker.dice.reduce((sum, dice) => (sum += dice.rolled?.ability.poison ?? 0), 0),
+			defense: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.defense) ?? 0 + (dice.rolled?.temp_bonus?.defense ?? 0)), 0),
+			heal: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.heal ?? 0)+ (dice.rolled?.temp_bonus?.heal ?? 0)), 0),
+			healAll: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.healAll ?? 0) + (dice.rolled?.temp_bonus?.healAll ?? 0)), 0),
+			poison: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.poison ?? 0) + (dice.rolled?.temp_bonus?.poison ?? 0)), 0),
 			multiplier: attacker.dice.reduce(
-				(product, dice) => (product *= dice.rolled?.ability.multiplier ?? 1),
+				(product, dice) => (product *= (dice.rolled?.ability.multiplier ?? 1) * (dice.rolled?.temp_bonus?.multiplier ?? 1)),
 				1
 			)
 		};
@@ -154,13 +179,12 @@
 			damage =
 				(mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier -
 				target.defense;
-			damage = damage < 0 ? (damage = 0) : damage;
+			damage = damage < 0 ? 0 : damage;
 		}
 
 		target.poison += mergedAbility.poison;
 
 		target.health -= damage;
-		target.health = target.health > target.maxHealth ? target.maxHealth : target.health;
 		target.health = target.health < 0 ? 0 : target.health;
 
 		let cleaveDamage = (mergedAbility.cleaveDamage) * mergedAbility.multiplier;
@@ -169,16 +193,17 @@
 				let targetCleaveDamage = mergedAbility.cleaveDamage * mergedAbility.multiplier - target.defense;
 				targetCleaveDamage = cleaveDamage < 0 ? (cleaveDamage = 0) : cleaveDamage;
 				enemy.health -= targetCleaveDamage;
-				enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
 				enemy.health = enemy.health < 0 ? 0 : enemy.health;
 			});
 		}
 
 		if (mergedAbility.healAll > 0) {
 			$enemies.forEach((enemy) => {
-				enemy.health += mergedAbility.healAll;
-				enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
-				enemy.health = enemy.health < 0 ? 0 : enemy.health;
+				if(enemy.health) {
+					enemy.health += mergedAbility.healAll;
+					enemy.health = enemy.health > enemy.maxHealth ? enemy.maxHealth : enemy.health;
+					enemy.health = enemy.health < 0 ? 0 : enemy.health;
+				}
 			});
 		}
 
@@ -190,7 +215,7 @@
 		attacker.health = attacker.health > attacker.maxHealth ? attacker.maxHealth : attacker.health;
 		attacker.health = attacker.health < 0 ? 0 : attacker.health;
 		
-		attacker.poison--;
+		attacker.poison = Math.max(attacker.poison-1, 0);
 
 		attacker.defense = mergedAbility.defense;
 		attacker.animationState = EAnimationStates.ATTACK;
