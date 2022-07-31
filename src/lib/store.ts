@@ -631,7 +631,7 @@ export const player = writable<IPlayer>({
 	},
 	dice: [
 		{
-			faces: makeFaces(['sg2', 'sg2', 'sg2', 'sg2', 'sg2', 'sg2'])
+			faces: makeFaces(['d1', 'd1', 'd2', 'd2', 'h1', 's1'])
 		},
 		{
 			faces: makeFaces(['d1', 'd1', 'd2', 'd2', 'h1', 's1'])
