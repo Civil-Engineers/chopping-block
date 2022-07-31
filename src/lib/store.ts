@@ -411,15 +411,24 @@ const gold = {
 }
 
 const growing = {
+	dg2: newAbility({
+		name: 'Growing Attack 2',
+		description: 'Deals 2 damage and increases 2 each time used (Until battle end)',
+		rarity: 4,
+		icon: '',
+		defense: 2,
+		value: '%d',
+		grow: newAbility({damage:2})
+	}),
 	sg2: newAbility({
 		name: 'Growing Shield 2',
-		description: 'Blocks 2 damage and increases 1 each time used (Until battle end)',
+		description: 'Blocks 2 damage and increases 2 each time used (Until battle end)',
 		rarity: 4,
 		icon: '',
 		defense: 2,
 		value: '%s',
-		grow: newAbility({defense:1})
-	})
+		grow: newAbility({defense:2})
+	}),
 }
 
 const special = {
