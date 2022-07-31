@@ -227,12 +227,35 @@
 		transition: opacity 500ms ease display 500ms ease;
 		z-index: 2;
 		opacity: 0;
+		height: 500px;
+		overflow-y: scroll;
+		overflow-x: hidden;
+		padding: 30px;
+		width: 400px;
 		display: none;
 		&.is-shopping {
 			opacity: 1;
 			display: initial;
 		}
+		
 	}
+
+	::-webkit-scrollbar {
+			width: 15px;
+			// background-color: #f1f1f1;
+		}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		display:none
+	}
+		
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #888; 
+		border-radius: 100px;
+		height: 10px!important ;
+		}
 
 	.shop {
 		background-color: rgb(180, 116, 43);

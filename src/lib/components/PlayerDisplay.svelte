@@ -41,9 +41,8 @@
 </script>
 
 <div class="player-slot">
+	<DiceContainer playerDice={player.dice} />
 	<div class="player" class:is-enemy={isEnemy}>
-		<HealthBar maxHealth={player.maxHealth} health={player.health} />
-		<DiceContainer playerDice={player.dice} />
 		{#each particles as particle}
 			<div class="particle">
 				<div
@@ -58,6 +57,7 @@
 			src={player.animations[player.animationState] ?? player.animations[EAnimationStates.IDLE]}
 			alt=""
 		/>
+		<HealthBar maxHealth={player.maxHealth} health={player.health} />
 	</div>
 </div>
 
@@ -82,7 +82,7 @@
 			object-fit: contain;
 			object-position: 50% 100%;
 			margin-top: -130px;
-			margin-right: -150px;
+			margin-right: -250px;
 			width: 450px;
 			height: 450px;
 			display: block;
@@ -96,7 +96,7 @@
 		}
 		&.is-enemy {
 			> img {
-				margin-right: 100px;
+				margin-right: 140px;
 				margin-top: -180px;
 				width: 500px;
 				height: 500px;

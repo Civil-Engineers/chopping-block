@@ -14,7 +14,6 @@
 		EAnimationStates
 	} from '$lib/store';
 	import { rollDice, sleep } from '$lib/helper';
-	import DiceFace from './DiceFace.svelte';
 
 	let isFastFording = false;
 	let wave = 0;
@@ -61,10 +60,10 @@
 
 		// do ability to enemy
 		await sleep(waitSpeed);
-		for(const d of $player.dice) {
-			dicePreattack(d);
-		}
 		attack($player, $enemies[0]);
+		for(const d of $player.dice) {
+			dicePostAttack(d);
+		}
 		await sleep(waitSpeed*2.7);
 		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 		$player = $player;
@@ -100,7 +99,7 @@
 				let sum = 0;
 				$player.dice.forEach((dice) => {
 					dice.faces.forEach((face) => {
-						sum += face.ability.gold ? face.ability.gold : 0;
+						sum += face.ability.gold;
 					});
 				});
 				$player.gold += sum;
@@ -129,7 +128,7 @@
 	});
 
 	// battleLoop();
-	const dicePreattack = (dice: IDice) => {
+	const dicePostAttack = (dice: IDice) => {
 		if(dice.rolled?.ability.grow) {
 			dice.rolled.temp_bonus	= mergeAbilities(dice.rolled.ability.grow, dice.rolled.temp_bonus)
 		}

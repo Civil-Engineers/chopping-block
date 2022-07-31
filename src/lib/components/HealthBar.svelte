@@ -12,11 +12,11 @@
 
 <style>
 	.container {
-		height: 50px;
+		height: 30px;
 		width: 200px;
 		background-color: gray;
 		position: relative;
-		margin-bottom: 50px;
+		margin-top: 20px;
 		border-radius: 20px;
 		overflow: hidden;
 	}
