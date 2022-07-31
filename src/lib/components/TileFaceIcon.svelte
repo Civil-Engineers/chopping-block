@@ -64,4 +64,30 @@
       text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
     }
   }
+  .smaller {
+    width: 75px;
+	height: 75px;
+    > p {
+      position: absolute;
+      bottom: 9px;
+      margin: 0;
+      right: 16px;
+      color: white;
+      font-size: 20px;
+      text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
+    }
+  }
+  .smallest {
+    width: 50px;
+		height: 50px;
+    > p {
+      position: absolute;
+      bottom: 6px;
+      margin: 0;
+      right: 11px;
+      color: white;
+      font-size: 15px;
+      text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
+    }
+  }
 </style>
