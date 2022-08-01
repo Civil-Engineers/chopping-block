@@ -21,7 +21,7 @@
 		display = display.replaceAll("%d", getSum("damage"));
 		display = display.replaceAll("%cd", getSum("cleaveDamage"));
 		display = display.replaceAll("%h", getSum("heal"));
-		display = display.replaceAll("%s", getSum("defense"));
+		display = display.replaceAll('%b', getSum("block"));
 		return display;
 	}
 </script>

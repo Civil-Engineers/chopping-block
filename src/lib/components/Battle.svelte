@@ -22,7 +22,7 @@
 
 	$enemies.forEach((enemy) => {
 		enemy.dice.forEach((dice) => {
-			enemy.defense = 0;
+			enemy.block = 0;
 			const rolledNumber = rollDice(dice.faces.length);
 			dice.rolled = dice.faces[rolledNumber];
 			$enemies = $enemies;
@@ -43,17 +43,17 @@
 		await sleep(.2);
 		playAudio('/music/dice-roll.wav');
 		$player.dice.forEach((dice, index) => {
-			$player.defense = 0;
+			$player.block = 0;
 			const rolledNmber = rollDice(dice.faces.length);
 			dice.rolled = dice.faces[rolledNmber];
 			$player = $player;
 		});
 		$enemies.forEach((enemy) => {
-			enemy.defense = 0;
+			enemy.block = 0;
 			enemy.dice.forEach((dice) => {
 				const rolledNumber = rollDice(dice.faces.length);
 				dice.rolled = dice.faces[rolledNumber];
-				enemy.defense += dice.rolled.ability.defense ?? 0;
+				enemy.block += dice.rolled.ability.block ?? 0;
 				$enemies = $enemies;
 			});
 		});
@@ -95,7 +95,7 @@
 			if (wave < waveInitEnemies.length) {
 				setEnemiesToWave(wave);
 				$shopPhase = true;
-				$player.gold = 10;
+				$player.gold += 10;
 				let sum = 0;
 				$player.dice.forEach((dice) => {
 					dice.faces.forEach((face) => {
@@ -108,7 +108,7 @@
 
 				$enemies.forEach((enemy) => {
 					enemy.dice.forEach((dice) => {
-						enemy.defense = 0;
+						enemy.block = 0;
 						const rolledNumber = rollDice(dice.faces.length);
 						dice.rolled = dice.faces[rolledNumber];
 						$enemies = $enemies;
@@ -142,7 +142,7 @@
 		const mergedAbility:IAbility = newAbility({
 			damage: a1.damage + a2.damage,
 			cleaveDamage: a1.cleaveDamage + a2.cleaveDamage,
-			defense: a1.defense + a2.defense,
+			block: a1.block + a2.block,
 			heal: a1.heal + a2.heal,
 			healAll: a1.healAll + a2.healAll,
 			poison: a1.poison + a2.poison,
@@ -163,7 +163,7 @@
 				(sum, dice) => (sum += dice.rolled?.ability.goldAtt ? $player.gold : 0),
 				0
 			),
-			defense: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.defense) ?? 0 + (dice.rolled?.temp_bonus?.defense ?? 0)), 0),
+			block: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.block) ?? 0 + (dice.rolled?.temp_bonus?.block ?? 0)), 0),
 			heal: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.heal ?? 0)+ (dice.rolled?.temp_bonus?.heal ?? 0)), 0),
 			healAll: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.healAll ?? 0) + (dice.rolled?.temp_bonus?.healAll ?? 0)), 0),
 			poison: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.poison ?? 0) + (dice.rolled?.temp_bonus?.poison ?? 0)), 0),
@@ -177,7 +177,7 @@
 		if (damage > 0) {
 			damage =
 				(mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier -
-				target.defense;
+				target.block;
 			damage = damage < 0 ? 0 : damage;
 		}
 
@@ -189,7 +189,7 @@
 		let cleaveDamage = (mergedAbility.cleaveDamage) * mergedAbility.multiplier;
 		if (cleaveDamage > 0) {
 			$enemies.forEach((enemy) => {
-				let targetCleaveDamage = mergedAbility.cleaveDamage * mergedAbility.multiplier - target.defense;
+				let targetCleaveDamage = mergedAbility.cleaveDamage * mergedAbility.multiplier - target.block;
 				targetCleaveDamage = cleaveDamage < 0 ? (cleaveDamage = 0) : cleaveDamage;
 				enemy.health -= targetCleaveDamage;
 				enemy.health = enemy.health < 0 ? 0 : enemy.health;
@@ -216,7 +216,7 @@
 		
 		attacker.poison = Math.max(attacker.poison-1, 0);
 
-		attacker.defense = mergedAbility.defense;
+		attacker.block = mergedAbility.block;
 		attacker.animationState = EAnimationStates.ATTACK;
 	};
 
