@@ -32,7 +32,7 @@ export interface IPlayer {
 	dice: IDice[];
 	rolllingEffects?: IAbility;
 
-	defense: number;
+	block: number;
 	animationState: EAnimationStates;
 	animations: {
 		[EAnimationStates.IDLE]: string;
@@ -57,7 +57,7 @@ export interface IAbility {
 	cleaveDamage: number;
 
 	// remove form attack damage value to a limit of 0
-	defense: number;
+	block: number;
 
 	// applies to player health, can be negative
 	heal: number;
@@ -101,7 +101,7 @@ export const newAbility = (template: any) =>{
 
 		damage: template.damage ?? 0,
 		cleaveDamage: template.cleaveDamage ?? 0,
-		defense: template.defense ?? 0,
+		block: template.block ?? 0,
 		heal: template.heal ?? 0,
 		healAll: template.healAll ?? 0,
 		poison: template.poison ?? 0,
@@ -304,7 +304,7 @@ const shield = {
 		rarity: 0,
 		icon: '/images/Shield_Icon.png',
 		value: '1',
-		defense: 1
+		block: 1
 	}),
 	s2: newAbility({
 		name: 'Shield 2',
@@ -312,7 +312,7 @@ const shield = {
 		rarity: COMMON_R,
 		icon: '/images/Shield_Icon.png',
 		value: '2',
-		defense: 2
+		block: 2
 	}),
 	s3: newAbility({
 		name: 'Shield 3',
@@ -320,7 +320,7 @@ const shield = {
 		rarity: UNCOMMON_R,
 		icon: '/images/Shield_Icon.png',
 		value: '3',
-		defense: 3
+		block: 3
 	}),
 	s4: newAbility({
 		name: 'Shield 4',
@@ -328,7 +328,7 @@ const shield = {
 		rarity: UNRARE_R,
 		icon: '/images/Shield_Icon.png',
 		value: '4',
-		defense: 4
+		block: 4
 	}),
 	s5: newAbility({
 		name: 'Shield 5',
@@ -336,7 +336,7 @@ const shield = {
 		rarity: RARE_R,
 		value: '5',
 		icon: '/images/Shield_Icon.png',
-		defense: 5
+		block: 5
 	}),
 	s10: newAbility({
 		name: 'Shield 10',
@@ -344,7 +344,7 @@ const shield = {
 		rarity: 0,
 		value: '10',
 		icon: '/images/Shield_Icon.png',
-		defense: 10
+		block: 10
 	}),
 };
 
@@ -416,7 +416,7 @@ const growing = {
 		description: 'Deals 2 damage and increases 2 each time used (Until battle end)',
 		rarity: 4,
 		icon: '',
-		defense: 2,
+		block: 2,
 		value: '%d',
 		grow: newAbility({damage:2})
 	}),
@@ -425,9 +425,9 @@ const growing = {
 		description: 'Blocks 2 damage and increases 2 each time used (Until battle end)',
 		rarity: 4,
 		icon: '',
-		defense: 2,
-		value: '%s',
-		grow: newAbility({defense:2})
+		block: 2,
+		value: '%b',
+		grow: newAbility({block:2})
 	}),
 }
 
@@ -485,7 +485,7 @@ const createFishGoon = () => {
 		name: 'Training Dummy',
 		maxHealth: 10,
 		health: 10,
-		defense: 0,
+		block: 0,
 		poison: 0,
 		gold: 0,
 		animationState: EAnimationStates.IDLE,
@@ -507,7 +507,7 @@ const createPiranha = () => {
 		name: 'Training Dummy',
 		maxHealth: 12,
 		health: 12,
-		defense: 0,
+		block: 0,
 		poison: 0,
 		gold: 0,
 		animationState: EAnimationStates.IDLE,
@@ -530,7 +530,7 @@ const createCatFish = () => {
 		maxHealth: 6,
 		health: 6,
 		poison: 0,
-		defense: 0,
+		block: 0,
 		gold: 0,
 		animationState: EAnimationStates.IDLE,
 		animations: {
@@ -551,7 +551,7 @@ const createEelBoss = () => {
 		name: 'Training Dummy',
 		maxHealth: 20,
 		health: 20,
-		defense: 0,
+		block: 0,
 		poison: 0,
 		gold: 0,
 		animationState: EAnimationStates.IDLE,
@@ -623,7 +623,7 @@ export const player = writable<IPlayer>({
 	health: 30,
 	poison: 0,
 	gold: 10,
-	defense: 0,
+	block: 0,
 	animationState: EAnimationStates.IDLE,
 	animations: {
 		[EAnimationStates.IDLE]: '/images/Fisher.png',
@@ -646,7 +646,7 @@ export const enemies = writable<IPlayer[]>([
 		health: 10,
 		gold: 0,
 		poison: 0,
-		defense: 0,
+		block: 0,
 		animationState: EAnimationStates.IDLE,
 		animations: {
 			[EAnimationStates.IDLE]: 'test.jpg'
