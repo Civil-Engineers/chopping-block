@@ -38,7 +38,7 @@
 </script>
 
 
-<div class="con" class:is-rolling={$beRolling} style={`transform: translate(${xMargin}px, ${yMargin}px)`} on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)}>
+<div class="con" class:is-rolling={$beRolling} style={`margin-left: ${xMargin}px; margin-top: ${yMargin}px;`} on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)}>
 	{#if hover}
 		<div class="tool-tip" transition:fade>
 			<Dice {dice} />
@@ -62,7 +62,7 @@
 		position: absolute;
 		top: -130px;
 		left: 50%;
-    z-index: 10;
+		z-index: 10;
 		transform: translateX(-50%);
 	}
 </style>
