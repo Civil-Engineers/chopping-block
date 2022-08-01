@@ -57,7 +57,7 @@
 			src={player.animations[player.animationState] ?? player.animations[EAnimationStates.IDLE]}
 			alt=""
 		/>
-		<HealthBar maxHealth={player.maxHealth} health={player.health} />
+		<HealthBar maxHealth={player.maxHealth} health={player.health} poison={player.poison} block={player.poison}/>
 	</div>
 </div>
 
@@ -70,7 +70,7 @@
 		flex-direction: column;
 		justify-content: flex-end;
 		align-items: center;
-		padding-bottom: 40px;
+		padding-bottom: 15px;
 	}
 	.player {
 		display: flex;
