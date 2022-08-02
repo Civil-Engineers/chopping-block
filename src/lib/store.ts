@@ -16,6 +16,7 @@ export interface IFace {
 export interface IDice {
 	faces: IFace[];
 	rolled?: IFace;
+	isRolling?: boolean;
 }
 export enum EAnimationStates {
 	IDLE,
@@ -30,7 +31,7 @@ export interface IPlayer {
 	gold: number;
 	poison: number;
 	dice: IDice[];
-	rolllingEffects?: IAbility;
+	rerollEffects?: IAbility;
 
 	block: number;
 	animationState: EAnimationStates;
@@ -56,6 +57,7 @@ export interface IAbility {
 
 	//applies to all enemies
 	cleaveDamage: number;
+	blockAtt: boolean;
 
 	// remove form attack damage value to a limit of 0
 	block: number;
@@ -75,7 +77,8 @@ export interface IAbility {
 
 	goldAtt: boolean;
 	// allows the dice to be rolled again and stack the effects
-	rolling: boolean;
+	reroll: number;
+	rerollCount: 0;
 
 	// allows the face to be increased by grow amount
 	grow?: IAbility;
@@ -110,7 +113,11 @@ export const newAbility = (template: any) =>{
 		multiplier: template.multiplier ?? 1,
 		gold: template.gold ?? 0,
 		goldAtt: template.goldAtt ?? false,
-		rolling: template.rolling ?? false,
+		reroll: template.reroll ?? false,
+		rerollCount: 0,
+
+		blockAtt: template.blockAtt ?? false,
+
 		grow: template.grow,
 	}
 	return ability;
@@ -413,6 +420,15 @@ const gold = {
 }
 
 const growing = {
+	dgb6: newAbility({
+		name: 'All Out Attack 6',
+		description: 'Deals 6 damage and decreases by 2 each time used (Until battle end)',
+		rarity: UNRARE_R,
+		icon: '/images/Attack+_Icon.png',
+		damage: 6,
+		value: '%d',
+		grow: newAbility({damage:-2})
+	}),
 	dg2: newAbility({
 		name: 'Growing Attack 2',
 		description: 'Deals 2 damage and increases 2 each time used (Until battle end)',
@@ -433,6 +449,27 @@ const growing = {
 	}),
 }
 
+const reroll = {
+	hr1: newAbility({
+		name: 'Rolling Heal 1',
+		description: 'Restores 1 HP, reroll once per attack',
+		rarity: UNCOMMON_R,
+		value: '1',
+		icon: '/images/Heal_Icon.png',
+		heal: 1,
+		reroll: 2
+	}),
+	sr1: newAbility({
+		name: 'Rolling shield 1',
+		description: 'Blocks 1 damage, reroll twice per attack',
+		rarity: UNCOMMON_R,
+		value: '1',
+		icon: '/images/Shield_Icon.png',
+		block: 1,
+		reroll: 1
+	}),
+}
+
 const special = {
 	b2: newAbility({
 		name: 'Berserk x2',
@@ -441,6 +478,14 @@ const special = {
 		icon: '/images/Multiply_Icon.png',
 		value: '',
 		multiplier: 2
+	}),
+	sx: newAbility({
+		name: 'Shield Attack',
+		description: 'Does damage based on how much shield you have',
+		rarity: RARE_R,
+		icon: '/images/Shield+_Icon.png',
+		value: '',
+		blockAtt: true
 	}),
 	gx: newAbility({
 		name: 'Gold Attack',
@@ -471,7 +516,7 @@ export const allAbilities: { [key: string]: IAbility } = {
 	...heal,
 	...gold,
 	...growing,
-
+	...reroll,
 	...special,
 
 	// upgr: newAbility({

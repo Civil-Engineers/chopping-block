@@ -15,19 +15,20 @@
 	} from '$lib/store';
 	import { rollDice, sleep } from '$lib/helper';
 
+	const setWaveGold = () => {
+		waveGold = 0;
+		$enemies.forEach((enemy) => {
+			waveGold += enemy.gold;
+		});
+	}
+
+
 	let isFastFording = false;
 	let wave = 0;
+	let waveGold = 0;
 
 	setEnemiesToWave(wave);
-
-	$enemies.forEach((enemy) => {
-		enemy.dice.forEach((dice) => {
-			enemy.block = 0;
-			const rolledNumber = rollDice(dice.faces.length);
-			dice.rolled = dice.faces[rolledNumber];
-			$enemies = $enemies;
-		});
-	});
+	setWaveGold();
 
 	const battleLoop = async () => {
 		if ($enemies.length === 0) {
@@ -60,10 +61,10 @@
 
 		// do ability to enemy
 		await sleep(waitSpeed);
-		attack($player, $enemies[0]);
 		for(const d of $player.dice) {
-			dicePostAttack(d);
+			await dicePreAttack(d);
 		}
+		attack($player, $enemies[0]);
 		await sleep(waitSpeed*2.7);
 		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 		$player = $player;
@@ -84,6 +85,9 @@
 		$enemies = $enemies.filter((enemy) => enemy.health > 0);
 
 		await sleep(waitSpeed*2.2);
+		for(const d of $player.dice) {
+			dicePostAttack(d);
+		}
 		// loop many times until all enemies die or you die
 		if ($player.health > 0 && $enemies.length > 0) {
 			battleLoop();
@@ -93,16 +97,19 @@
 			resetTempBonus($player);
 			wave++;
 			if (wave < waveInitEnemies.length) {
+				
 				setEnemiesToWave(wave);
+
 				$shopPhase = true;
-				$player.gold += 10;
 				let sum = 0;
 				$player.dice.forEach((dice) => {
 					dice.faces.forEach((face) => {
 						sum += face.ability.gold;
 					});
 				});
+				$player.gold += 10;
 				$player.gold += sum;
+				setWaveGold();
 				// $player.health = $player.maxHealth;
 				$isShopping = true;
 
@@ -127,11 +134,34 @@
 		}
 	});
 
-	// battleLoop();
+
+	const dicePreAttack = async (dice: IDice) => {
+		if(dice.rolled?.ability.reroll && dice.rolled?.ability.rerollCount < dice.rolled.ability.reroll) {
+			dice.rolled.ability.rerollCount++; 
+			if ($player.rerollEffects) {
+				$player.rerollEffects = mergeAbilities($player.rerollEffects, dice.rolled.ability);
+			} else {
+				$player.rerollEffects = dice.rolled.ability;
+			}
+			console.log("reroll")
+			dice.isRolling = true;
+			$player = $player;
+			await sleep(waitSpeed);
+			dice.isRolling=false;
+			const rolledNmber = rollDice(dice.faces.length);
+			dice.rolled = dice.faces[rolledNmber];
+			$player = $player;
+			dicePreAttack(dice);
+		}
+	}
+
 	const dicePostAttack = (dice: IDice) => {
 		if(dice.rolled?.ability.grow) {
 			dice.rolled.temp_bonus	= mergeAbilities(dice.rolled.ability.grow, dice.rolled.temp_bonus)
 		}
+		dice.faces.forEach((face) => {
+			face.ability.rerollCount = 0;
+		})
 		// if(dice.rolled?.ability.rolling) {
 		// 	// animation?
 			
@@ -146,17 +176,16 @@
 			heal: a1.heal + a2.heal,
 			healAll: a1.healAll + a2.healAll,
 			poison: a1.poison + a2.poison,
-			multiplier: a1.multiplier + a2.multiplier,
+			multiplier: a1.multiplier * a2.multiplier,
 		});
 		return mergedAbility;
 	}
 
 	const attack = (attacker: IPlayer, target: IPlayer) => {
 		// dice merge
-		const mergedAbility = {
+		let mergedAbility:any = {
 			damage: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.damage ?? 0) + (dice.rolled?.temp_bonus?.damage ?? 0)), 0),
-			cleaveDamage: attacker.dice.reduce(
-				(sum, dice) => (sum += (dice.rolled?.ability.cleaveDamage ?? 0) + (dice.rolled?.temp_bonus?.cleaveDamage ?? 0)),
+			cleaveDamage: attacker.dice.reduce((sum, dice) => (sum += (dice.rolled?.ability.cleaveDamage ?? 0) + (dice.rolled?.temp_bonus?.cleaveDamage ?? 0)),
 				0
 			),
 			goldDamage: attacker.dice.reduce(
@@ -172,15 +201,30 @@
 				1
 			)
 		};
+		if (attacker.rerollEffects) {
+			let a = attacker.rerollEffects;
+			mergedAbility.damage += a.damage;
+			mergedAbility.cleaveDamage += a.cleaveDamage;
+			mergedAbility.block += a.block;
+			mergedAbility.heal += a.heal;
+			mergedAbility.healAll += a.healAll;
+			mergedAbility.poison += a.poison;
+		}
+		attacker.rerollEffects
+		mergedAbility.damage += (attacker.rerollEffects?.damage ?? 0)
 
-		let damage = (mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier;
+		attacker.block = mergedAbility.block;
+
+		mergedAbility.blockDamage = attacker.dice.reduce(
+			(sum, dice) => (sum += dice.rolled?.ability.blockAtt ? $player.block : 0),
+			0
+		)
+
+		let damage = (mergedAbility.damage + mergedAbility.goldDamage+ mergedAbility.blockDamage) * mergedAbility.multiplier;
 		if (damage > 0) {
-			damage =
-				(mergedAbility.damage + mergedAbility.goldDamage) * mergedAbility.multiplier -
-				target.block;
+			damage -= target.block;
 			damage = damage < 0 ? 0 : damage;
 		}
-
 		target.poison += mergedAbility.poison;
 
 		target.health -= damage;
@@ -216,12 +260,11 @@
 		
 		attacker.poison = Math.max(attacker.poison-1, 0);
 
-		attacker.block = mergedAbility.block;
 		attacker.animationState = EAnimationStates.ATTACK;
 	};
 
 	// wait speed in milliseconds
-	$: waitSpeed = isFastFording ? 200 : 400;
+	$: waitSpeed = isFastFording ? 50 : 400;
 </script>
 
 <div class="container">

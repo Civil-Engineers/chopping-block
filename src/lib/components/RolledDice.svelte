@@ -23,7 +23,7 @@
 	}
 
 	const diceLoop = async () => {
-		if($beRolling) {
+		if($beRolling || dice.isRolling) {
 			currRoll = dice.faces[Math.floor(Math.random() * dice.faces.length)];
 			rampTime = rampTime + 5;
 			xMargin = Math.floor(Math.random() * shakeDist + shakeConst) * randomSign();
@@ -39,7 +39,7 @@
 	diceLoop();
 </script>
 
-{#if $beRolling}
+{#if $beRolling || dice.isRolling}
 	<div class="con" class:is-rolling={$beRolling} style={`transform: translate(${xMargin}px, ${yMargin}px) rotate(${rotate}deg);`} on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)}>
 		{#if hover}
 			<div class="tool-tip" transition:fade>

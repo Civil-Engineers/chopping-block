@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { IAbility, IFace } from "$lib/store";
+import { each } from "svelte/internal";
 	export let ability: IAbility;
 	export let temp: IAbility | undefined = undefined;
 	export let small: boolean = false
@@ -29,6 +30,11 @@
 
 <div class="icon" class:small={small && !smaller} class:smallest={smaller}>
 	<img src={ability.icon} alt="" />
+	<div>
+		{#if ability.reroll > ability.rerollCount} 
+			<img class="reroll-icon" src={'/images/Reroll_Status_Icon.png'} alt="">
+		{/if}
+	</div>
 	<p>{display(ability.value)}</p>
 </div>
 
@@ -51,6 +57,13 @@
 			font-size: 50px;
 			text-shadow: -2px -2px 0 #391302, 2px -2px 0 #391302, -2px 2px 0 #391302, 2px 2px 0 #391302;
 		}
+	}
+	
+	.reroll-icon {
+		position: absolute;
+		right: 20px;
+		top: 25px;
+		width: 10px;
 	}
   .small {
     width: 100px;
