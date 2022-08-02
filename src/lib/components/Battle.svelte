@@ -160,6 +160,7 @@
 	const dicePostAttack = (dice: IDice) => {
 		if(dice.rolled?.ability.grow) {
 			dice.rolled.temp_bonus	= mergeAbilities(dice.rolled.ability.grow, dice.rolled.temp_bonus)
+			
 		}
 		dice.faces.forEach((face) => {
 			face.ability.rerollCount = 0;
@@ -224,8 +225,8 @@
 		let damage = (mergedAbility.damage + mergedAbility.goldDamage+ mergedAbility.blockDamage) * mergedAbility.multiplier;
 		if (damage > 0) {
 			damage -= target.block;
-			damage = damage < 0 ? 0 : damage;
-		}
+		} 
+		damage = damage < 0 ? 0 : damage;
 		target.poison += mergedAbility.poison;
 
 		target.health -= damage;

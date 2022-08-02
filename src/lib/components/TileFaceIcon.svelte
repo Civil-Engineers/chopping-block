@@ -12,7 +12,7 @@ import { each } from "svelte/internal";
 		if(temp && typeof temp !== "undefined") {
 			const y = temp[key];
 			if(typeof x === "number" && typeof y === "number") {
-				return ""+(x+y);
+				return ""+Math.max(x+y,0);
 			}
 		}
 		return ""+x;
