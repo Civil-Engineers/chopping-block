@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { isShopping, allAbilities, selectedShopFace, shopBuy, shopPhase } from '$lib/store';
+	import { isShopping, allAbilities, selectedShopFace, shopBuy, shopPhase, type IDice, makeFaces } from '$lib/store';
 	import type { IPlayer } from '$lib/store';
 	import { getRandomAbility } from './../helper';
 	import Dice from './Dice.svelte';
 	import TileFaceIcon from './TileFaceIcon.svelte';
+import AudioPlayer from './AudioPlayer.svelte';
 	export let player: IPlayer;
 
 	let newItem = () => {
@@ -14,17 +15,33 @@
 		};
 	};
 
-  let NoItem = () => {
+	let NoItem = () => {
 		return {
 			key: "d0",
 			data: allAbilities["d0"]
 		};
 	};
 
-	let abilities = [newItem(), newItem(), newItem()];
+	const dicePool = [
+		["d1","d1","d1","d1","h1","d0"],
+		["d0","d0","d0"],
+		["b2","s1","d3","h2","h2","d0","d0","d0","d0","d0",],
+	]
+	let newDice = () => {
+		let d = Math.floor(dicePool.length * Math.random())
+		const x:IDice = {
+			faces: makeFaces(dicePool[d])
+		}
+		return x;
+	}
 
+	let abilities = [newItem(), newItem(), newItem(), newItem()];
+	let dice:IDice|null = newDice();
+	let potion = true;
 	let rerollShop = () => {
-		abilities = [newItem(), newItem(), newItem()];
+		abilities = [newItem(), newItem(), newItem(), newItem()];
+		potion = true;
+		dice = newDice();
 	};
 
 	let selectedAbility = -1;
@@ -61,37 +78,50 @@
 	</button>
 
 	<section class="shop" class:is-shopping={$isShopping && isShoppingAllowed}>
-		<span style="font-size: 30px;">{"Gold: "+ player.gold}</span>
+		<div class="gold-container"><img src={"/images/Gold.png"} alt="Gold: " class="gold-icon"><p class="gold-text">{player.gold}</p></div>
 		<div class="cols">
 			<div width="min-content">
 				<ul class="shop-items">
 					{#each abilities as ability, index}
-						<li
-							class="shop-item"
-							class:selected={selectedAbility === index}
-							style={`box-shadow: 0 0 ${(10-ability.data.rarity)*2}px ${(10-ability.data.rarity)*2}px red`}
-							on:click={() => {
-								if(selectedAbility == index) {
-									selectedAbility = -1;
-									$selectedShopFace = "";
-								} else if (player.gold >= 3) {
-									selectedAbility = index;
-									$selectedShopFace = ability.key;
-								}
-							}}
-				
-							on:mouseenter={() => {
-								highlightedAbility = index;
-							}}
-							on:mouseleave={() => {
-								highlightedAbility = -1;
-							}}
-						>
-							<TileFaceIcon ability={ability.data}/>
-						</li>
+					<!-- style={`box-shadow: 0 0 ${(12-ability.data.rarity)*2}px ${(12-ability.data.rarity)*2}px red`} -->
+						<div class="item-container">
+							<li
+								class="shop-item"
+								class:selected={selectedAbility === index}
+								style={`box-shadow: 0 0 ${(12-ability.data.rarity)}px ${(12-ability.data.rarity)}px red`}
+								on:click={() => {
+									if(selectedAbility == index) {
+										selectedAbility = -1;
+										$selectedShopFace = "";
+									} else if (player.gold >= 3) {
+										selectedAbility = index;
+										$selectedShopFace = ability.key;
+									}
+								}}
+					
+								on:mouseenter={() => {
+									highlightedAbility = index;
+								}}
+								on:mouseleave={() => {
+									highlightedAbility = -1;
+								}}
+							>
+								<TileFaceIcon ability={ability.data} small={true}/>
+							</li>
+							<div class="item-text">
+								{#if highlightedAbility == index || selectedAbility == index}
+									<p class="item-desc">{ability.data.description}</p>
+									<p class="item-cost">Cost: {ability.data.cost}</p>
+								{:else}
+									<p class="item-title">{ability.data.name}</p>
+									<p class="item-cost">Cost: {ability.data.cost}</p> 
+								{/if}
+							</div>
+						</div>
 					{/each}
 				</ul>
-				<div
+				
+				<div class="reroll-button"
 					on:click={() => {
 						if (player.gold >= 1) {
 							selectedAbility = -1;
@@ -99,40 +129,61 @@
 							rerollShop();
 							player.gold -= 1;
 						}
-					}}
-					class="reroll-button">
+					}}>
 					<img src={"/images/Reroll.png"} alt="Reroll" class="reroll-img" />
 					<span class="reroll-text">Reroll - 1 Gold</span>
 				</div>
-				<div
+				<div class="next-battle-button"
 					on:click={() => {
 						$shopPhase = false;
 						$isShopping = false;
-					}}
-					class="next-battle-button">
+					}}>
 					<img src={"/images/Start_battle.png"} alt="Next Battle" class="next-battle-img" />
 					<span class="next-battle-text">Next battle</span>
 				</div>
 			</div>
-      <!-- {#each abilities as ability, index} -->
-			<div class="item-description">
-				{#if selectedAbility >= 0}
-					<span>{abilities[selectedAbility].data.description}</span>
-				{:else if highlightedAbility >= 0 }
-          <span>{abilities[highlightedAbility].data.description}</span>
-					<!-- <span>Select an ability to learn more</span> -->
-				{/if}
-      <!-- {/each} -->
-			</div>
+			<ul class="shop-items">
+				<div class="item-container">
+					<li
+						class="shop-item"
+						on:click={() => {
+							if (player.gold >= player.dice.length * 8 && dice !== null) {
+								player.dice.push(dice);
+								player.dice = player.dice;
+								player.gold -= player.dice.length * 8;
+								dice = null;
+							}
+						}}
+					>
+						{#if dice}
+							<Dice dice={dice} smaller={true}/>
+						{:else}
+							<p>Sold</p>
+						{/if}
+					</li>
+					{#if dice}
+						<div class="item-text">
+							<p class="item-title">D{dice.faces.length}</p>
+							<p class="item-cost">Cost: {player.dice.length * 8}</p>
+							<!-- <p class="item-desc">{ability.data.description}</p> -->
+						</div>
+					{/if}
+				</div>
+			</ul>
 		</div>
+		
 	</section>
 	<section class="bkg" class:is-shopping={$isShopping} />
 	<p class="instructions" class:is-shopping={$isShopping}>
 		Select an item in shop, then click a slot in any of your dice to replace. Each face costs 3 coins.
 	</p>
 	<section class="current-abi" class:is-shopping={$isShopping}>
-		{#each player.dice as dice}
-			<div class="dice-wrapper"><Dice {dice} /></div>
+		{#each player.dice as dice, index}
+			{#if index == player.dice.length-1}
+				<div><Dice {dice} /></div>
+			{:else}
+				<div class="dice-wrapper"><Dice {dice} /></div>
+			{/if}
 		{/each}
 	</section>
 </div>
@@ -163,7 +214,7 @@
 		}
 
 		&.is-shopping {
-			transform: translateX(-25rem);
+			transform: translateX(-45rem);
 		}
 		&.is-visible {
 			opacity: 1;
@@ -174,15 +225,26 @@
 		}
 	}
 
-	.dice-wrapper {
-		margin-bottom: 5rem;
+	.gold-container {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		.gold-icon {
+			width: 50px;
+			
+		}
+		.gold-text {
+			font-size: 20px;
+			margin: 0px 0px 0px 3px;
+		}
 	}
+	
 	.bkg {
 		background-color: rgba(30, 30, 30);
 		color: white;
 		position: fixed;
 		top: rem;
-		left: 00rem;
+		left: 0rem;
 		width: 100rem;
 		height: 100rem;
 		border-bottom-left-radius: 10px;
@@ -205,7 +267,7 @@
 	.instructions {
 		position: fixed;
 		top: 1rem;
-		left: 18rem;
+		left: 3rem;
 		color: white;
 		text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
 		z-index: 2;
@@ -222,7 +284,7 @@
 		color: white;
 		position: fixed;
 		top: 10rem;
-		left: 20rem;
+		left: 3rem;
 		box-sizing: border-box;
 		transition: opacity 500ms ease display 500ms ease;
 		z-index: 2;
@@ -233,9 +295,17 @@
 		padding: 30px;
 		width: 400px;
 		display: none;
+		flex-wrap: wrap;
+    	justify-content: center;
+		row-gap: 10px;
+		.dice-wrapper {
+			border-bottom: thick solid white;
+			margin-bottom: 0px;
+			padding-bottom: 20px;
+		}
 		&.is-shopping {
 			opacity: 1;
-			display: initial;
+			display: flex;
 		}
 		
 	}
@@ -254,7 +324,8 @@
 	::-webkit-scrollbar-thumb {
 		background: #888; 
 		border-radius: 100px;
-		height: 10px!important ;
+		// height: 10px!important ;
+
 		}
 
 	.shop {
@@ -262,8 +333,8 @@
 		color: white;
 		position: fixed;
 		top: 1rem;
-		right: -25rem;
-		width: 25rem;
+		right: -45rem;
+		width: 45rem;
 		height: 43rem;
 		border-bottom-left-radius: 10px;
 		box-sizing: border-box;
@@ -272,7 +343,7 @@
 		z-index: 3;
 
 		&.is-shopping {
-			transform: translateX(-25rem);
+			transform: translateX(-45rem);
 		}
 
 		.cols {
@@ -281,8 +352,8 @@
 
 			.item-description {
 				margin: 1em 0;
-        padding: 1em;
-        font-size: 28px;
+				padding: 1em;
+				font-size: 28px;
 			}
 		}
 
@@ -294,28 +365,51 @@
 			flex-direction: column;
 			gap: 1rem;
 
-			.shop-item {
+			.item-container {
 				display: flex;
-        margin-top: 10px;
-        margin-bottom: 20px;
-				flex-direction: column;
-				width: 8rem;
-				height: 8rem;
-				background-color: rgb(43, 180, 54);
-				border-radius: 10px;
-				align-items: center;
 				justify-content: center;
-				transition: background-color 150ms ease-in-out;
+				.shop-item {
+					display: flex;
+					margin-top: 10px;
+					margin-bottom: 10px;
+					flex-direction: column;
+					border-radius: 10px;
+					align-items: center;
+					justify-content: center;
+					transition: background-color 150ms ease-in-out;
+					
+					&:hover {
+						cursor: pointer;
+						// background-color: rgb(35, 141, 43);
+					}
 
-				&:hover {
-					cursor: pointer;
-					background-color: rgb(35, 141, 43);
+					&.selected {
+						// background-color: rgb(35, 141, 43);
+					}
 				}
-
-				&.selected {
-					background-color: rgb(35, 141, 43);
+				.item-text {
+					width: 200px;
+					margin:0px;
+					margin-left: 15px;
+					.item-title {
+						margin-top: 39px;
+						margin-bottom: 0px;
+						font-size: 24px;
+					}
+					.item-cost {
+						font-size: 16px;
+    					margin-top: 4px;
+						margin-bottom: 0px;
+					}
+					.item-desc {
+						margin: 0px;
+						height: 31px;
+						margin-top: 39px;
+						font-size:14px;
+					}
 				}
 			}
+			
 		}
 
 		.reroll-button {
@@ -362,7 +456,7 @@
 
 			.next-battle-text {
 				position: fixed;
-        margin-left: -98px;
+				margin-left: -98px;
 				bottom: 38px;
 				text-shadow: -1px -1px 0 #391302, 1px -1px 0 #391302, -1px 1px 0 #391302, 1px 1px 0 #391302;
 			}

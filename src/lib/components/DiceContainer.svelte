@@ -9,6 +9,8 @@
 	{#each playerDice as dice}
 		{#if dice.rolled}
 			<RolledDice {dice} face={dice.rolled} />
+		{:else}
+			<RolledDice {dice} face={dice.faces[0]} />
 		{/if}
 	{/each}
 </div>

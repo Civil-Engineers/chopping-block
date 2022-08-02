@@ -3,6 +3,7 @@
 	export let ability: IAbility;
 	export let temp: IAbility | undefined = undefined;
 	export let small: boolean = false
+	export let smaller: boolean = false
 	
 
 	const getSum = (key: keyof IAbility) => {
@@ -26,7 +27,7 @@
 	}
 </script>
 
-<div class="icon" class:small={small}>
+<div class="icon" class:small={small && !smaller} class:smallest={smaller}>
 	<img src={ability.icon} alt="" />
 	<p>{display(ability.value)}</p>
 </div>
@@ -79,7 +80,7 @@
   }
   .smallest {
     width: 50px;
-		height: 50px;
+	height: 50px;
     > p {
       position: absolute;
       bottom: 6px;

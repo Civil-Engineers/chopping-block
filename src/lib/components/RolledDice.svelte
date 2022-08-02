@@ -10,12 +10,13 @@
 	export let dice: IDice;
 
 	let hover = false;
-	let currRoll:IFace = dice.faces[Math.floor(Math.random() * 5 + 1)];
+	let currRoll:IFace = dice.faces[Math.floor(Math.random() * dice.faces.length)];
 	let rampTime = 10;
 	let xMargin = 0;
     let yMargin = 0;
 	let shakeDist = 10;
 	let shakeConst = 12;
+	let rotate = 0;
 
 	const randomSign = () => {
 		return Math.random() < 0.5 ? 1 : -1;
@@ -23,13 +24,14 @@
 
 	const diceLoop = async () => {
 		if($beRolling) {
-			currRoll = dice.faces[Math.floor(Math.random() * 5 + 1)];
+			currRoll = dice.faces[Math.floor(Math.random() * dice.faces.length)];
 			rampTime = rampTime + 5;
 			xMargin = Math.floor(Math.random() * shakeDist + shakeConst) * randomSign();
 			yMargin = Math.floor(Math.random() * shakeDist + shakeConst) * randomSign();
+			rotate = Math.floor(Math.random() * 10+10) * randomSign();
 		} else {
-			xMargin = 0;
-			yMargin = 0;
+			// xMargin = 0;
+			// yMargin = 0;
 		}
 		await sleep(35);
 		diceLoop();
@@ -37,23 +39,30 @@
 	diceLoop();
 </script>
 
-
-<div class="con" class:is-rolling={$beRolling} style={`margin-left: ${xMargin}px; margin-top: ${yMargin}px;`} on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)}>
-	{#if hover}
-		<div class="tool-tip" transition:fade>
-			<Dice {dice} />
-		</div>
-	{/if}
-	{#if $beRolling}
+{#if $beRolling}
+	<div class="con" class:is-rolling={$beRolling} style={`transform: translate(${xMargin}px, ${yMargin}px) rotate(${rotate}deg);`} on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)}>
+		{#if hover}
+			<div class="tool-tip" transition:fade>
+				<Dice {dice} />
+			</div>
+		{/if}
 		<TileFaceIcon ability = {currRoll.ability}  temp={currRoll.temp_bonus} small={true} />
-	{:else}
+	</div>
+{:else}
+	<div class="con"  on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)}>
+		{#if hover}
+			<div class="tool-tip" transition:fade>
+				<Dice {dice} />
+			</div>
+		{/if}
 		<TileFaceIcon ability = {face.ability}  temp={face.temp_bonus} small={true} />
-	{/if}
-</div>
+	</div>
+{/if}
 
 <style lang="scss">
 	.con {
 		position: relative;
+		transition: transform .25s;
 	}
 	.is-rolling {
 		filter: brightness(60%);
@@ -63,6 +72,7 @@
 		top: -130px;
 		left: 50%;
 		z-index: 10;
+		background-color: black;
 		transform: translateX(-50%);
 	}
 </style>

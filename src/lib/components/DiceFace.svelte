@@ -2,7 +2,7 @@
 	import { audioList, makeAbility, playAudio, type IFace } from '$lib/store';
 	import { isShopping, selectedShopFace, allAbilities, shopBuy } from '$lib/store';
 	import TileFaceIcon from './TileFaceIcon.svelte';
-
+	export let smaller: boolean = false;
 	export let face: IFace;
 	// export let inShop: boolean;
 	// $: scale = health / maxHealth * 100;
@@ -25,5 +25,5 @@
 		trySetNewFace();
 	}}
 >
-	<TileFaceIcon ability={face.ability} temp={face.temp_bonus} small={true}/>
+	<TileFaceIcon ability={face.ability} temp={face.temp_bonus} smaller={smaller} small={true}/>
 </div>

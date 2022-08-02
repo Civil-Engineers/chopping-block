@@ -49,6 +49,7 @@ export interface IAbility {
 	description: string;
 	icon: string;
 	value: string;
+	cost: number;
 
 	// applies to the other player, can be negative to heal
 	damage: number;
@@ -98,6 +99,7 @@ export const newAbility = (template: any) =>{
 		description: template.description ?? "",
 		icon: template.icon ?? "",
 		value: template.value ?? "",
+		cost: template.cost ?? 3,
 
 		damage: template.damage ?? 0,
 		cleaveDamage: template.cleaveDamage ?? 0,
@@ -415,8 +417,8 @@ const growing = {
 		name: 'Growing Attack 2',
 		description: 'Deals 2 damage and increases 2 each time used (Until battle end)',
 		rarity: 4,
-		icon: '',
-		block: 2,
+		icon: '/images/Attack+_Icon.png',
+		damage: 2,
 		value: '%d',
 		grow: newAbility({damage:2})
 	}),
@@ -424,7 +426,7 @@ const growing = {
 		name: 'Growing Shield 2',
 		description: 'Blocks 2 damage and increases 2 each time used (Until battle end)',
 		rarity: 4,
-		icon: '',
+		icon: '/images/Shield+_Icon.png',
 		block: 2,
 		value: '%b',
 		grow: newAbility({block:2})
@@ -435,7 +437,7 @@ const special = {
 	b2: newAbility({
 		name: 'Berserk x2',
 		description: 'Multiplies damage done by 2',
-		rarity: UNRARE_R,
+		rarity: RARE_R,
 		icon: '/images/Multiply_Icon.png',
 		value: '',
 		multiplier: 2
@@ -448,6 +450,7 @@ const special = {
 		value: '',
 		goldAtt: true,
 	}),
+	
 	dp4: newAbility({
 		name: 'Vicious Attack 4',
 		description: 'Deals 4 damage, take 2',
@@ -487,7 +490,7 @@ const createFishGoon = () => {
 		health: 10,
 		block: 0,
 		poison: 0,
-		gold: 0,
+		gold: 3,
 		animationState: EAnimationStates.IDLE,
 		animations: {
 			[EAnimationStates.IDLE]: '/images/Fish_Goon.png',
@@ -509,7 +512,7 @@ const createPiranha = () => {
 		health: 12,
 		block: 0,
 		poison: 0,
-		gold: 0,
+		gold: 6,
 		animationState: EAnimationStates.IDLE,
 		animations: {
 			[EAnimationStates.IDLE]: '/images/Piranha.png',
@@ -531,7 +534,7 @@ const createCatFish = () => {
 		health: 6,
 		poison: 0,
 		block: 0,
-		gold: 0,
+		gold: 5,
 		animationState: EAnimationStates.IDLE,
 		animations: {
 			[EAnimationStates.IDLE]: '/images/Catfish.png',
@@ -618,11 +621,11 @@ export const waveInitEnemies: IPlayer[][] = [
 ];
 
 export const player = writable<IPlayer>({
-	name: 'Roe',
+	name: 'Fisher',
 	maxHealth: 30,
 	health: 30,
 	poison: 0,
-	gold: 10,
+	gold: 0,
 	block: 0,
 	animationState: EAnimationStates.IDLE,
 	animations: {
