@@ -460,13 +460,13 @@ const reroll = {
 		reroll: 2
 	}),
 	sr1: newAbility({
-		name: 'Rolling shield 1',
+		name: 'Rolling Shield 1',
 		description: 'Blocks 1 damage, reroll twice per attack',
 		rarity: UNCOMMON_R,
 		value: '1',
 		icon: '/images/Shield_Icon.png',
 		block: 1,
-		reroll: 1
+		reroll: 2
 	}),
 }
 

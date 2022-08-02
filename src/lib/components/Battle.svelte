@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PlayerDisplay from '$lib/components/PlayerDisplay.svelte';
 	import Shop from './Shop.svelte';
-	import { EGlobalStates, isShopping, globalGameState, playAudio, newAbility, resetTempBonus, type IDice, type IFace } from '$lib/store';
+	import { EGlobalStates, isShopping, globalGameState, playAudio, newAbility, makeAbility, resetTempBonus, type IDice, type IFace } from '$lib/store';
 	import {
 		player,
 		enemies,
@@ -143,15 +143,15 @@
 			} else {
 				$player.rerollEffects = dice.rolled.ability;
 			}
-			console.log("reroll")
 			dice.isRolling = true;
 			$player = $player;
-			await sleep(waitSpeed);
+			await sleep(waitSpeed/2);
 			dice.isRolling=false;
 			const rolledNmber = rollDice(dice.faces.length);
 			dice.rolled = dice.faces[rolledNmber];
 			$player = $player;
-			dicePreAttack(dice);
+			await sleep(waitSpeed/2);
+			await dicePreAttack(dice);
 		}
 	}
 
@@ -210,7 +210,6 @@
 			mergedAbility.healAll += a.healAll;
 			mergedAbility.poison += a.poison;
 		}
-		attacker.rerollEffects
 		mergedAbility.damage += (attacker.rerollEffects?.damage ?? 0)
 
 		attacker.block = mergedAbility.block;
@@ -261,6 +260,7 @@
 		attacker.poison = Math.max(attacker.poison-1, 0);
 
 		attacker.animationState = EAnimationStates.ATTACK;
+		attacker.rerollEffects = makeAbility('d0');
 	};
 
 	// wait speed in milliseconds

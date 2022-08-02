@@ -40,7 +40,7 @@
 </script>
 
 {#if $beRolling || dice.isRolling}
-	<div class="con" class:is-rolling={$beRolling} style={`transform: translate(${xMargin}px, ${yMargin}px) rotate(${rotate}deg);`} on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)}>
+	<div class="con" class:is-rolling={$beRolling || dice.isRolling} style={`transform: translate(${xMargin}px, ${yMargin}px) rotate(${rotate}deg);`} on:mouseenter={() => (hover = true)} on:mouseleave={() => (hover = false)}>
 		{#if hover}
 			<div class="tool-tip" transition:fade>
 				<Dice {dice} />
