@@ -61,9 +61,11 @@
 
 		// do ability to enemy
 		await sleep(waitSpeed);
+		let promises = [];
 		for(const d of $player.dice) {
-			await dicePreAttack(d);
+			promises.push(dicePreAttack(d));
 		}
+		await Promise.all(promises);
 		attack($player, $enemies[0]);
 		await sleep(waitSpeed*2.7);
 		$enemies = $enemies.filter((enemy) => enemy.health > 0);
